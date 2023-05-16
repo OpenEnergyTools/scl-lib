@@ -22,7 +22,7 @@ const smvMacRange = Array(maxSmvMacAddress - minSmvMacAddress)
  * generate unique `MAC-address` without the need to update the `doc` in-between:
  * @example
  * ```ts
- * const macGenerator = mACAddressGenerator(doc,"GSE");
+ * const macGenerator = macAddressGenerator(doc,"GSE");
  * const mac1 = macGenerator();        //01-0C-CD-01-00-09
  * const mac2 = macGenerator();        //01-0C-CD-01-00-0A
  * ```
