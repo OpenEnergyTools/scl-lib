@@ -22,3 +22,18 @@ export type Edit = Insert | Update | Remove | Edit[];
 export function isUpdate(edit: Edit): edit is Update {
   return (edit as Update).element !== undefined;
 }
+
+/** Utility function to create element with `tagName` and its`attributes` */
+export function createElement(
+  doc: XMLDocument,
+  tag: string,
+  attrs: Record<string, string | null>
+): Element {
+  const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
+  Object.entries(attrs)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .filter(([_, value]) => value !== null)
+    .forEach(([name, value]) => element.setAttribute(name, value!));
+
+  return element;
+}

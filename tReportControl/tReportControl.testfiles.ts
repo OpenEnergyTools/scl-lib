@@ -29,6 +29,7 @@ export const subscribedReport = `
                             serviceType="Report" />
                     </Inputs>
                 </LN0>
+                <LN lnClass="USER" inst="1" />
             </LDevice>
             <LDevice inst="second" />
         </Server>
@@ -36,6 +37,9 @@ export const subscribedReport = `
 </IED>
 <IED name="srcIED">
     <AccessPoint name="someAP">
+        <Services>
+            <ConfReportControl max="3" />
+        </Services>
         <Server>
             <LDevice inst="someLDInst">
                 <LN0 lnClass="LLN0" inst="" lnType="someLnType">
