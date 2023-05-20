@@ -22,6 +22,11 @@ export type Edit = Insert | Update | Remove | Edit[];
 export function isUpdate(edit: Edit): edit is Update {
   return (edit as Update).element !== undefined;
 }
+export function isRemove(edit: Edit): edit is Remove {
+  return (
+    (edit as Insert).parent === undefined && (edit as Remove).node !== undefined
+  );
+}
 
 /** Utility function to create element with `tagName` and its`attributes` */
 export function createElement(
