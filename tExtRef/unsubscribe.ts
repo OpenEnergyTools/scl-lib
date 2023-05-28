@@ -3,6 +3,14 @@ import { Remove, Update } from "../foundation/utils.js";
 import { removeInputs } from "../tInputs/removeInputs.js";
 import { removeSubscriptionSupervision } from "../tLN/removeSubscriptionSupervision.js";
 
+/** ServiceType is used to set limits on a later binding type
+ * ExtRef in Ed2 of the standard. It therefore cannot be removed
+ * all the easy. For now it only is removed in case `pServT` exists
+ */
+function getServiceType(extRef: Element): null | undefined {
+  return extRef.getAttribute("pServT") ? null : undefined;
+}
+
 /**
  * Remove link between sending IED data to receiving IED external
  * references - unsubscribing.
@@ -42,7 +50,7 @@ export function unsubscribe(extRefs: Element[]): (Update | Remove)[] {
           srcLNClass: null,
           srcLNInst: null,
           srcCBName: null,
-          serviceType: null,
+          serviceType: getServiceType(extRef),
         },
       });
     else removeActions.push({ node: extRef });

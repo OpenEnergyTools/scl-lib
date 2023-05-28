@@ -55,6 +55,36 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect((actions[2] as Update).element).to.equal(extRefs[2]);
   });
 
+  it("do not remove ICT defined Ed2 attributes", () => {
+    const extRef = findElement(laterBindingExtRefs, "ExtRef")!;
+    const actions = unsubscribe([extRef]);
+
+    expect(actions.length).to.equal(1);
+    expect(actions[0]).to.satisfies(isUpdate);
+
+    const update = actions[0] as Update;
+    expect(update.attributes["intAddr"]).to.be.undefined;
+    expect(update.attributes["serviceType"]).to.be.undefined;
+  });
+
+  it("do not remove ICT defined Ed2.1 attributes", () => {
+    const extRef = findElement(
+      laterBindingExtRefs,
+      'ExtRef[intAddr="someOtherIntAddr"]'
+    )!;
+    const actions = unsubscribe([extRef]);
+
+    expect(actions.length).to.equal(1);
+    expect(actions[0]).to.satisfies(isUpdate);
+
+    const update = actions[0] as Update;
+    expect(update.attributes["intAddr"]).to.be.undefined;
+    expect(update.attributes["serviceType"]).to.be.null;
+    expect(update.attributes["pDo"]).to.be.undefined;
+    expect(update.attributes["pDA"]).to.be.undefined;
+    expect(update.attributes["pServT"]).to.be.undefined;
+  });
+
   it("makes sure to remove subscription LGOS supervision as well", () => {
     const extRefs = findElements(
       withSubscriptionSupervision,

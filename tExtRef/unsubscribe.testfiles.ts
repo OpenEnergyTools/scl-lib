@@ -39,7 +39,7 @@ export const multipleExtRefs = `
 </SCL>`;
 
 export const laterBindingExtRefs = `
-<SCL schema="1.7">
+<SCL version="2007">
 <IED name="sinkIED1">
     <AccessPoint name="someOtherAP">
         <Server>
@@ -54,7 +54,13 @@ export const laterBindingExtRefs = `
                             lnClass="LLN0" 
                             doName="Op" 
                             daName="q" 
-                            intAddr="someIntAddr" />
+                            intAddr="someIntAddr" 
+                            serviceType="GOOSE"
+                            srcCBName="someCB"
+                            srcLDInst="someSrcLDInst"
+                            srcPrefix="someSrcPrefix"
+                            srcLNClass="someLNClass"
+                            srcLNInst="someLNInst" />
                         <ExtRef 
                             iedName="srcIED" 
                             prefix="" 
@@ -63,7 +69,16 @@ export const laterBindingExtRefs = `
                             lnClass="LLN0" 
                             doName="Op" 
                             daName="general" 
-                            intAddr="someIntAddr" />
+                            intAddr="someOtherIntAddr"
+                            serviceType="GOOSE"
+                            srcCBName="someCB"
+                            srcLDInst="someSrcLDInst"
+                            srcPrefix="someSrcPrefix"
+                            srcLNClass="someLNClass"
+                            srcLNInst="someLNInst"
+                            pDO="Op"
+                            pDA="general"
+                            pServT="GOOSE" />
                         <ExtRef 
                             iedName="srcIED" 
                             prefix="" 
