@@ -53,7 +53,8 @@ export const laterBindingExtRefs = `
                             ldInst="someLDInst" 
                             lnClass="LLN0" 
                             doName="Op" 
-                            daName="q" />
+                            daName="q" 
+                            intAddr="someIntAddr" />
                         <ExtRef 
                             iedName="srcIED" 
                             prefix="" 
@@ -70,7 +71,8 @@ export const laterBindingExtRefs = `
                             ldInst="someLDInst" 
                             lnClass="LLN0" 
                             doName="Str" 
-                            daName="q" />
+                            daName="q" 
+                            intAddr="someIntAddr" />
                     </Inputs>
                 </LN0>
             </LDevice>

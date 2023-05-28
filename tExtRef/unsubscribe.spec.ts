@@ -47,12 +47,12 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     const actions = unsubscribe(extRefs);
 
     expect(actions.length).to.equal(3);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isRemove);
-    expect((actions[1] as Remove).node).to.equal(extRefs[2]);
+    expect(actions[0]).to.satisfies(isUpdate);
+    expect((actions[0] as Update).element).to.equal(extRefs[0]);
+    expect(actions[1]).to.satisfies(isUpdate);
+    expect((actions[1] as Update).element).to.equal(extRefs[1]);
     expect(actions[2]).to.satisfies(isUpdate);
-    expect((actions[2] as Update).element).to.equal(extRefs[1]);
+    expect((actions[2] as Update).element).to.equal(extRefs[2]);
   });
 
   it("makes sure to remove subscription LGOS supervision as well", () => {
