@@ -140,12 +140,19 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someSmv"]'
     );
+    const doi = extRefs[0].ownerDocument.querySelector(
+      'LN[lnClass="LSVS"][inst="1"] > DOI'
+    );
     const actions = unsubscribe(extRefs);
 
-    expect(actions.length).to.equal(3);
+    expect(actions.length).to.equal(4);
     expect(actions[0]).to.satisfies(isRemove);
     expect((actions[0] as Remove).node).to.equal(extRefs[0]);
     expect(actions[1]).to.satisfies(isRemove);
     expect((actions[1] as Remove).node).to.equal(extRefs[1]);
+    expect(actions[2]).to.satisfies(isRemove);
+    expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
+    expect(actions[3]).to.satisfies(isRemove);
+    expect((actions[3] as Remove).node).to.equal(doi);
   });
 });

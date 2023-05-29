@@ -43,6 +43,14 @@ function isSrcRefEditable(ctrlBlock: Element, subscriberIed: Element): boolean {
   const ln = supervisionElement?.closest("LN") ?? null;
   if (!ln) return false;
 
+  if (
+    supervisionElement?.querySelector(
+      ':scope DAI[name="setSrcRef"][valImport="true"][valKind="RO"],' +
+        ' :scope DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]'
+    )
+  )
+    return true;
+
   const rootNode = ln.ownerDocument;
 
   const lnClass = ln.getAttribute("lnClass");

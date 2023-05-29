@@ -199,10 +199,10 @@ export const withSubscriptionSupervision = `
                         </DAI>
                     </DOI>
                 </LN>
-                <LN lnClass="LGOS" inst="2" lnType="someLGOSType">
+                <LN lnClass="LGOS" inst="2" lnType="someLGOSType1">
                     <Private type="OpenSCD.create" />
                     <DOI name="GoCBRef">
-                        <DAI name="setSrcRef">
+                        <DAI name="setSrcRef" valImport="true" valKind="RO" >
                             <Val>srcIEDsomeLDInst/LLN0.someGse2</Val>
                         </DAI>
                     </DOI>
@@ -289,11 +289,17 @@ export const withSubscriptionSupervision = `
     <LNodeType id="someLSVSType" lnClass="LSVS">
         <DO name="SvCBRef" type="someSmvORG"/>
     </LNodeType>
+    <LNodeType id="someLSVSType1" lnClass="LSVS">
+        <DO name="SvCBRef" type="someSmvORG1"/>
+    </LNodeType>
     <DOType cdc="ORG" id="someGseORG">
         <DA name="setSrcRef" valImport="true" valKind="RO" />
     </DOType>
+    <DOType cdc="ORG" id="someGseORG1">
+        <DA name="setSrcRef" valImport="true" valKind="RO" />
+    </DOType>
     <DOType cdc="ORG" id="someSmvORG">
-        <DA name="setSrcRef" />
+        <DA name="setSrcRef" valImport="true" valKind="RO" />
     </DOType>
 </DataTypeTemplates>
 </SCL>`;
