@@ -85,7 +85,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect(update.attributes["pServT"]).to.be.undefined;
   });
 
-  it("makes sure to remove subscription LGOS supervision as well", () => {
+  it("per default remove subscription LGOS supervision as well", () => {
     const extRefs = findElements(
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]'
@@ -109,6 +109,22 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect((actions[3] as Remove).node).to.equal(doi);
     expect(actions[4]).to.satisfies(isRemove);
     expect((actions[4] as Remove).node).to.equal(ln);
+  });
+
+  it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
+    const extRefs = findElements(
+      withSubscriptionSupervision,
+      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]'
+    );
+    const actions = unsubscribe(extRefs, { ignoreSupervision: true });
+
+    expect(actions.length).to.equal(3);
+    expect(actions[0]).to.satisfies(isRemove);
+    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
+    expect(actions[1]).to.satisfies(isRemove);
+    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
+    expect(actions[2]).to.satisfies(isUpdate);
+    expect((actions[2] as Update).element).to.equal(extRefs[2]);
   });
 
   it("does not remove subscription supervision with remaining connections", () => {
@@ -154,5 +170,21 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
     expect(actions[3]).to.satisfies(isRemove);
     expect((actions[3] as Remove).node).to.equal(doi);
+  });
+
+  it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
+    const extRefs = findElements(
+      withSubscriptionSupervision,
+      'ExtRef[srcCBName="someSmv"]'
+    );
+    const actions = unsubscribe(extRefs, { ignoreSupervision: true });
+
+    expect(actions.length).to.equal(3);
+    expect(actions[0]).to.satisfies(isRemove);
+    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
+    expect(actions[1]).to.satisfies(isRemove);
+    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
+    expect(actions[2]).to.satisfies(isRemove);
+    expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
   });
 });

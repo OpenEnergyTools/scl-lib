@@ -3,6 +3,14 @@ import { Remove, Update } from "../foundation/utils.js";
 import { removeInputs } from "../tInputs/removeInputs.js";
 import { removeSubscriptionSupervision } from "../tLN/removeSubscriptionSupervision.js";
 
+/** Optional setting to configure un-subscription */
+export type UnsubscribeOptions = {
+  /** Whether to ignore removing subscription supervision (LGOS / LSVS).
+   * CAUTION: This might be resulting in a invalid SCL file.
+   */
+  ignoreSupervision: boolean;
+};
+
 /** ServiceType is used to set limits on a later binding type
  * ExtRef in Ed2 of the standard. It therefore cannot be removed
  * all the easy. For now it only is removed in case `pServT` exists
@@ -20,7 +28,7 @@ function getServiceType(extRef: Element): null | undefined {
  * -Remove `ExtRef` in case `intAddr` is missing
  *
  * 2. Removes leaf `Input` elements as well
- * 3. Removes subscription supervision
+ * 3. Removes subscription supervision (can be disabled through options.ignoreSupervision)
  * - when all external references of one control block are unsubscribed
  * - when `valKind` RO|Conf and `valImport` true
  * ```
@@ -29,7 +37,10 @@ function getServiceType(extRef: Element): null | undefined {
  * @returns An array of update and/or remove action representing changes required
  * to unsubscribe.
  */
-export function unsubscribe(extRefs: Element[]): (Update | Remove)[] {
+export function unsubscribe(
+  extRefs: Element[],
+  options: UnsubscribeOptions = { ignoreSupervision: false }
+): (Update | Remove)[] {
   const updateActions: Update[] = [];
   const removeActions: Remove[] = [];
 
@@ -59,6 +70,8 @@ export function unsubscribe(extRefs: Element[]): (Update | Remove)[] {
   return [
     ...removeInputs(removeActions),
     ...updateActions,
-    ...removeSubscriptionSupervision(extRefs),
+    ...(options.ignoreSupervision
+      ? []
+      : removeSubscriptionSupervision(extRefs)),
   ];
 }

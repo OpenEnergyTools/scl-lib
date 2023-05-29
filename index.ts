@@ -10,4 +10,5 @@ export { macAddressGenerator } from "./generator/macAddressGenerator.js";
 export { appIdGenerator } from "./generator/appIdGenerator.js";
 export { lnInstGenerator } from "./generator/lnInstGenerator.js";
 
+export { UnsubscribeOptions } from "./tExtRef/unsubscribe.js";
 export { unsubscribe } from "./tExtRef/unsubscribe.js";
