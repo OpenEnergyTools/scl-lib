@@ -8,8 +8,12 @@
     "strict": true,
     "allowJs": true,
     "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": true,
     "outDir": "dist",
     "rootDir": "./",
   },
-  "include": ["**/*.ts"]
+  "files": [
+    "./index.ts",
+  ],
 }
