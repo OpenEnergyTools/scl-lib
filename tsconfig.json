@@ -10,6 +10,8 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "rootDir": "./",
+    "sourceMap": true,
+    "declaration": true,
   },
   "include": ["**/*.ts"]
 }

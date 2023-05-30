@@ -21,7 +21,7 @@
     "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch --coverage\" ",
     "doc": "npx rimraf doc && typedoc --out doc index.ts",
     "deploy": "npm run doc && gh-pages --dist 'doc'",
-    "build": "npx rimraf dist && tsc index.ts --declaration --sourceMap --outDir dist && typedoc --out dist/doc index.ts"
+    "build": "npx rimraf dist && tsc && typedoc --out dist/doc index.ts"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
