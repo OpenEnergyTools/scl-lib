@@ -13,3 +13,5 @@ export { lnInstGenerator } from "./generator/lnInstGenerator.js";
 export { UnsubscribeOptions } from "./tExtRef/unsubscribe.js";
 export { unsubscribe } from "./tExtRef/unsubscribe.js";
 export { extRefTypeRestrictions } from "./tExtRef/extRefTypeRestrictions.js";
+
+export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";
