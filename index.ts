@@ -15,3 +15,5 @@ export { unsubscribe } from "./tExtRef/unsubscribe.js";
 export { extRefTypeRestrictions } from "./tExtRef/extRefTypeRestrictions.js";
 
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";
+
+export { getReference } from "./general/getReference.js";
