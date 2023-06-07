@@ -18,6 +18,10 @@ const pDOInValid = `<ExtRef
         intAddr="someIntAddr" 
         pDO="someStrangepDO" />`;
 
+const pDOInValid1 = `<ExtRef 
+        intAddr="someIntAddr" 
+        pDO="someStrangepDO" pDA="stVal" />`;
+
 const pDOandpDAValid1 = `<ExtRef 
         intAddr="someIntAddr" 
         pDO="AmpSv"
@@ -37,6 +41,10 @@ describe("A function to determine the CDC and bType though pXXX attributes", () 
   it("return undefined with missing pDO", () =>
     expect(extRefTypeRestrictions(findElement(unrestrictedExtRef, "ExtRef")!))
       .to.be.undefined);
+
+  it("return undefined with invalid pDO", () =>
+    expect(extRefTypeRestrictions(findElement(pDOInValid1, "ExtRef")!)).to.be
+      .undefined);
 
   describe("with pDO only given ExtRefs", () => {
     it("return correct CDC with a valid pDO", () =>
