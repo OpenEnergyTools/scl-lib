@@ -23,8 +23,9 @@ export function extRefTypeRestrictions(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dataObject = (dataObjects as any)[pDO];
+
   const cdc = dataObject?.cdc ?? null;
-  if (!pDA && !cdc) return;
+  if (!cdc) return;
   if (!pDA && cdc) return { cdc };
 
   const dataAttribute = dataObject.children[pDA!];
