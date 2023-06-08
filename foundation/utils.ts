@@ -27,6 +27,9 @@ export function isRemove(edit: Edit): edit is Remove {
     (edit as Insert).parent === undefined && (edit as Remove).node !== undefined
   );
 }
+export function isInsert(edit: Edit): edit is Insert {
+  return (edit as Insert).parent !== undefined;
+}
 
 /** Utility function to create element with `tagName` and its`attributes` */
 export function createElement(

@@ -1,0 +1,264 @@
+import { Insert, Update, createElement } from "../foundation/utils.js";
+import { getReference } from "../general/getReference.js";
+
+import { doesFcdaMeetExtRefRestrictions } from "./doesFcdaMeetExtRefRestrictions.js";
+
+const serviceTypes: Partial<Record<string, "Report" | "GOOSE" | "SMV">> = {
+  ReportControl: "Report",
+  GSEControl: "GOOSE",
+  SampledValueControl: "SMV",
+};
+
+export type SubscribeOptions = {
+  /** Disables checks before subscription. !!Use with care */
+  force: boolean;
+};
+
+export type Connection = {
+  /** Can be `LN0`, `LN`, `Inputs` or `ExtRef` */
+  sink: Element;
+  source: {
+    /** `FCDA` element with or without `daName` */
+    fcda: Element;
+    /** `ReportControl`, `GSEControl`, `SampledValueControl` */
+    controlBlock?: Element;
+  };
+};
+
+function srcAttributes(controlBlock?: Element): {
+  srcLDInst: string | null;
+  srcPrefix: string | null;
+  srcLNClass: string | null;
+  srcLNInst: string | null;
+  srcCBName: string | null;
+  serviceType: "Report" | "GOOSE" | "SMV" | null;
+} | null {
+  const srcLDInst =
+    controlBlock?.closest("LDevice")?.getAttribute("inst") || null;
+  const srcPrefix =
+    controlBlock?.closest("LN0,LN")?.getAttribute("prefix") || "";
+  const srcLNClass =
+    controlBlock?.closest("LN0,LN")?.getAttribute("lnClass") || null;
+  const srcLNInst =
+    controlBlock?.closest("LN0,LN")?.getAttribute("inst") || null;
+  const srcCBName = controlBlock?.getAttribute("name") || null;
+
+  if (
+    !controlBlock ||
+    !serviceTypes[controlBlock.tagName] ||
+    !srcLDInst ||
+    !srcLNClass ||
+    !srcCBName
+  )
+    return {
+      srcLDInst: null,
+      srcPrefix: null,
+      srcLNClass: null,
+      srcLNInst: null,
+      srcCBName: null,
+      serviceType: null,
+    };
+
+  return {
+    srcLDInst,
+    srcPrefix,
+    srcLNClass,
+    srcLNInst,
+    srcCBName,
+    serviceType: serviceTypes[controlBlock.tagName]!,
+  };
+}
+
+function getDataAttributes(fcda: Element): {
+  iedName: string;
+  ldInst: string;
+  prefix: string | null;
+  lnClass: string;
+  lnInst: string | null;
+  doName: string;
+  daName: string | null;
+  fc: string;
+} | null {
+  const sourceIed = fcda.closest("IED");
+  const iedName = sourceIed?.getAttribute("name");
+  const [ldInst, prefix, lnClass, lnInst, doName, daName, fc] = [
+    "ldInst",
+    "prefix",
+    "lnClass",
+    "lnInst",
+    "doName",
+    "daName",
+    "fc",
+  ].map((attr) => fcda.getAttribute(attr));
+
+  if (!sourceIed || !iedName || !ldInst || !lnClass || !doName || !fc)
+    return null;
+
+  return {
+    iedName,
+    ldInst,
+    prefix,
+    lnClass,
+    lnInst,
+    doName,
+    daName,
+    fc,
+  };
+}
+
+function createSubscribeAction(
+  connection: Connection,
+  parent: Element
+): Update | Insert | null {
+  const doc = connection.sink.ownerDocument;
+  const fcda = connection.source.fcda;
+  const controlBlock = connection.source.controlBlock;
+
+  const isEd1 = !doc.querySelector("SCL")?.getAttribute("version");
+
+  const ed1Attributes = getDataAttributes(fcda);
+  if (!ed1Attributes) return null;
+
+  const ed2Attributes = {
+    ...ed1Attributes,
+    ...srcAttributes(controlBlock),
+  };
+
+  if (connection.sink.tagName === "ExtRef" && isEd1)
+    return {
+      element: connection.sink,
+      attributes: ed1Attributes,
+    };
+
+  if (connection.sink.tagName === "ExtRef" && !isEd1)
+    return {
+      element: connection.sink,
+      attributes: ed2Attributes,
+    };
+
+  const reference = getReference(parent, "ExtRef");
+
+  if (connection.sink.tagName !== "ExtRef" && isEd1) {
+    const extRef = createElement(doc, "ExtRef", ed1Attributes);
+    return { parent, node: extRef, reference };
+  }
+
+  const extRef = createElement(doc, "ExtRef", ed2Attributes);
+  return { parent, node: extRef, reference };
+}
+
+function createSubscribeActions(
+  connections: Connection[]
+): (Insert | Update)[] {
+  const inputActions: Insert[] = [];
+
+  const extRefActions = connections
+    .map((option) => {
+      const parent = option.sink;
+
+      // no Inputs child yet in anyLN element
+      if (
+        (parent.tagName === "LN" || parent.tagName === "LN0") &&
+        !inputActions.some((insert) => insert.parent === parent)
+      ) {
+        const inputs = createElement(parent.ownerDocument, "Inputs", {});
+        const action = createSubscribeAction(option!, inputs);
+        if (action)
+          inputActions.push({
+            parent,
+            node: inputs,
+            reference: getReference(parent, "Inputs"),
+          });
+
+        return action;
+      }
+
+      // there is an Input already in anyLn
+      if (
+        (parent.tagName === "LN" || parent.tagName === "LN0") &&
+        inputActions.some((insert) => insert.parent === parent)
+      ) {
+        const inputs = inputActions.find((insert) => insert.parent === parent)!
+          .node as Element;
+        return createSubscribeAction(option!, inputs);
+      }
+
+      return createSubscribeAction(option!, parent);
+    })
+    .filter((action) => action) as (Insert | Update)[];
+
+  return [...inputActions, ...extRefActions];
+}
+
+function invalidSink(sink: Element): boolean {
+  if (sink.tagName === "ExtRef")
+    return !sink.getAttribute("intAddr") || !!sink.getAttribute("iedName");
+
+  return !(
+    sink.tagName === "LN" ||
+    sink.tagName === "LN0" ||
+    sink.tagName === "Inputs"
+  );
+}
+
+function validSubscribeConditions(connection: Connection): boolean {
+  if (invalidSink(connection.sink)) return false;
+
+  //TODO: check connection via Communication section
+
+  const fcda = connection.source.fcda;
+  const controlBlock = connection.source.controlBlock;
+  const serviceType = controlBlock
+    ? serviceTypes[controlBlock.tagName]
+    : undefined;
+  if (
+    connection.sink.tagName === "ExtRef" &&
+    !doesFcdaMeetExtRefRestrictions(connection.sink, fcda, serviceType)
+  )
+    return false;
+
+  return true;
+}
+
+/**
+ * A function to subscribe [[`source`]](s) to [[`sink`]](s).
+ * > Be aware that this function is producing a diff to the actual SCL.
+ * > It is therefore crucial to make sure that at the point of calling
+ * > this function the SCL is up to date.
+ * @example
+ * ```ts
+ * // do not do this
+ * const diff1 = subscribe(conn1);
+ * const diff2 = subscribe(conn2);
+ * .dispatch(editEvent([diff1, diff2]));
+ *
+ * // better do this
+ * const diff = subscribe([conn1, conn2]);
+ * .dispatch(editEvent(diff))
+ * ```
+ * @param sink - Can be `LN0`, `LN` and `Inputs`
+ * for non-later-binding type of subscription and `ExtRef` with `intAddr`
+ * for later binding type subscription.
+ * @param source.fcda - `FCDA` element
+ * @param source.controlBlock - The control block carrying the [[`source.fcda`]]
+ * @returns An array of actions to do a valid subscription
+ */
+export function subscribe(
+  connectionOrConnections: Connection | Connection[],
+  options: SubscribeOptions = { force: false }
+): (Insert | Update)[] {
+  const connections = Array.isArray(connectionOrConnections)
+    ? connectionOrConnections
+    : [connectionOrConnections];
+
+  const validConnections = options.force
+    ? connections
+    : (connections.filter(validSubscribeConditions) as Connection[]);
+
+  const extRefActions = createSubscribeActions(validConnections);
+
+  return [
+    ...extRefActions,
+    //TODO: ...insertSubscriptionSupervisions(extRefActions),
+  ];
+}
