@@ -11,14 +11,6 @@ export type UnsubscribeOptions = {
   ignoreSupervision: boolean;
 };
 
-/** ServiceType is used to set limits on a later binding type
- * ExtRef in Ed2 of the standard. It therefore cannot be removed
- * all the easy. For now it only is removed in case `pServT` exists
- */
-function getServiceType(extRef: Element): null | undefined {
-  return extRef.getAttribute("pServT") ? null : undefined;
-}
-
 /**
  * Remove link between sending IED data to receiving IED external
  * references - unsubscribing.
@@ -61,7 +53,7 @@ export function unsubscribe(
           srcLNClass: null,
           srcLNInst: null,
           srcCBName: null,
-          serviceType: getServiceType(extRef),
+          ...(extRef.getAttribute("pServT") && { serviceType: null }),
         },
       });
     else removeActions.push({ node: extRef });

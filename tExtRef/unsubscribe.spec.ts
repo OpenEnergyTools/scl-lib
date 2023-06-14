@@ -55,7 +55,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect((actions[2] as Update).element).to.equal(extRefs[2]);
   });
 
-  it("do not remove ICT defined Ed2 attributes", () => {
+  it("does not remove ICT defined Ed2 attributes", () => {
     const extRef = findElement(laterBindingExtRefs, "ExtRef")!;
     const actions = unsubscribe([extRef]);
 
@@ -64,10 +64,10 @@ describe("Function allowing to unsubscribe multiple external references", () => 
 
     const update = actions[0] as Update;
     expect(update.attributes["intAddr"]).to.be.undefined;
-    expect(update.attributes["serviceType"]).to.be.undefined;
+    expect(update.attributes).to.not.have.own.property("serviceType");
   });
 
-  it("do not remove ICT defined Ed2.1 attributes", () => {
+  it("does not remove ICT defined Ed2.1 attributes", () => {
     const extRef = findElement(
       laterBindingExtRefs,
       'ExtRef[intAddr="someOtherIntAddr"]'
@@ -79,6 +79,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
 
     const update = actions[0] as Update;
     expect(update.attributes["intAddr"]).to.be.undefined;
+    // remove service type if pServT defined
     expect(update.attributes["serviceType"]).to.be.null;
     expect(update.attributes["pDo"]).to.be.undefined;
     expect(update.attributes["pDA"]).to.be.undefined;
@@ -186,5 +187,31 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect((actions[1] as Remove).node).to.equal(extRefs[1]);
     expect(actions[2]).to.satisfies(isRemove);
     expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
+  });
+
+  it("with pServT present, serviceType is removed", () => {
+    const extRefs = findElements(
+      laterBindingExtRefs,
+      'ExtRef[intAddr="someOtherIntAddr"]'
+    );
+    const actions = unsubscribe(extRefs, { ignoreSupervision: true });
+
+    expect(actions.length).to.equal(1);
+    expect((actions[0] as Update).element).to.equal(extRefs[0]);
+    expect((actions[0] as Update).attributes.serviceType).to.be.null;
+  });
+
+  it("without pServT, serviceType is not removed", () => {
+    const extRefs = findElements(
+      laterBindingExtRefs,
+      'ExtRef[intAddr="someIntAddr"]'
+    )[0];
+    const actions = unsubscribe([extRefs], { ignoreSupervision: true });
+
+    expect(actions.length).to.equal(1);
+    expect((actions[0] as Update).element).to.equal(extRefs);
+    expect((actions[0] as Update).attributes).to.not.have.own.property(
+      "serviceType"
+    );
   });
 });
