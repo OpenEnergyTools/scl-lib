@@ -1,4 +1,4 @@
-import dataObjects from "../foundation/nsd.json";
+import dataObjects from "../foundation/nsd.js";
 
 /**
  * This function returns the common data class `CDC` of the
