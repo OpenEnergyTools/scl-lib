@@ -1,4 +1,6 @@
-import dataObjects from "../foundation/nsd.json";
+const dataObjects = await fetch(
+  new URL("../foundation/nsd.json", import.meta.url)
+).then((res) => res.json());
 
 /**
  * This function returns the common data class `CDC` of the

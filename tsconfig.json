@@ -17,5 +17,6 @@
   },
   "files": [
     "./index.ts",
+    "./foundation/nsd.json"
   ],
 }
