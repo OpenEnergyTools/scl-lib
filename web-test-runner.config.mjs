@@ -5,7 +5,7 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   /** Test files to run */
   files: '**/*.spec.ts',
 
-  plugins: [esbuildPlugin({ ts: true, json: true })],
+  plugins: [esbuildPlugin({ ts: true })],
 
   /** Resolve bare module imports */
   nodeResolve: {
