@@ -86,7 +86,6 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         lnInst: "1",
         doName: "Pos",
         daName: "q",
-        fc: "ST",
       });
     });
 
@@ -116,7 +115,6 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       expect(extRef.getAttribute("lnInst")).to.equal("1");
       expect(extRef.getAttribute("doName")).to.equal("Pos");
       expect(extRef.getAttribute("daName")).to.equal("q");
-      expect(extRef.getAttribute("fc")).to.equal("ST");
       expect(extRef.hasAttribute("serviceType")).to.be.false;
       expect(extRef.hasAttribute("srcLDInst")).to.be.false;
       expect(extRef.hasAttribute("srcPrefix")).to.be.false;
@@ -226,7 +224,6 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
           lnInst: "1",
           doName: "Pos",
           daName: "stVal",
-          fc: "ST",
           srcLDInst: "QB2_Disconnector",
           srcPrefix: "",
           srcLNClass: "LLN0",
@@ -255,7 +252,6 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
           lnInst: "1",
           doName: "Pos",
           daName: "stVal",
-          fc: "ST",
           srcLDInst: null,
           srcPrefix: null,
           srcLNClass: null,
@@ -293,7 +289,6 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         expect(extRef.getAttribute("lnInst")).to.equal("1");
         expect(extRef.getAttribute("doName")).to.equal("Pos");
         expect(extRef.getAttribute("daName")).to.equal("q");
-        expect(extRef.getAttribute("fc")).to.equal("ST");
         expect(extRef.getAttribute("srcLDInst")).to.equal("QB2_Disconnector");
         expect(extRef.getAttribute("srcPrefix")).to.be.equal("");
         expect(extRef.getAttribute("srcLNClass")).to.equal("LLN0");
@@ -391,7 +386,6 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
           lnInst: "1",
           doName: "AmpSv",
           daName: "instMag.i",
-          fc: "MX",
           srcLDInst: "SampledValue",
           srcPrefix: "",
           srcLNClass: "LLN0",
