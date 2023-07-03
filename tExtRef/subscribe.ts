@@ -77,7 +77,6 @@ function getDataAttributes(fcda: Element): {
   lnInst: string | null;
   doName: string;
   daName: string | null;
-  fc: string;
 } | null {
   const sourceIed = fcda.closest("IED");
   const iedName = sourceIed?.getAttribute("name");
@@ -102,7 +101,6 @@ function getDataAttributes(fcda: Element): {
     lnInst,
     doName,
     daName,
-    fc,
   };
 }
 
