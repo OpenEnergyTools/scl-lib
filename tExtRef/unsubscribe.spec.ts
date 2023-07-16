@@ -5,7 +5,14 @@ import {
   withSubscriptionSupervision,
 } from "./unsubscribe.testfiles.js";
 
-import { Remove, Update, isRemove, isUpdate } from "../foundation/utils.js";
+import {
+  Insert,
+  Remove,
+  Update,
+  isInsert,
+  isRemove,
+  isUpdate,
+} from "../foundation/utils.js";
 import { unsubscribe } from "./unsubscribe.js";
 import { findElement } from "../foundation/helpers.test.js";
 
@@ -99,17 +106,25 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       'LN[lnClass="LGOS"][inst="2"]'
     );
 
-    expect(actions.length).to.equal(5);
+    expect(actions.length).to.equal(7);
     expect(actions[0]).to.satisfies(isRemove);
     expect((actions[0] as Remove).node).to.equal(extRefs[0]);
     expect(actions[1]).to.satisfies(isRemove);
     expect((actions[1] as Remove).node).to.equal(extRefs[1]);
     expect(actions[2]).to.satisfies(isUpdate);
     expect((actions[2] as Update).element).to.equal(extRefs[2]);
-    expect(actions[3]).to.satisfies(isRemove);
-    expect((actions[3] as Remove).node).to.equal(doi);
-    expect(actions[4]).to.satisfies(isRemove);
-    expect((actions[4] as Remove).node).to.equal(ln);
+
+    expect(isRemove(actions[3])).to.be.true;
+    expect((<Remove>actions[3]).node.nodeName).to.be.equal("Val");
+    expect((<Remove>actions[3]).node.textContent).to.be.equal(
+      "srcIEDsomeLDInst/LLN0.someGse"
+    );
+
+    expect(isInsert(actions[4])).to.be.true;
+    expect((<Insert>actions[4]).node.nodeName).to.be.equal("Val");
+    expect((<Insert>actions[4]).node.textContent).to.be.equal("");
+    expect((<Insert>actions[4]).parent.nodeName).to.be.equal("DAI");
+    expect((<Insert>actions[4]).reference).to.be.null;
   });
 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
@@ -162,15 +177,26 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     );
     const actions = unsubscribe(extRefs);
 
-    expect(actions.length).to.equal(4);
+    expect(actions.length).to.equal(5);
+
     expect(actions[0]).to.satisfies(isRemove);
     expect((actions[0] as Remove).node).to.equal(extRefs[0]);
     expect(actions[1]).to.satisfies(isRemove);
     expect((actions[1] as Remove).node).to.equal(extRefs[1]);
     expect(actions[2]).to.satisfies(isRemove);
     expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
-    expect(actions[3]).to.satisfies(isRemove);
-    expect((actions[3] as Remove).node).to.equal(doi);
+
+    expect(isRemove(actions[3])).to.be.true;
+    expect((<Remove>actions[3]).node.nodeName).to.be.equal("Val");
+    expect((<Remove>actions[3]).node.textContent).to.be.equal(
+      "srcIEDsomeLDInst/LLN0.someSmv"
+    );
+
+    expect(isInsert(actions[4])).to.be.true;
+    expect((<Insert>actions[4]).node.nodeName).to.be.equal("Val");
+    expect((<Insert>actions[4]).node.textContent).to.be.equal("");
+    expect((<Insert>actions[4]).parent.nodeName).to.be.equal("DAI");
+    expect((<Insert>actions[4]).reference).to.be.null;
   });
 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {

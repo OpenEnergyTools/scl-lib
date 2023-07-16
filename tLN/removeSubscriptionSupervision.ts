@@ -1,121 +1,42 @@
-import { Remove } from "../foundation/utils.js";
+import { Insert, Remove } from "../foundation/utils.js";
 
 import { controlBlockObjRef } from "../tControl/controlBlockObjRef.js";
 import { sourceControlBlock } from "../tControl/sourceControlBlock.js";
 
-type GroupedExtRefs = {
+import { cannotRemoveSupervision } from "./canRemoveSubscriptionSupervision.js";
+
+export type GroupedExtRefs = {
   extRefs: Element[];
   ctrlBlock: Element;
   subscriberIed: Element;
 };
 
 /** @returns Element to remove the subscription supervision */
-function removableSupervisionElement(
+export function removableSupervisionElement(
   ctrlBlock: Element,
-  subscriberIed: Element
+  subscriberIed: Element,
+  removeLN?: boolean
 ): Element | null {
   const supervisionType = ctrlBlock.tagName === "GSEControl" ? "LGOS" : "LSVS";
+  const doiRef = ctrlBlock.tagName === "GSEControl" ? "GoCBRef" : "SvCBRef";
 
-  const valElement = Array.from(
+  const supervisionInstances = Array.from(
     subscriberIed.querySelectorAll(
-      `LN[lnClass="${supervisionType}"] > DOI > DAI > Val`
+      `LN[lnClass="${supervisionType}"] > DOI[name="${doiRef}"] > DAI[name="setSrcRef"] > Val`
     )
-  ).find((val) => val.textContent === controlBlockObjRef(ctrlBlock));
+  );
+  const valElement = supervisionInstances.find(
+    (val) => val.textContent === controlBlockObjRef(ctrlBlock)
+  );
   if (!valElement) return null;
 
   const ln = valElement.closest("LN")!;
-  const doi = valElement.closest("DOI")!;
+  const firstSupLn = supervisionInstances[0]?.closest("LN");
 
-  // do not remove logical nodes `LGOS`, `LSVS` unless privately tagged
-  const canRemoveLn = ln.querySelector(
-    ':scope > Private[type="OpenSCD.create"]'
-  );
-
-  return canRemoveLn ? ln : doi;
+  return removeLN && ln !== firstSupLn ? ln : valElement;
 }
 
-/** @returns Whether `DA` with name `setSrcRef`  can edited by SCL editor */
-function isSrcRefEditable(ctrlBlock: Element, subscriberIed: Element): boolean {
-  const supervisionElement = removableSupervisionElement(
-    ctrlBlock,
-    subscriberIed
-  );
-  const ln = supervisionElement?.closest("LN") ?? null;
-  if (!ln) return false;
-
-  if (
-    supervisionElement?.querySelector(
-      ':scope DAI[name="setSrcRef"][valImport="true"][valKind="RO"],' +
-        ' :scope DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]'
-    )
-  )
-    return true;
-
-  const rootNode = ln.ownerDocument;
-
-  const lnClass = ln.getAttribute("lnClass");
-  const cbRefType = lnClass === "LGOS" ? "GoCBRef" : "SvCBRef";
-  const lnType = ln.getAttribute("lnType");
-
-  const goOrSvCBRef = rootNode.querySelector(
-    `DataTypeTemplates > 
-        LNodeType[id="${lnType}"][lnClass="${lnClass}"] > DO[name="${cbRefType}"]`
-  );
-
-  const cbRefId = goOrSvCBRef?.getAttribute("type");
-  const setSrcRef = rootNode.querySelector(
-    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`
-  );
-
-  return (
-    (setSrcRef?.getAttribute("valKind") === "Conf" ||
-      setSrcRef?.getAttribute("valKind") === "RO") &&
-    setSrcRef.getAttribute("valImport") === "true"
-  );
-}
-
-/** @returns Whether other subscribed ExtRef of the same control block exist */
-function isControlBlockSubscribed(extRefs: Element[]): boolean {
-  const [
-    srcCBName,
-    srcLDInst,
-    srcLNClass,
-    iedName,
-    srcPrefix,
-    srcLNInst,
-    serviceType,
-  ] = [
-    "srcCBName",
-    "srcLDInst",
-    "srcLNClass",
-    "iedName",
-    "srcPrefix",
-    "srcLNInst",
-    "serviceType",
-  ].map((attr) => extRefs[0].getAttribute(attr));
-
-  const parentIed = extRefs[0].closest("IED");
-  return Array.from(parentIed!.getElementsByTagName("ExtRef")).some(
-    (otherExtRef) =>
-      !extRefs.includes(otherExtRef) &&
-      (otherExtRef.getAttribute("srcPrefix") ?? "") === (srcPrefix ?? "") &&
-      (otherExtRef.getAttribute("srcLNInst") ?? "") === (srcLNInst ?? "") &&
-      otherExtRef.getAttribute("srcCBName") === srcCBName &&
-      otherExtRef.getAttribute("srcLDInst") === srcLDInst &&
-      otherExtRef.getAttribute("srcLNClass") === srcLNClass &&
-      otherExtRef.getAttribute("iedName") === iedName &&
-      otherExtRef.getAttribute("serviceType") === serviceType
-  );
-}
-
-function cannotRemoveSupervision(extRefGroup: GroupedExtRefs): boolean {
-  return (
-    isControlBlockSubscribed(extRefGroup.extRefs) ||
-    !isSrcRefEditable(extRefGroup.ctrlBlock, extRefGroup.subscriberIed)
-  );
-}
-
-function groupPerControlBlock(
+export function groupPerControlBlock(
   extRefs: Element[]
 ): Record<string, GroupedExtRefs> {
   const groupedExtRefs: Record<string, GroupedExtRefs> = {};
@@ -142,8 +63,19 @@ function groupPerControlBlock(
  * @param extRefs - An array of external reference elements
  * @returns Actions to remove subscription supervision `LGOS` or `LSVS`
  */
-export function removeSubscriptionSupervision(extRefs: Element[]): Remove[] {
-  if (extRefs.length === 0) return [];
+export function removeSubscriptionSupervision(
+  extRefOrExtRefs: Element | Element[],
+  options?: { removeLN: boolean }
+): (Remove | Insert)[] {
+  if (
+    !extRefOrExtRefs ||
+    (Array.isArray(extRefOrExtRefs) && extRefOrExtRefs.length === 0)
+  )
+    return [];
+
+  const extRefs = Array.isArray(extRefOrExtRefs)
+    ? extRefOrExtRefs
+    : [extRefOrExtRefs];
 
   const groupedExtRefs = groupPerControlBlock(extRefs);
 
@@ -151,12 +83,28 @@ export function removeSubscriptionSupervision(extRefs: Element[]): Remove[] {
     Object.values(groupedExtRefs)
       .map((extRefGroup) => {
         if (cannotRemoveSupervision(extRefGroup)) return null;
-
         return removableSupervisionElement(
           extRefGroup.ctrlBlock,
-          extRefGroup.subscriberIed
+          extRefGroup.subscriberIed,
+          options?.removeLN ?? false
         )!;
       })
       .filter((element) => element) as Element[]
-  ).map((node) => ({ node }));
+  ).flatMap((node) => {
+    if (node.tagName === "Val") {
+      // copy existing node and set textContent to empty
+      const newValElement = <Element>node.cloneNode(true);
+      newValElement.textContent = "";
+      return [
+        { node },
+        {
+          parent: node.parentElement!,
+          reference: null,
+          node: newValElement,
+        },
+      ];
+    } else {
+      return { node };
+    }
+  });
 }

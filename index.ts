@@ -1,3 +1,5 @@
+import { canRemoveSubscriptionSupervision } from "./tLN/canRemoveSubscriptionSupervision.js";
+
 export { Update } from "./foundation/utils.js";
 export { Insert } from "./foundation/utils.js";
 export { Remove } from "./foundation/utils.js";
@@ -17,6 +19,9 @@ export { SubscribeOptions } from "./tExtRef/subscribe.js";
 export { subscribe } from "./tExtRef/subscribe.js";
 export { extRefTypeRestrictions } from "./tExtRef/extRefTypeRestrictions.js";
 export { doesFcdaMeetExtRefRestrictions } from "./tExtRef/doesFcdaMeetExtRefRestrictions.js";
+
+export { removeSubscriptionSupervision } from "./tLN/removeSubscriptionSupervision.js";
+export { canRemoveSubscriptionSupervision } from "./tLN/canRemoveSubscriptionSupervision.js";
 
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";
 

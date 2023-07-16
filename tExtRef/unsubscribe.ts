@@ -1,4 +1,4 @@
-import { Remove, Update } from "../foundation/utils.js";
+import { Insert, Remove, Update } from "../foundation/utils.js";
 
 import { removeInputs } from "../tInputs/removeInputs.js";
 import { removeSubscriptionSupervision } from "../tLN/removeSubscriptionSupervision.js";
@@ -32,7 +32,7 @@ export type UnsubscribeOptions = {
 export function unsubscribe(
   extRefs: Element[],
   options: UnsubscribeOptions = { ignoreSupervision: false }
-): (Update | Remove)[] {
+): (Update | Remove | Insert)[] {
   const updateActions: Update[] = [];
   const removeActions: Remove[] = [];
 
