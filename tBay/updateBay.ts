@@ -2,7 +2,12 @@ import { Update } from "../foundation/utils.js";
 
 function updateConnectivityNodes(
   element: Element,
-  names: { substation: string; voltageLevel; oldBay: string; newBay: string }
+  names: {
+    substation: string;
+    voltageLevel: string;
+    oldBay: string;
+    newBay: string;
+  }
 ): Update[] {
   const cNodes = Array.from(element.getElementsByTagName("ConnectivityNode"));
 
@@ -19,7 +24,12 @@ function updateConnectivityNodes(
 
 function updateTerminals(
   element: Element,
-  names: { substation: string; voltageLevel; oldBay: string; newBay: string }
+  names: {
+    substation: string;
+    voltageLevel: string;
+    oldBay: string;
+    newBay: string;
+  }
 ): Update[] {
   const terminals = Array.from(
     element
