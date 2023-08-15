@@ -4,6 +4,8 @@ export { Remove } from "./foundation/utils.js";
 
 export { updateBay } from "./tBay/updateBay.js";
 
+export { updateVoltageLevel } from "./tVoltageLevel/updateVoltageLevel.js";
+
 export { CreateReportControlOptions } from "./tReportControl/createReportControl.js";
 export { updateReportControl } from "./tReportControl/updateReportControl.js";
 export { createReportControl } from "./tReportControl/createReportControl.js";
