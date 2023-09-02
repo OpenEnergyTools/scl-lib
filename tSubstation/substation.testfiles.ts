@@ -30,7 +30,7 @@ export const substation = `<SCL
     </PowerTransformer>
     <VoltageLevel name="J1">
       <Bay name="BB1">
-        <ConnectivityNode name="L1" path="AA1/J1/BB1/L1" />
+        <ConnectivityNode name="L1" pathName="AA1/J1/BB1/L1" />
       </Bay>
       <Bay name="Q01">
         <ConductingEquipment name="QA1" type="CBR">
@@ -69,13 +69,13 @@ export const substation = `<SCL
             cNodeName="L2"
           ></Terminal>
         </ConductingEquipment>
-        <ConnectivityNode name="L1" path="AA1/J1/Q01/L1" />
-        <ConnectivityNode name="L2" path="AA1/J1/Q01/L2" />
+        <ConnectivityNode name="L1" pathName="AA1/J1/Q01/L1" />
+        <ConnectivityNode name="L2" pathName="AA1/J1/Q01/L2" />
       </Bay>
     </VoltageLevel>
     <VoltageLevel name="E1">
       <Bay name="BB1">
-        <ConnectivityNode name="L1" path="AA1/E1/BB1/L1" />
+        <ConnectivityNode name="L1" pathName="AA1/E1/BB1/L1" />
       </Bay>
       <Bay name="Q01">
         <ConductingEquipment name="QB1" type="DIS">
@@ -114,8 +114,8 @@ export const substation = `<SCL
             cNodeName="L2"
           ></Terminal>
         </ConductingEquipment>
-        <ConnectivityNode name="L1" path="AA1/E1/Q01/L1" />
-        <ConnectivityNode name="L2" path="AA1/E1/Q01/L2" />
+        <ConnectivityNode name="L1" pathName="AA1/E1/Q01/L1" />
+        <ConnectivityNode name="L2" pathName="AA1/E1/Q01/L2" />
       </Bay>
       <Bay name="Q02">
         <ConductingEquipment name="QB1" type="DIS">
@@ -154,8 +154,8 @@ export const substation = `<SCL
             cNodeName="L2"
           ></Terminal>
         </ConductingEquipment>
-        <ConnectivityNode name="L1" path="AA1/E1/Q02/L1" />
-        <ConnectivityNode name="L2" path="AA1/E1/Q02/L2" />
+        <ConnectivityNode name="L1" pathName="AA1/E1/Q02/L1" />
+        <ConnectivityNode name="L2" pathName="AA1/E1/Q02/L2" />
       </Bay>
     </VoltageLevel>
   </Substation>

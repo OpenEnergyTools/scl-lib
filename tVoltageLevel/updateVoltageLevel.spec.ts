@@ -74,7 +74,7 @@ describe("update VoltageLevel element", () => {
 
       expect(actions.length).to.equal(2);
       expect(actions[1].attributes).to.deep.equal({
-        path: "AA2/D2/Q01/L1",
+        pathName: "AA2/D2/Q01/L1",
       });
     });
 
@@ -88,23 +88,23 @@ describe("update VoltageLevel element", () => {
       expect((actions[0] as Update).element).to.equal(aa1e1);
 
       expect((actions[1] as Update).attributes).to.deep.equal({
-        path: "AA1/E2/BB1/L1",
+        pathName: "AA1/E2/BB1/L1",
       });
 
       expect((actions[2] as Update).attributes).to.deep.equal({
-        path: "AA1/E2/Q01/L1",
+        pathName: "AA1/E2/Q01/L1",
       });
 
       expect((actions[3] as Update).attributes).to.deep.equal({
-        path: "AA1/E2/Q01/L2",
+        pathName: "AA1/E2/Q01/L2",
       });
 
       expect((actions[4] as Update).attributes).to.deep.equal({
-        path: "AA1/E2/Q02/L1",
+        pathName: "AA1/E2/Q02/L1",
       });
 
       expect((actions[5] as Update).attributes).to.deep.equal({
-        path: "AA1/E2/Q02/L2",
+        pathName: "AA1/E2/Q02/L2",
       });
     });
 

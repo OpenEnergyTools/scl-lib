@@ -72,7 +72,7 @@ describe("update Bay element", () => {
 
       expect(actions.length).to.equal(2);
       expect(actions[1].attributes).to.deep.equal({
-        path: "AA2/D1/Q02/L1",
+        pathName: "AA2/D1/Q02/L1",
       });
     });
 
@@ -88,12 +88,12 @@ describe("update Bay element", () => {
 
       expect(actions[1]).to.satisfy(isUpdate);
       expect((actions[1] as Update).attributes).to.deep.equal({
-        path: "AA1/E1/Q03/L1",
+        pathName: "AA1/E1/Q03/L1",
       });
 
       expect(actions[2]).to.satisfy(isUpdate);
       expect((actions[2] as Update).attributes).to.deep.equal({
-        path: "AA1/E1/Q03/L2",
+        pathName: "AA1/E1/Q03/L2",
       });
     });
 

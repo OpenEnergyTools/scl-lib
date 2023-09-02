@@ -16,7 +16,7 @@ function updateConnectivityNodes(
     if (!cNodeName) return;
 
     const newPath = `${names.substation}/${names.voltageLevel}/${names.newBay}/${cNodeName}`;
-    return { element: cNode, attributes: { path: newPath } };
+    return { element: cNode, attributes: { pathName: newPath } };
   });
 
   return updates.filter((update) => update) as Update[];
