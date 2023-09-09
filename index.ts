@@ -6,6 +6,8 @@ export { updateBay } from "./tBay/updateBay.js";
 
 export { updateVoltageLevel } from "./tVoltageLevel/updateVoltageLevel.js";
 
+export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
+
 export { CreateReportControlOptions } from "./tReportControl/createReportControl.js";
 export { updateReportControl } from "./tReportControl/updateReportControl.js";
 export { createReportControl } from "./tReportControl/createReportControl.js";
