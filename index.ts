@@ -5,6 +5,7 @@ export { Remove } from "./foundation/utils.js";
 export { updateBay } from "./tBay/updateBay.js";
 export { updateVoltageLevel } from "./tVoltageLevel/updateVoltageLevel.js";
 export { updateSubstation } from "./tSubstation/updateSubstation.js";
+export { removeProcessElement } from "./tSubstation/removeProcessElement.js";
 
 export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
 
