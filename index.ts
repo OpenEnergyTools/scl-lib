@@ -28,3 +28,4 @@ export { doesFcdaMeetExtRefRestrictions } from "./tExtRef/doesFcdaMeetExtRefRest
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";
 
 export { getReference } from "./general/getReference.js";
+export { getChildren } from "./general/getChildren.js";
