@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { getChildren } from "./getChildren.j";
+import { getChildren } from "./getChildren.js";
 
 const nonSense = new DOMParser()
   .parseFromString('<NonSense name="e1" />', "application/xml")
