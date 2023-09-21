@@ -151,4 +151,27 @@ describe("Function to an importIED and its referenced elements", () => {
     expect(findElements(multipleIEDs, "SubNetwork").length).to.equal(4);
     expect(findElements(multipleIEDs, "ConnectedAP").length).to.equal(7);
   });
+
+  it("make sure to follow the schema definitions sequence", async () => {
+    const emptyScl = (
+      await fetch("tIED/importIED/emptyproject.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    const imports = insertIed(emptyScl, validIed);
+    handleEdit(imports);
+
+    expect(emptyScl.querySelector("DataTypeTemplates + Communication")).to.be
+      .null;
+    expect(emptyScl.querySelector("IED + Communication")).to.be.null;
+    expect(emptyScl.querySelector("LNodeType + DAType")).to.be.null;
+    expect(emptyScl.querySelector("LNodeType + EnumType")).to.be.null;
+    expect(emptyScl.querySelector("DOType + LNodeType")).to.be.null;
+    expect(emptyScl.querySelector("DAType + LNodeType")).to.be.null;
+    expect(emptyScl.querySelector("EnumType + LNodeType")).to.be.null;
+    expect(emptyScl.querySelector("DOType + EnumType")).to.be.null;
+    expect(emptyScl.querySelector("EnumType + DOType")).to.be.null;
+    expect(emptyScl.querySelector("EnumType + DAType")).to.be.null;
+  });
 });

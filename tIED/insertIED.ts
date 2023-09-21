@@ -305,18 +305,18 @@ export function insertIed(
   ied: Element,
   options: InsertIedOptions = { addCommunicationSection: true }
 ): Insert[] {
-  const inserts: Insert[] = [];
-
   if (!isSCL(scl) || !isIED(ied) || isNameUnique(scl, ied)) return [];
-  inserts.push(...addDataTypeTemplates(ied, scl));
-
+  const insertCommunication: Insert[] = [];
   if (options.addCommunicationSection)
-    inserts.push(...addCommunicationElements(ied, scl));
+    insertCommunication.push(...addCommunicationElements(ied, scl));
+
+  const insertDataTypes: Insert[] = [];
+  insertDataTypes.push(...addDataTypeTemplates(ied, scl));
 
   const insertIed: Insert = {
     parent: scl,
     node: ied,
     reference: getReference(scl, "IED"),
   };
-  return [insertIed].concat(inserts);
+  return [...insertCommunication, insertIed, ...insertDataTypes];
 }
