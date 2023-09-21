@@ -3,7 +3,7 @@ import {esbuildPlugin} from '@web/dev-server-esbuild'
 
 export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   /** Test files to run */
-  files: '**/*.spec.ts',
+  files: ['**/*.spec.ts','!node_modules/**/*.spec.ts'],
 
   plugins: [esbuildPlugin({ ts: true })],
 

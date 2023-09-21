@@ -91,7 +91,7 @@
                 </SMV>
 			</ConnectedAP>
 		</SubNetwork>
-		<SubNetwork name="NewSubNetwork" />
+		<SubNetwork name="NewSubNetwork2" />
 	</Communication>
 	<IED name="IED3" type="DummyIED" manufacturer="DummyManufactorer" configVersion="1" originalSclVersion="2007" originalSclRevision="B" owner="DummyOwner">
 		<Services>

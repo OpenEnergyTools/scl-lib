@@ -22,34 +22,41 @@ function addCommunicationElements(newIed: Element, scl: Element): Insert[] {
       reference: getReference(scl, "Communication"),
     });
 
-  const connectedAP = newIed.ownerDocument.querySelector(
-    `:root > Communication > SubNetwork > ConnectedAP[iedName="${newIed.getAttribute(
-      "name"
-    )}"]`
-  );
-  if (!connectedAP) return actions;
-
-  const newSubNetwork = <Element>connectedAP.parentElement!;
-  const oldSubNetworkMatch = communication.querySelector(
-    `:root > Communication > SubNetwork[name="${newSubNetwork.getAttribute(
-      "name"
-    )}"]`
+  const newSubNetworks = Array.from(
+    newIed.ownerDocument.querySelectorAll(`:root > Communication > SubNetwork`)
   );
 
-  const subNetwork = oldSubNetworkMatch ? oldSubNetworkMatch : newSubNetwork;
-  const newConnectedAP = <Element>connectedAP.cloneNode(true);
+  newSubNetworks.forEach((newSubNetwork) => {
+    const subNetworkName = newSubNetwork.getAttribute("name");
+    // check if subnetwork already exists
+    const existingSubNetwork = communication.querySelector(
+      `:root > Communication > SubNetwork[name="${subNetworkName}"]`
+    );
 
-  if (!oldSubNetworkMatch)
-    actions.push({
-      parent: communication,
-      node: subNetwork,
-      reference: getReference(communication, "SubNetwork"),
-    });
+    if (!existingSubNetwork) {
+      // subnetwork is new and can be copied as is
+      const subNetwork = <Element>newSubNetwork.cloneNode(true);
+      actions.push({
+        parent: communication,
+        node: subNetwork,
+        reference: getReference(communication, "SubNetwork"),
+      });
+    } else {
+      // subnetwork exists and individual ConnectedAP are copied
+      const newConnectedAPs = newIed.ownerDocument.querySelectorAll(
+        `:root > Communication > SubNetwork[name="${subNetworkName}"] 
+        > ConnectedAP[iedName="${newIed.getAttribute("name")}"]`
+      );
 
-  actions.push({
-    parent: subNetwork,
-    node: newConnectedAP,
-    reference: getReference(subNetwork, "ConnectedAP"),
+      newConnectedAPs.forEach((newConnectedAP) => {
+        const connectedAP = <Element>newConnectedAP.cloneNode(true);
+        actions.push({
+          parent: existingSubNetwork,
+          node: connectedAP,
+          reference: getReference(existingSubNetwork, "ConnectedAP"),
+        });
+      });
+    }
   });
 
   return actions;
