@@ -133,7 +133,7 @@ function addEnumType(
   return {
     parent: oldDataTypeTemplates,
     node: newEnumType,
-    reference: getReference(oldDataTypeTemplates, "LNodeType"),
+    reference: getReference(oldDataTypeTemplates, "EnumType"),
   };
 }
 
