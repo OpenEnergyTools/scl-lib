@@ -153,25 +153,24 @@ describe("Function to an importIED and its referenced elements", () => {
   });
 
   it("make sure to follow the schema definitions sequence", async () => {
-    const emptyScl = (
-      await fetch("tIED/importIED/emptyproject.scd")
+    const scl = (
+      await fetch("tIED/importIED/multipleieds.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
 
-    const imports = insertIed(emptyScl, validIed);
+    const imports = insertIed(scl, validIed);
     handleEdit(imports);
 
-    expect(emptyScl.querySelector("DataTypeTemplates + Communication")).to.be
-      .null;
-    expect(emptyScl.querySelector("IED + Communication")).to.be.null;
-    expect(emptyScl.querySelector("LNodeType + DAType")).to.be.null;
-    expect(emptyScl.querySelector("LNodeType + EnumType")).to.be.null;
-    expect(emptyScl.querySelector("DOType + LNodeType")).to.be.null;
-    expect(emptyScl.querySelector("DAType + LNodeType")).to.be.null;
-    expect(emptyScl.querySelector("EnumType + LNodeType")).to.be.null;
-    expect(emptyScl.querySelector("DOType + EnumType")).to.be.null;
-    expect(emptyScl.querySelector("EnumType + DOType")).to.be.null;
-    expect(emptyScl.querySelector("EnumType + DAType")).to.be.null;
+    expect(scl.querySelector("DataTypeTemplates + Communication")).to.be.null;
+    expect(scl.querySelector("IED + Communication")).to.be.null;
+    expect(scl.querySelector("LNodeType + DAType")).to.be.null;
+    expect(scl.querySelector("LNodeType + EnumType")).to.be.null;
+    expect(scl.querySelector("DOType + LNodeType")).to.be.null;
+    expect(scl.querySelector("DAType + LNodeType")).to.be.null;
+    expect(scl.querySelector("EnumType + LNodeType")).to.be.null;
+    expect(scl.querySelector("DOType + EnumType")).to.be.null;
+    expect(scl.querySelector("EnumType + DOType")).to.be.null;
+    expect(scl.querySelector("EnumType + DAType")).to.be.null;
   });
 });
