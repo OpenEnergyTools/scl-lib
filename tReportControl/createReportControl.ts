@@ -83,7 +83,7 @@ export type CreateReportControlOptions = {
  * @param parent - Direct parent `LN`, `LN0` or indirect parents
  *                `LDevice`, `AccessPoint` or `IED`. In the later case first `LN0` is picked.
  * @param options - Configuration options.
- * @returns Action inserting `ReportControl` to [[`parent`]] element or `null`
+ * @returns edit inserting `ReportControl` to [[`parent`]] element or `null`
  * */
 export function createReportControl(
   parent: Element,

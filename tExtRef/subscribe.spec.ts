@@ -16,8 +16,8 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       const fcda = docEd1.querySelector(`FCDA[desc="goose1q"]`)!;
       const sink = docEd1.querySelector(`LDevice[inst="Earth_Switch"]`)!;
 
-      const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-      expect(actions.length).to.equal(0);
+      const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+      expect(edits.length).to.equal(0);
     });
 
     it("invalid sink element missing ExtRef intAddr", () => {
@@ -25,8 +25,8 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       const fcda = docEd2.querySelector(`FCDA[desc="goose1q"]`)!;
       const sink = docEd2.querySelector(`ExtRef[desc="missingIntAddr"]`)!;
 
-      const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-      expect(actions.length).to.equal(0);
+      const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+      expect(edits.length).to.equal(0);
     });
 
     it("invalid sink element subscriber later binding ExtRef", () => {
@@ -34,16 +34,16 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       const fcda = docEd2.querySelector(`FCDA[desc="goose1q"]`)!;
       const sink = docEd2.querySelector(`ExtRef[desc="subscribedExtRef"]`)!;
 
-      const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-      expect(actions.length).to.equal(0);
+      const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+      expect(edits.length).to.equal(0);
     });
 
     it("invalid source.fcda element", () => {
       const fcda = docEd1.querySelector(`FCDA[desc="missingDoName"]`)!;
       const sink = docEd1.querySelector(`Inputs`)!;
 
-      const actions = subscribe([{ sink, source: { fcda } }]);
-      expect(actions.length).to.equal(0);
+      const edits = subscribe([{ sink, source: { fcda } }]);
+      expect(edits.length).to.equal(0);
     });
 
     it("invalid with orphan FCDA", () => {
@@ -61,24 +61,24 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       const fcda = docEd2.querySelector(`FCDA[desc="goose1q"]`)!;
       const sink = docEd2.querySelector(`ExtRef[desc="missingIntAddr"]`)!;
 
-      const actions = subscribe([{ sink, source: { fcda, controlBlock } }], {
+      const edits = subscribe([{ sink, source: { fcda, controlBlock } }], {
         force: true,
       });
-      expect(actions.length).to.equal(1);
+      expect(edits.length).to.equal(1);
     });
   });
 
   describe("with edition 1 projects", () => {
-    it("return update action for later binding type ExtRef ", () => {
+    it("return update edit for later binding type ExtRef ", () => {
       const controlBlock = docEd1.querySelector(`GSEControl[desc="goose1"]`)!;
       const fcda = docEd1.querySelector(`FCDA[desc="goose1q"]`)!;
       const sink = docEd1.querySelector(`ExtRef[intAddr="Pos;CSWI1/Pos/q"]`)!;
 
-      const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-      expect(actions.length).to.equal(1);
-      expect(actions[0]).to.satisfies(isUpdate);
-      expect((actions[0] as Update).element).to.equal(sink);
-      expect((actions[0] as Update).attributes).to.deep.equal({
+      const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+      expect(edits.length).to.equal(1);
+      expect(edits[0]).to.satisfies(isUpdate);
+      expect((edits[0] as Update).element).to.equal(sink);
+      expect((edits[0] as Update).attributes).to.deep.equal({
         iedName: "GOOSE_Publisher",
         ldInst: "QB1_Disconnector",
         prefix: "",
@@ -89,25 +89,23 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       });
     });
 
-    it("returns insert action for non later binding type subscription", () => {
+    it("returns insert edit for non later binding type subscription", () => {
       const controlBlock = docEd1.querySelector(`GSEControl[desc="goose1"]`)!;
       const fcda = docEd1.querySelector(`FCDA[desc="goose1q"]`)!;
       const sink = docEd1.querySelector(`Inputs`)!;
 
-      const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-      expect(actions.length).to.equal(1);
-      expect(actions[0]).to.satisfies(isInsert);
-      expect(((actions[0] as Insert).parent as Element).tagName).to.equal(
+      const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+      expect(edits.length).to.equal(1);
+      expect(edits[0]).to.satisfies(isInsert);
+      expect(((edits[0] as Insert).parent as Element).tagName).to.equal(
         "Inputs"
       );
-      expect(((actions[0] as Insert).node as Element).tagName).to.equal(
-        "ExtRef"
-      );
-      expect(((actions[0] as Insert).reference as Element).tagName).to.equal(
+      expect(((edits[0] as Insert).node as Element).tagName).to.equal("ExtRef");
+      expect(((edits[0] as Insert).reference as Element).tagName).to.equal(
         "ExtRef"
       );
 
-      const extRef = (actions[0] as Insert).node as Element;
+      const extRef = (edits[0] as Insert).node as Element;
       expect(extRef.getAttribute("iedName")).to.equal("GOOSE_Publisher");
       expect(extRef.getAttribute("ldInst")).to.equal("QB1_Disconnector");
       expect(extRef.getAttribute("prefix")).to.equal("");
@@ -169,54 +167,54 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         expect(subscribe([{ sink, source: { fcda } }]).length).to.equal(0);
       });
 
-      it("returns no update action with failing SPS/BOOLEAN check", () => {
+      it("returns no update edit with failing SPS/BOOLEAN check", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1q"]`)!;
         const sink = docEd2.querySelector(`ExtRef[intAddr="restrictExtRef"]`)!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(0);
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(0);
       });
 
-      it("returns no update action with failing CMV/FLOAT32 check ", () => {
+      it("returns no update edit with failing CMV/FLOAT32 check ", () => {
         const controlBlock = docEd2.querySelector(`ReportControl`)!;
         const fcda = docEd2.querySelector(` DataSet[name="Meas"] > FCDA`)!;
         const sink = docEd2.querySelector(`ExtRef[intAddr="wrongAnalogue"]`)!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(0);
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(0);
       });
 
-      it("returns update action with passing SPC/BOOLEAN check", () => {
+      it("returns update edit with passing SPC/BOOLEAN check", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1stVal"]`)!;
         const sink = docEd2.querySelector(`ExtRef[intAddr="restrictExtRef"]`)!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(1);
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(1);
       });
 
-      it("returns update action with passing CMV/FLOAT32 check", () => {
+      it("returns update edit with passing CMV/FLOAT32 check", () => {
         const controlBlock = docEd2.querySelector(` ReportControl`)!;
         const fcda = docEd2.querySelector(` DataSet[name="Meas"] > FCDA`)!;
         const sink = docEd2.querySelector(`ExtRef[intAddr="validAnalogue"]`)!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(1);
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(1);
       });
 
-      it("return update action with srcxxx attributes with controlBlock set", () => {
+      it("return update edit with srcxxx attributes with controlBlock set", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1stVal"]`)!;
         const sink = docEd2.querySelector(
           `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`
         )!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(1);
-        expect(actions[0]).to.satisfies(isUpdate);
-        expect((actions[0] as Update).element).to.equal(sink);
-        expect((actions[0] as Update).attributes).to.deep.equal({
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(1);
+        expect(edits[0]).to.satisfies(isUpdate);
+        expect((edits[0] as Update).element).to.equal(sink);
+        expect((edits[0] as Update).attributes).to.deep.equal({
           iedName: "GOOSE_Publisher",
           ldInst: "QB1_Disconnector",
           prefix: "",
@@ -233,18 +231,18 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         });
       });
 
-      it("return update action without srcXXX attributes with controlBlock set", () => {
+      it("return update edit without srcXXX attributes with controlBlock set", () => {
         const controlBlock = undefined;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1stVal"]`)!;
         const sink = docEd2.querySelector(
           `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`
         )!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(1);
-        expect(actions[0]).to.satisfies(isUpdate);
-        expect((actions[0] as Update).element).to.equal(sink);
-        expect((actions[0] as Update).attributes).to.deep.equal({
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(1);
+        expect(edits[0]).to.satisfies(isUpdate);
+        expect((edits[0] as Update).element).to.equal(sink);
+        expect((edits[0] as Update).attributes).to.deep.equal({
           iedName: "GOOSE_Publisher",
           ldInst: "QB1_Disconnector",
           prefix: "",
@@ -263,25 +261,23 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
     });
 
     describe("for non later binding type subscription", () => {
-      it("return insert action to add ExtRef", () => {
+      it("return insert edit to add ExtRef", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1q"]`)!;
         const sink = docEd2.querySelector(
           `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`
         )!;
 
-        const actions = subscribe([{ sink, source: { fcda, controlBlock } }]);
-        expect(actions.length).to.equal(2);
-        expect(actions[0]).to.satisfies(isInsert);
-        expect(((actions[0] as Insert).parent as Element).tagName).to.equal(
-          "LN"
-        );
-        expect(((actions[0] as Insert).node as Element).tagName).to.equal(
+        const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
+        expect(edits.length).to.equal(2);
+        expect(edits[0]).to.satisfies(isInsert);
+        expect(((edits[0] as Insert).parent as Element).tagName).to.equal("LN");
+        expect(((edits[0] as Insert).node as Element).tagName).to.equal(
           "Inputs"
         );
-        expect((actions[0] as Insert).reference).to.equal(null);
+        expect((edits[0] as Insert).reference).to.equal(null);
 
-        const extRef = (actions[1] as Insert).node as Element;
+        const extRef = (edits[1] as Insert).node as Element;
         expect(extRef.getAttribute("iedName")).to.equal("GOOSE_Publisher");
         expect(extRef.getAttribute("ldInst")).to.equal("QB1_Disconnector");
         expect(extRef.getAttribute("prefix")).to.equal("");
@@ -315,11 +311,11 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         )!;
         const extRef4 = { sink, source: { fcda, controlBlock } };
 
-        const actions = subscribe([extRef3, extRef4]);
-        expect(actions.length).to.equal(3);
-        expect(actions[0]).to.satisfies(isInsert);
-        expect(actions[1]).to.satisfies(isInsert);
-        expect(actions[2]).to.satisfies(isInsert);
+        const edits = subscribe([extRef3, extRef4]);
+        expect(edits.length).to.equal(3);
+        expect(edits[0]).to.satisfies(isInsert);
+        expect(edits[1]).to.satisfies(isInsert);
+        expect(edits[2]).to.satisfies(isInsert);
       });
     });
 
@@ -331,8 +327,8 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
           `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`
         )!;
 
-        const actions = subscribe({ sink, source: { fcda, controlBlock } });
-        expect(actions.length).to.equal(1);
+        const edits = subscribe({ sink, source: { fcda, controlBlock } });
+        expect(edits.length).to.equal(1);
       });
 
       it("allows multiple subscriptions at once", () => {
@@ -374,11 +370,11 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         )!;
         const extRef4 = { sink, source: { fcda, controlBlock } };
 
-        const actions = subscribe([extRef1, extRef2, extRef3, extRef4]);
-        expect(actions.length).to.equal(5);
-        expect(actions[0]).to.satisfies(isInsert);
-        expect(actions[1]).to.satisfies(isUpdate);
-        expect((actions[1] as Update).attributes).to.deep.equal({
+        const edits = subscribe([extRef1, extRef2, extRef3, extRef4]);
+        expect(edits.length).to.equal(5);
+        expect(edits[0]).to.satisfies(isInsert);
+        expect(edits[1]).to.satisfies(isUpdate);
+        expect((edits[1] as Update).attributes).to.deep.equal({
           iedName: "GOOSE_Publisher",
           ldInst: "SampledValue",
           prefix: "L1",
@@ -393,9 +389,9 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
           srcCBName: "someSmv",
           serviceType: "SMV",
         });
-        expect(actions[2]).to.satisfies(isUpdate);
-        expect(actions[3]).to.satisfies(isInsert);
-        expect(actions[4]).to.satisfies(isInsert);
+        expect(edits[2]).to.satisfies(isUpdate);
+        expect(edits[3]).to.satisfies(isInsert);
+        expect(edits[4]).to.satisfies(isInsert);
       });
     });
   });

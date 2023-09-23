@@ -60,8 +60,8 @@ function updateTerminals(
 }
 
 /** Updates `VoltageLevel` attributes and cross-referenced elements
- * @param update - update action on `VoltageLevel` attributes
- * @returns Completed update action array */
+ * @param update - update edit on `VoltageLevel` attributes
+ * @returns Completed update edit array */
 export function updateVoltageLevel(update: Update): Update[] {
   if (update.element.tagName !== "VoltageLevel") return [update];
 

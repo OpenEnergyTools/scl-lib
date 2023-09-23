@@ -26,19 +26,19 @@ export type UnsubscribeOptions = {
  * ```
  * In case the external reference
  * @param extRefs - Array of external references
- * @returns An array of update and/or remove action representing changes required
+ * @returns An array of update and/or remove edit representing changes required
  * to unsubscribe.
  */
 export function unsubscribe(
   extRefs: Element[],
   options: UnsubscribeOptions = { ignoreSupervision: false }
 ): (Update | Remove)[] {
-  const updateActions: Update[] = [];
-  const removeActions: Remove[] = [];
+  const updateEdits: Update[] = [];
+  const removeEdits: Remove[] = [];
 
   extRefs.map((extRef) => {
     if (extRef.getAttribute("intAddr"))
-      updateActions.push({
+      updateEdits.push({
         element: extRef,
         attributes: {
           iedName: null,
@@ -56,12 +56,12 @@ export function unsubscribe(
           ...(extRef.getAttribute("pServT") && { serviceType: null }),
         },
       });
-    else removeActions.push({ node: extRef });
+    else removeEdits.push({ node: extRef });
   });
 
   return [
-    ...removeInputs(removeActions),
-    ...updateActions,
+    ...removeInputs(removeEdits),
+    ...updateEdits,
     ...(options.ignoreSupervision
       ? []
       : removeSubscriptionSupervision(extRefs)),

@@ -5,27 +5,27 @@ import { handleEdit } from "@openscd/open-scd-core";
 import { Insert } from "../foundation/utils";
 import { insertIed } from "./insertIED.js";
 
-function findAction(
-  actions: Insert[],
+function findEdit(
+  edits: Insert[],
   type: "parent" | "node",
   node: Node
 ): Insert | undefined {
-  return actions.find(
-    (action) =>
-      (type === "parent" && action.parent === node) ||
-      (type === "node" && action.node === node)
+  return edits.find(
+    (edit) =>
+      (type === "parent" && edit.parent === node) ||
+      (type === "node" && edit.node === node)
   );
 }
 
 function numberInserts(
-  actions: Insert[],
+  edits: Insert[],
   type: "parent" | "node",
   tag: string
 ): number {
-  return actions.filter(
-    (action) =>
-      (type === "parent" && (action.parent as Element).tagName === tag) ||
-      (type === "node" && (action.node as Element).tagName === tag)
+  return edits.filter(
+    (edit) =>
+      (type === "parent" && (edit.parent as Element).tagName === tag) ||
+      (type === "node" && (edit.node as Element).tagName === tag)
   ).length;
 }
 
@@ -83,7 +83,7 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("passes on the IED element to the project", async () => {
     const imports = insertIed(emptyScl, validIed);
-    expect(findAction(imports, "node", validIed)).to.not.be.undefined;
+    expect(findEdit(imports, "node", validIed)).to.not.be.undefined;
   });
 
   it("adds data type templates elements", async () => {
