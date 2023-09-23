@@ -45,12 +45,12 @@ function outOfScopeCNode(root: Element, cNode: Element): boolean {
   );
 }
 
-/** Updates remove action for process type element
+/** Updates remove edit for process type element
  * includes orphan Terminal's and orphan ConnectivityNode's
  * > NOTE: Process type element potentially hold `ConnectivityNode` and
  * > `Terminal`. Removing those can leave orphan elements
- * @param remove - remove action on precess level elements
- * @return - enriched remove action array
+ * @param remove - remove edit on precess level elements
+ * @return - enriched remove edit array
  */
 export function removeProcessElement(remove: Remove): Remove[] {
   const element = remove.node as Element;

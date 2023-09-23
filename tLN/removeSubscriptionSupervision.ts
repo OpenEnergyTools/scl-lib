@@ -140,7 +140,7 @@ function groupPerControlBlock(
 /** Removes subscription supervision - `LGOS` or `LSVS` - when no other data
  * of a given `GSEControl` or `SampledValueControl`
  * @param extRefs - An array of external reference elements
- * @returns Actions to remove subscription supervision `LGOS` or `LSVS`
+ * @returns edits to remove subscription supervision `LGOS` or `LSVS`
  */
 export function removeSubscriptionSupervision(extRefs: Element[]): Remove[] {
   if (extRefs.length === 0) return [];

@@ -189,7 +189,7 @@ describe("ReportControl related functions", () => {
         ).to.be.null;
       });
 
-      it("return valid insert action with valid datSet reference", () => {
+      it("return valid insert edit with valid datSet reference", () => {
         expect(createReportControl(ln02, { rpt: { datSet: "rptDataSet" } })).to
           .not.be.null;
       });

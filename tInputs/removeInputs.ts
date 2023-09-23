@@ -9,8 +9,8 @@ function isInputLeaf(input: Element, allInputs: Element[]): boolean {
 
 /**
  * Makes sure to not leave empty `Inputs` element after removing
- * its child `ExtRef` elements using [[`extRefActions`]]
- * @returns Actions to remove `Inputs` when empty
+ * its child `ExtRef` elements using [[`extRefedits`]]
+ * @returns edits to remove `Inputs` when empty
  * */
 export function removeInputs(extRefs: Remove[]): Remove[] {
   const removeInputs: Remove[] = [];

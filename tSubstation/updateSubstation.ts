@@ -57,8 +57,8 @@ function updateTerminals(
 }
 
 /** Updates `Substation` attributes and cross-referenced elements
- * @param update - update action on `Substation` attributes
- * @returns Completed update action array */
+ * @param update - update edit on `Substation` attributes
+ * @returns Completed update edit array */
 export function updateSubstation(update: Update): Update[] {
   if (update.element.tagName !== "Substation") return [update];
 

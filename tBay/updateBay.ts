@@ -61,8 +61,8 @@ function updateTerminals(
 }
 
 /** Updates `Bay` attributes and cross-referenced elements
- * @param update - update action on `Bay` attributes
- * @returns Completed update action array */
+ * @param update - update edit on `Bay` attributes
+ * @returns Completed update edit array */
 export function updateBay(update: Update): Update[] {
   if (update.element.tagName !== "Bay") return [update];
 

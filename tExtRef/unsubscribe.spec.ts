@@ -21,48 +21,48 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("returns empty array for empty array input", () =>
     expect(unsubscribe([])).to.be.empty);
 
-  it("returns a remove action for each non later binding ExtRef", () => {
+  it("returns a remove edit for each non later binding ExtRef", () => {
     const extRefs = findElements(multipleExtRefs, "ExtRef");
-    const actions = unsubscribe(extRefs);
+    const edits = unsubscribe(extRefs);
 
-    expect(actions.length).to.equal(4);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isRemove);
-    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
-    expect(actions[2]).to.satisfies(isRemove);
-    expect((actions[2] as Remove).node).to.equal(extRefs[2]);
+    expect(edits.length).to.equal(4);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRefs[0]);
+    expect(edits[1]).to.satisfies(isRemove);
+    expect((edits[1] as Remove).node).to.equal(extRefs[1]);
+    expect(edits[2]).to.satisfies(isRemove);
+    expect((edits[2] as Remove).node).to.equal(extRefs[2]);
   });
 
-  it("returns an additional remove action for leave parent Input", () => {
+  it("returns an additional remove edit for leave parent Input", () => {
     const extRefs = findElements(multipleExtRefs, "ExtRef");
-    const actions = unsubscribe(extRefs);
+    const edits = unsubscribe(extRefs);
 
-    expect(actions[3]).to.satisfies(isRemove);
-    expect((actions[3] as Remove).node).to.equal(extRefs[0].parentElement);
+    expect(edits[3]).to.satisfies(isRemove);
+    expect((edits[3] as Remove).node).to.equal(extRefs[0].parentElement);
   });
 
-  it("returns update action for later binding type ExtRef", () => {
+  it("returns update edit for later binding type ExtRef", () => {
     const extRefs = findElements(laterBindingExtRefs, "ExtRef");
-    const actions = unsubscribe(extRefs);
+    const edits = unsubscribe(extRefs);
 
-    expect(actions.length).to.equal(3);
-    expect(actions[0]).to.satisfies(isUpdate);
-    expect((actions[0] as Update).element).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isUpdate);
-    expect((actions[1] as Update).element).to.equal(extRefs[1]);
-    expect(actions[2]).to.satisfies(isUpdate);
-    expect((actions[2] as Update).element).to.equal(extRefs[2]);
+    expect(edits.length).to.equal(3);
+    expect(edits[0]).to.satisfies(isUpdate);
+    expect((edits[0] as Update).element).to.equal(extRefs[0]);
+    expect(edits[1]).to.satisfies(isUpdate);
+    expect((edits[1] as Update).element).to.equal(extRefs[1]);
+    expect(edits[2]).to.satisfies(isUpdate);
+    expect((edits[2] as Update).element).to.equal(extRefs[2]);
   });
 
   it("does not remove ICT defined Ed2 attributes", () => {
     const extRef = findElement(laterBindingExtRefs, "ExtRef")!;
-    const actions = unsubscribe([extRef]);
+    const edits = unsubscribe([extRef]);
 
-    expect(actions.length).to.equal(1);
-    expect(actions[0]).to.satisfies(isUpdate);
+    expect(edits.length).to.equal(1);
+    expect(edits[0]).to.satisfies(isUpdate);
 
-    const update = actions[0] as Update;
+    const update = edits[0] as Update;
     expect(update.attributes["intAddr"]).to.be.undefined;
     expect(update.attributes).to.not.have.own.property("serviceType");
   });
@@ -72,12 +72,12 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       laterBindingExtRefs,
       'ExtRef[intAddr="someOtherIntAddr"]'
     )!;
-    const actions = unsubscribe([extRef]);
+    const edits = unsubscribe([extRef]);
 
-    expect(actions.length).to.equal(1);
-    expect(actions[0]).to.satisfies(isUpdate);
+    expect(edits.length).to.equal(1);
+    expect(edits[0]).to.satisfies(isUpdate);
 
-    const update = actions[0] as Update;
+    const update = edits[0] as Update;
     expect(update.attributes["intAddr"]).to.be.undefined;
     // remove service type if pServT defined
     expect(update.attributes["serviceType"]).to.be.null;
@@ -91,7 +91,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]'
     );
-    const actions = unsubscribe(extRefs);
+    const edits = unsubscribe(extRefs);
     const doi = extRefs[0].ownerDocument.querySelector(
       'LN[lnClass="LGOS"][inst="1"] > DOI'
     );
@@ -99,17 +99,17 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       'LN[lnClass="LGOS"][inst="2"]'
     );
 
-    expect(actions.length).to.equal(5);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isRemove);
-    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
-    expect(actions[2]).to.satisfies(isUpdate);
-    expect((actions[2] as Update).element).to.equal(extRefs[2]);
-    expect(actions[3]).to.satisfies(isRemove);
-    expect((actions[3] as Remove).node).to.equal(doi);
-    expect(actions[4]).to.satisfies(isRemove);
-    expect((actions[4] as Remove).node).to.equal(ln);
+    expect(edits.length).to.equal(5);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRefs[0]);
+    expect(edits[1]).to.satisfies(isRemove);
+    expect((edits[1] as Remove).node).to.equal(extRefs[1]);
+    expect(edits[2]).to.satisfies(isUpdate);
+    expect((edits[2] as Update).element).to.equal(extRefs[2]);
+    expect(edits[3]).to.satisfies(isRemove);
+    expect((edits[3] as Remove).node).to.equal(doi);
+    expect(edits[4]).to.satisfies(isRemove);
+    expect((edits[4] as Remove).node).to.equal(ln);
   });
 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
@@ -117,15 +117,15 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]'
     );
-    const actions = unsubscribe(extRefs, { ignoreSupervision: true });
+    const edits = unsubscribe(extRefs, { ignoreSupervision: true });
 
-    expect(actions.length).to.equal(3);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isRemove);
-    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
-    expect(actions[2]).to.satisfies(isUpdate);
-    expect((actions[2] as Update).element).to.equal(extRefs[2]);
+    expect(edits.length).to.equal(3);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRefs[0]);
+    expect(edits[1]).to.satisfies(isRemove);
+    expect((edits[1] as Remove).node).to.equal(extRefs[1]);
+    expect(edits[2]).to.satisfies(isUpdate);
+    expect((edits[2] as Update).element).to.equal(extRefs[2]);
   });
 
   it("does not remove subscription supervision with remaining connections", () => {
@@ -133,11 +133,11 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someGse"]'
     )!;
-    const actions = unsubscribe([extRef]);
+    const edits = unsubscribe([extRef]);
 
-    expect(actions.length).to.equal(1);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRef);
+    expect(edits.length).to.equal(1);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRef);
   });
 
   it("does not remove subscription supervision without missing object reference", () => {
@@ -145,11 +145,11 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someGse3"]'
     )!;
-    const actions = unsubscribe([extRef]);
+    const edits = unsubscribe([extRef]);
 
-    expect(actions.length).to.equal(1);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRef);
+    expect(edits.length).to.equal(1);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRef);
   });
 
   it("makes sure to remove subscription LSVS supervision as well", () => {
@@ -160,17 +160,17 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     const doi = extRefs[0].ownerDocument.querySelector(
       'LN[lnClass="LSVS"][inst="1"] > DOI'
     );
-    const actions = unsubscribe(extRefs);
+    const edits = unsubscribe(extRefs);
 
-    expect(actions.length).to.equal(4);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isRemove);
-    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
-    expect(actions[2]).to.satisfies(isRemove);
-    expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
-    expect(actions[3]).to.satisfies(isRemove);
-    expect((actions[3] as Remove).node).to.equal(doi);
+    expect(edits.length).to.equal(4);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRefs[0]);
+    expect(edits[1]).to.satisfies(isRemove);
+    expect((edits[1] as Remove).node).to.equal(extRefs[1]);
+    expect(edits[2]).to.satisfies(isRemove);
+    expect((edits[2] as Remove).node).to.equal(extRefs[1].parentElement);
+    expect(edits[3]).to.satisfies(isRemove);
+    expect((edits[3] as Remove).node).to.equal(doi);
   });
 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
@@ -178,15 +178,15 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someSmv"]'
     );
-    const actions = unsubscribe(extRefs, { ignoreSupervision: true });
+    const edits = unsubscribe(extRefs, { ignoreSupervision: true });
 
-    expect(actions.length).to.equal(3);
-    expect(actions[0]).to.satisfies(isRemove);
-    expect((actions[0] as Remove).node).to.equal(extRefs[0]);
-    expect(actions[1]).to.satisfies(isRemove);
-    expect((actions[1] as Remove).node).to.equal(extRefs[1]);
-    expect(actions[2]).to.satisfies(isRemove);
-    expect((actions[2] as Remove).node).to.equal(extRefs[1].parentElement);
+    expect(edits.length).to.equal(3);
+    expect(edits[0]).to.satisfies(isRemove);
+    expect((edits[0] as Remove).node).to.equal(extRefs[0]);
+    expect(edits[1]).to.satisfies(isRemove);
+    expect((edits[1] as Remove).node).to.equal(extRefs[1]);
+    expect(edits[2]).to.satisfies(isRemove);
+    expect((edits[2] as Remove).node).to.equal(extRefs[1].parentElement);
   });
 
   it("with pServT present, serviceType is removed", () => {
@@ -194,11 +194,11 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       laterBindingExtRefs,
       'ExtRef[intAddr="someOtherIntAddr"]'
     );
-    const actions = unsubscribe(extRefs, { ignoreSupervision: true });
+    const edits = unsubscribe(extRefs, { ignoreSupervision: true });
 
-    expect(actions.length).to.equal(1);
-    expect((actions[0] as Update).element).to.equal(extRefs[0]);
-    expect((actions[0] as Update).attributes.serviceType).to.be.null;
+    expect(edits.length).to.equal(1);
+    expect((edits[0] as Update).element).to.equal(extRefs[0]);
+    expect((edits[0] as Update).attributes.serviceType).to.be.null;
   });
 
   it("without pServT, serviceType is not removed", () => {
@@ -206,11 +206,11 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       laterBindingExtRefs,
       'ExtRef[intAddr="someIntAddr"]'
     )[0];
-    const actions = unsubscribe([extRefs], { ignoreSupervision: true });
+    const edits = unsubscribe([extRefs], { ignoreSupervision: true });
 
-    expect(actions.length).to.equal(1);
-    expect((actions[0] as Update).element).to.equal(extRefs);
-    expect((actions[0] as Update).attributes).to.not.have.own.property(
+    expect(edits.length).to.equal(1);
+    expect((edits[0] as Update).element).to.equal(extRefs);
+    expect((edits[0] as Update).attributes).to.not.have.own.property(
       "serviceType"
     );
   });

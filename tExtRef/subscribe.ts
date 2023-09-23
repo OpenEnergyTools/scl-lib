@@ -104,7 +104,7 @@ function getDataAttributes(fcda: Element): {
   };
 }
 
-function createSubscribeAction(
+function createSubscribeEdit(
   connection: Connection,
   parent: Element
 ): Update | Insert | null {
@@ -145,47 +145,45 @@ function createSubscribeAction(
   return { parent, node: extRef, reference };
 }
 
-function createSubscribeActions(
-  connections: Connection[]
-): (Insert | Update)[] {
-  const inputActions: Insert[] = [];
+function createSubscribeEdits(connections: Connection[]): (Insert | Update)[] {
+  const inputEdits: Insert[] = [];
 
-  const extRefActions = connections
+  const extRefEdits = connections
     .map((option) => {
       const parent = option.sink;
 
       // no Inputs child yet in anyLN element
       if (
         (parent.tagName === "LN" || parent.tagName === "LN0") &&
-        !inputActions.some((insert) => insert.parent === parent)
+        !inputEdits.some((insert) => insert.parent === parent)
       ) {
         const inputs = createElement(parent.ownerDocument, "Inputs", {});
-        const action = createSubscribeAction(option!, inputs);
-        if (action)
-          inputActions.push({
+        const edit = createSubscribeEdit(option!, inputs);
+        if (edit)
+          inputEdits.push({
             parent,
             node: inputs,
             reference: getReference(parent, "Inputs"),
           });
 
-        return action;
+        return edit;
       }
 
       // there is an Input already in anyLn
       if (
         (parent.tagName === "LN" || parent.tagName === "LN0") &&
-        inputActions.some((insert) => insert.parent === parent)
+        inputEdits.some((insert) => insert.parent === parent)
       ) {
-        const inputs = inputActions.find((insert) => insert.parent === parent)!
+        const inputs = inputEdits.find((insert) => insert.parent === parent)!
           .node as Element;
-        return createSubscribeAction(option!, inputs);
+        return createSubscribeEdit(option!, inputs);
       }
 
-      return createSubscribeAction(option!, parent);
+      return createSubscribeEdit(option!, parent);
     })
-    .filter((action) => action) as (Insert | Update)[];
+    .filter((edit) => edit) as (Insert | Update)[];
 
-  return [...inputActions, ...extRefActions];
+  return [...inputEdits, ...extRefEdits];
 }
 
 function invalidSink(sink: Element): boolean {
@@ -239,7 +237,7 @@ function validSubscribeConditions(connection: Connection): boolean {
  * for later binding type subscription.
  * @param source.fcda - `FCDA` element
  * @param source.controlBlock - The control block carrying the [[`source.fcda`]]
- * @returns An array of actions to do a valid subscription
+ * @returns An array of edits to do a valid subscription
  */
 export function subscribe(
   connectionOrConnections: Connection | Connection[],
@@ -253,10 +251,10 @@ export function subscribe(
     ? connections
     : (connections.filter(validSubscribeConditions) as Connection[]);
 
-  const extRefActions = createSubscribeActions(validConnections);
+  const extRefEdits = createSubscribeEdits(validConnections);
 
   return [
-    ...extRefActions,
-    //TODO: ...insertSubscriptionSupervisions(extRefActions),
+    ...extRefEdits,
+    //TODO: ...insertSubscriptionSupervisions(extRefEdits),
   ];
 }

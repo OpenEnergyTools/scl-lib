@@ -4,8 +4,8 @@ import { findControlBlockSubscription } from "../tControl/findControlSubscriptio
 import { updatedConfRev } from "../tControl/updateConfRev.js";
 
 /** Updates `ReportControl` attributes and cross-referenced elements
- * @param update - update action on `ReportControl` attributes
- * @returns Completed update action array */
+ * @param update - update edit on `ReportControl` attributes
+ * @returns Completed update edit array */
 export function updateReportControl(update: Update): Update[] {
   if (update.element.tagName !== "ReportControl") return [];
 
