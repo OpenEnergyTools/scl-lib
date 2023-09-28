@@ -227,7 +227,7 @@ function addLNodeType(
     Array.from(
       newIed.querySelectorAll(`LN0[lnType="${idOld}"],LN[lnType="${idOld}"]`)
     )
-      .filter((anyLn) => anyLn.closest("Private"))
+      .filter((anyLn) => !anyLn.closest("Private"))
       .forEach((ln) => ln.setAttribute("lnType", idNew));
   }
 
@@ -239,45 +239,48 @@ function addLNodeType(
 }
 
 function addDataTypeTemplates(newIed: Element, scl: Element): Insert[] {
-  const edits: (Insert | undefined)[] = [];
+  const dataTypeEdit: Insert[] = [];
 
   const dataTypeTemplates = scl.querySelector(":root > DataTypeTemplates")
     ? scl.querySelector(":root > DataTypeTemplates")!
     : createElement(scl.ownerDocument, "DataTypeTemplates", {});
 
   if (!dataTypeTemplates.parentElement) {
-    edits.push({
+    dataTypeEdit.push({
       parent: scl,
       node: dataTypeTemplates,
       reference: getReference(scl, "DataTypeTemplates"),
     });
   }
 
+  const typeEdits: (Insert | undefined)[] = [];
   newIed.ownerDocument
-    .querySelectorAll(":root > DataTypeTemplates > LNodeType")
-    .forEach((lNodeType) =>
-      edits.push(addLNodeType(newIed, lNodeType, dataTypeTemplates!))
-    );
-
-  newIed.ownerDocument
-    .querySelectorAll(":root > DataTypeTemplates > DOType")
-    .forEach((doType) =>
-      edits.push(addDOType(newIed, doType, dataTypeTemplates!))
+    .querySelectorAll(":root > DataTypeTemplates > EnumType")
+    .forEach((enumType) =>
+      typeEdits.push(addEnumType(newIed, enumType, dataTypeTemplates!))
     );
 
   newIed.ownerDocument
     .querySelectorAll(":root > DataTypeTemplates > DAType")
     .forEach((daType) =>
-      edits.push(addDAType(newIed, daType, dataTypeTemplates!))
+      typeEdits.push(addDAType(newIed, daType, dataTypeTemplates!))
     );
 
   newIed.ownerDocument
-    .querySelectorAll(":root > DataTypeTemplates > EnumType")
-    .forEach((enumType) =>
-      edits.push(addEnumType(newIed, enumType, dataTypeTemplates!))
+    .querySelectorAll(":root > DataTypeTemplates > DOType")
+    .forEach((doType) =>
+      typeEdits.push(addDOType(newIed, doType, dataTypeTemplates!))
     );
 
-  return edits.filter((item) => item !== undefined) as Insert[];
+  newIed.ownerDocument
+    .querySelectorAll(":root > DataTypeTemplates > LNodeType")
+    .forEach((lNodeType) =>
+      typeEdits.push(addLNodeType(newIed, lNodeType, dataTypeTemplates!))
+    );
+
+  return dataTypeEdit.concat(
+    typeEdits.reverse().filter((item) => item !== undefined) as Insert[]
+  );
 }
 
 function isNameUnique(scl: Element, ied: Element): boolean {

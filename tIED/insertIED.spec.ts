@@ -131,10 +131,10 @@ describe("Function to an importIED and its referenced elements", () => {
     const imports = insertIed(multipleIEDs, validIed);
 
     expect(numberInserts(imports, "node", "DataTypeTemplates")).to.equal(0);
-    expect(numberInserts(imports, "node", "LNodeType")).to.equal(1); // only !isEqualNode
-    expect(numberInserts(imports, "node", "DOType")).to.equal(2); // only !isEqualNode
-    expect(numberInserts(imports, "node", "DAType")).to.equal(1); // only !isEqualNode
-    expect(numberInserts(imports, "node", "EnumType")).to.equal(3); // only !isEqualNode
+    expect(numberInserts(imports, "node", "LNodeType")).to.equal(4); // only !isEqualNode
+    expect(numberInserts(imports, "node", "DOType")).to.equal(3); // only !isEqualNode
+    expect(numberInserts(imports, "node", "DAType")).to.equal(2); // only !isEqualNode
+    expect(numberInserts(imports, "node", "EnumType")).to.equal(1); // only !isEqualNode
   });
 
   it("skips existing SubNetwork element", async () => {
@@ -159,6 +159,12 @@ describe("Function to an importIED and its referenced elements", () => {
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
 
+    const validIed = (
+      await fetch("tIED/importIED/valid.iid")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector(':root > IED[name="TestImportIED"]')!;
+
     const imports = insertIed(scl, validIed);
     handleEdit(imports);
 
@@ -172,5 +178,100 @@ describe("Function to an importIED and its referenced elements", () => {
     expect(scl.querySelector("DOType + EnumType")).to.be.null;
     expect(scl.querySelector("EnumType + DOType")).to.be.null;
     expect(scl.querySelector("EnumType + DAType")).to.be.null;
+  });
+
+  it("make sure to follow the schema definitions sequence with missing references", async () => {
+    const scl = (
+      await fetch("tIED/importIED/emptyproject.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    const validIed = (
+      await fetch("tIED/importIED/valid.iid")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector(':root > IED[name="TestImportIED"]')!;
+
+    const imports = insertIed(scl, validIed);
+    handleEdit(imports);
+
+    expect(scl.querySelector("DataTypeTemplates + Communication")).to.be.null;
+    expect(scl.querySelector("IED + Communication")).to.be.null;
+    expect(scl.querySelector("LNodeType + DAType")).to.be.null;
+    expect(scl.querySelector("LNodeType + EnumType")).to.be.null;
+    expect(scl.querySelector("DOType + LNodeType")).to.be.null;
+    expect(scl.querySelector("DAType + LNodeType")).to.be.null;
+    expect(scl.querySelector("EnumType + LNodeType")).to.be.null;
+    expect(scl.querySelector("DOType + EnumType")).to.be.null;
+    expect(scl.querySelector("EnumType + DOType")).to.be.null;
+    expect(scl.querySelector("EnumType + DAType")).to.be.null;
+  });
+
+  it("make sure lnType and type reference are not broken", async () => {
+    const scl1 = (
+      await fetch("tIED/importIED/multipleieds.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    const validIed1 = (
+      await fetch("tIED/importIED/valid.iid")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector(':root > IED[name="TestImportIED"]')!;
+
+    const imports = insertIed(scl1, validIed1);
+    handleEdit(imports);
+
+    const brokenType = Array.from(
+      scl1.querySelectorAll("DO, SDO, DA, BDA, LN, LN0 ")
+    )
+      .filter(
+        (elem) => elem.hasAttribute("type") || elem.hasAttribute("lnType")
+      )
+      .map((elem) => {
+        if (elem.tagName === "LN" || elem.tagName === "LN0")
+          return elem.getAttribute("lnType");
+        return elem.getAttribute("type");
+      })
+      .filter(
+        (type) =>
+          scl1.querySelector(
+            `LNodeType[id="${type}"], DOType[id="${type}"], DAType[id="${type}"], EnumType[id="${type}"]`
+          ) === null
+      );
+
+    expect(brokenType.length).to.equal(0);
+  });
+
+  it("make sure no orphan data types are generated", async () => {
+    const scl2 = (
+      await fetch("tIED/importIED/multipleieds.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    const validIed2 = (
+      await fetch("tIED/importIED/valid.iid")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector(':root > IED[name="TestImportIED"]')!;
+
+    const imports = insertIed(scl2, validIed2);
+    handleEdit(imports);
+
+    const orphanTypes = Array.from(
+      scl2.querySelectorAll("LNodeType, DOType, DAType, EnumType")
+    )
+      .map((type) => type.getAttribute("id"))
+      .filter(
+        (id) =>
+          scl2.querySelector(
+            `LN[lnType="${id}"], LN0[lnType="${id}"], DO[type="${id}"], SDO[type="${id}"], DA[type="${id}"], BDA[type="${id}"]`
+          ) === null
+      );
+
+    expect(orphanTypes.length).to.equal(0);
   });
 });
