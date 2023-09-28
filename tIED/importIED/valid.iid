@@ -433,43 +433,21 @@
 			<BDA name="Test" bType="BOOLEAN" />
 		</DAType>
 		<EnumType id="Dummy_ctlModel">
-			<EnumVal ord="0">
-				status-only
-			</EnumVal>
-			<EnumVal ord="1">
-				direct-with-normal-security
-			</EnumVal>
-			<EnumVal ord="2">
-				sbo-with-normal-security
-			</EnumVal>
-			<EnumVal ord="3">
-				direct-with-enhanced-security
-			</EnumVal>
-			<EnumVal ord="4">
-				sbo-with-enhanced-security
-			</EnumVal>
+			<EnumVal ord="0">status-only</EnumVal>
+			<EnumVal ord="1">direct-with-normal-security</EnumVal>
+			<EnumVal ord="2">sbo-with-normal-security</EnumVal>
+			<EnumVal ord="3">direct-with-enhanced-security</EnumVal>
+			<EnumVal ord="4">sbo-with-enhanced-security</EnumVal>
 		</EnumType>
 		<EnumType id="unreferened.EnumType">
-			<EnumVal ord="0">
-				status-only
-			</EnumVal>
+			<EnumVal ord="0">status-only</EnumVal>
 		</EnumType>
 		<EnumType id="Dummy_Beh">
-			<EnumVal ord="1">
-				on
-			</EnumVal>
-			<EnumVal ord="2">
-				blocked
-			</EnumVal>
-			<EnumVal ord="3">
-				test
-			</EnumVal>
-			<EnumVal ord="4">
-				test/blocked
-			</EnumVal>
-			<EnumVal ord="5">
-				off
-			</EnumVal>
+			<EnumVal ord="1">on</EnumVal>
+			<EnumVal ord="2">blocked</EnumVal>
+			<EnumVal ord="3">test</EnumVal>
+			<EnumVal ord="4">test/blocked</EnumVal>
+			<EnumVal ord="5">off</EnumVal>
 		</EnumType>
 		<EnumType id="Dummy_Health">
 			<EnumVal ord="1">Ok</EnumVal>
@@ -477,33 +455,15 @@
 			<EnumVal ord="3">Alarm</EnumVal>
 		</EnumType>
 		<EnumType id="Dummy_orCategory">
-			<EnumVal ord="0">
-				not-supported
-			</EnumVal>
-			<EnumVal ord="1">
-				bay-control
-			</EnumVal>
-			<EnumVal ord="2">
-				station-control
-			</EnumVal>
-			<EnumVal ord="3">
-				remote-control
-			</EnumVal>
-			<EnumVal ord="4">
-				automatic-bay
-			</EnumVal>
-			<EnumVal ord="5">
-				automatic-station
-			</EnumVal>
-			<EnumVal ord="6">
-				automatic-remote
-			</EnumVal>
-			<EnumVal ord="7">
-				maintenance
-			</EnumVal>
-			<EnumVal ord="8">
-				process
-			</EnumVal>
+			<EnumVal ord="0">not-supported</EnumVal>
+			<EnumVal ord="1">bay-control</EnumVal>
+			<EnumVal ord="2">station-control</EnumVal>
+			<EnumVal ord="3">remote-control</EnumVal>
+			<EnumVal ord="4">automatic-bay</EnumVal>
+			<EnumVal ord="5">automatic-station</EnumVal>
+			<EnumVal ord="6">automatic-remote</EnumVal>
+			<EnumVal ord="7">maintenance</EnumVal>
+			<EnumVal ord="8">process</EnumVal>
 		</EnumType>
 	</DataTypeTemplates>
 </SCL>

@@ -561,10 +561,10 @@
 			<DA fc="DC" name="d" bType="VisString255" />
 		</DOType>
 		<DOType cdc="SPS" id="Dummy.SPS">
-            <DA fc="ST" dchg="true" name="stVal" bType="BOOLEAN" />
-            <DA fc="ST" qchg="true" name="q" bType="Quality" />
-            <DA fc="ST" name="t" bType="Timestamp" />
-        </DOType>
+			<DA fc="ST" dchg="true" name="stVal" bType="BOOLEAN" />
+			<DA fc="ST" qchg="true" name="q" bType="Quality" />
+			<DA fc="ST" name="t" bType="Timestamp" />
+		</DOType>
 		<DAType id="AnalogueValue_i">
             <BDA name="i" bType="INT32"/>
         </DAType>
