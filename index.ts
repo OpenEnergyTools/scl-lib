@@ -9,6 +9,8 @@ export { removeProcessElement } from "./tSubstation/removeProcessElement.js";
 
 export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
 
+export { controlBlockGseOrSmv } from "./tControl/controlBlockGseOrSmv.js";
+
 export { CreateReportControlOptions } from "./tReportControl/createReportControl.js";
 export { updateReportControl } from "./tReportControl/updateReportControl.js";
 export { createReportControl } from "./tReportControl/createReportControl.js";
