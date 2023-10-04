@@ -45,3 +45,11 @@ export function createElement(
 
   return element;
 }
+
+/** @returns the cartesian product of `arrays` */
+export function crossProduct<T>(...arrays: T[][]): T[][] {
+  return arrays.reduce<T[][]>(
+    (a, b) => <T[][]>a.flatMap((d) => b.map((e) => [d, e].flat())),
+    [[]]
+  );
+}
