@@ -1,3 +1,4 @@
+export { Edit } from "./foundation/utils.js";
 export { Update } from "./foundation/utils.js";
 export { Insert } from "./foundation/utils.js";
 export { Remove } from "./foundation/utils.js";
@@ -8,6 +9,7 @@ export { updateSubstation } from "./tSubstation/updateSubstation.js";
 export { removeProcessElement } from "./tSubstation/removeProcessElement.js";
 
 export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
+export { updateIED } from "./tIED/updateIED.js";
 
 export { CreateReportControlOptions } from "./tReportControl/createReportControl.js";
 export { updateReportControl } from "./tReportControl/updateReportControl.js";
