@@ -1,7 +1,7 @@
 import { Remove } from "../foundation/utils.js";
 
 import { controlBlockObjRef } from "../tControl/controlBlockObjRef.js";
-import { sourceControlBlock } from "../tControl/sourceControlBlock.js";
+import { sourceControlBlock } from "../tExtRef/sourceControlBlock.js";
 
 type GroupedExtRefs = {
   extRefs: Element[];
