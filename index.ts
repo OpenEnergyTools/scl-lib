@@ -64,8 +64,13 @@ export {
 export { sourceControlBlock } from "./tExtRef/sourceControlBlock.js";
 export { isSubscribed } from "./tExtRef/isSubscribed.js";
 
-export { Supervision } from "./tLN/canInstantiateSubscriptionSupervision.js";
-export { canInstantiateSubscriptionSupervision } from "./tLN/canInstantiateSubscriptionSupervision.js";
+export {
+  Supervision,
+  SupervisionOptions,
+} from "./tLN/supervision/foundation.js";
+export { canInstantiateSubscriptionSupervision } from "./tLN/supervision/canInstantiateSubscriptionSupervision.js";
+export { instantiateSubscriptionSupervision } from "./tLN/supervision/instantiateSubscriptionSupervision.js";
+export { insertSubscriptionSupervisions } from "./tLN/supervision/insertSubscriptionSupervisions.js";
 
 export { maxAttributes, canAddFCDA } from "./tFCDA/canAddFCDA.js";
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";

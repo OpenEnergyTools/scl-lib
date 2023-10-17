@@ -1,38 +1,11 @@
-import { controlBlockObjRef } from "../tControl/controlBlockObjRef.js";
+import { controlBlockObjRef } from "../../tControl/controlBlockObjRef.js";
 
-export type Supervision = {
-  /** Pointer to the supervision location. This can be either a subscriber IED
-   * or the logical node (`LGOS`/`LSVS`) itself */
-  subscriberIedOrLn: Element;
-  /** The control block to be supervised */
-  sourceControlBlock: Element;
-};
-
-export type SupervisionOptions = {
-  /** Whether to check for `valKind`/`valImport`. Defaulting to true */
-  checkEditableSrcRef: boolean;
-  /**
-   * Whether the given control block is already supervised in the subscriber
-   * IED. Defaulting to true.
-   */
-  checkDuplicateSupervisions: boolean;
-  /**
-   * Whether a new supervision would exceed the limits set in the `Services`
-   * element or whether the subscriber LN already hosts a valid supervision.
-   * Defaulting to true.
-   */
-  checkMaxSupervisionLimits: boolean;
-};
-
-function supervisionLnClass(supervision: Supervision): "LGOS" | "LSVS" {
-  const serviceType = supervision.sourceControlBlock.tagName;
-  return serviceType === "GSEControl" ? "LGOS" : "LSVS";
-}
-
-function type(supervision: Supervision): "GoCBRef" | "SvCBRef" {
-  const serviceType = supervision.sourceControlBlock.tagName;
-  return serviceType === "GSEControl" ? "GoCBRef" : "SvCBRef";
-}
+import {
+  Supervision,
+  SupervisionOptions,
+  supervisionLnClass,
+  type,
+} from "./foundation.js";
 
 /** @returns Whether a supervision LN holds a valid control block object ref */
 function holdsValidObjRef(ln: Element, type: "GoCBRef" | "SvCBRef"): boolean {
@@ -52,7 +25,7 @@ function holdsValidObjRef(ln: Element, type: "GoCBRef" | "SvCBRef"): boolean {
 }
 
 /** @returns Whether `Services` element requirement is met */
-function exceedSupervisionLimits(supervision: Supervision): boolean {
+function withinSupervisionLimits(supervision: Supervision): boolean {
   const subscriberIed =
     supervision.subscriberIedOrLn.tagName === "IED"
       ? supervision.subscriberIedOrLn
@@ -64,16 +37,18 @@ function exceedSupervisionLimits(supervision: Supervision): boolean {
     ?.getAttribute(`${lnClass === "LGOS" ? "maxGo" : "maxSv"}`);
   if (!max || isNaN(parseInt(max, 10))) return false;
 
-  const existingSupervisionLogicalNode = Array.from(
+  const existingSupervisionLNs = Array.from(
     subscriberIed.querySelectorAll(`LN[lnClass="${lnClass}"]`),
   );
 
-  const availableSupervisorSpots = existingSupervisionLogicalNode.filter(
+  if (existingSupervisionLNs.length < parseInt(max, 10)) return true;
+
+  const availableSupervisorSpots = existingSupervisionLNs.filter(
     (ln) => !holdsValidObjRef(ln, type(supervision)),
   );
 
   return (
-    existingSupervisionLogicalNode.length <= parseInt(max, 10) &&
+    existingSupervisionLNs.length === parseInt(max, 10) &&
     availableSupervisorSpots.length > 0
   );
 }
@@ -177,6 +152,8 @@ function isControlBlockSupervised(supervision: Supervision): boolean {
 export function canInstantiateSubscriptionSupervision(
   supervision: Supervision,
   options: SupervisionOptions = {
+    newSupervisionLn: false,
+    fixedLnInst: -1,
     checkEditableSrcRef: true,
     checkDuplicateSupervisions: true,
     checkMaxSupervisionLimits: true,
@@ -200,7 +177,7 @@ export function canInstantiateSubscriptionSupervision(
 
   if (
     options.checkMaxSupervisionLimits &&
-    !exceedSupervisionLimits(supervision)
+    !withinSupervisionLimits(supervision)
   )
     return false;
 
