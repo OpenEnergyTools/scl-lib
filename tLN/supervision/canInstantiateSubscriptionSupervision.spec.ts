@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { canInstantiateSubscriptionSupervision } from "./canInstantiateSubscriptionSupervision";
+import { canInstantiateSubscriptionSupervision } from "./canInstantiateSubscriptionSupervision.js";
 
 export const doc = new DOMParser().parseFromString(
   `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" version="2007" revision="B" release="4">
@@ -234,6 +234,8 @@ describe("Function that checks whether subscription supervision can be instantia
             subscriberIedOrLn,
           },
           {
+            newSupervisionLn: false,
+            fixedLnInst: -1,
             checkDuplicateSupervisions: false,
             checkEditableSrcRef: true,
             checkMaxSupervisionLimits: true,
@@ -354,6 +356,8 @@ describe("Function that checks whether subscription supervision can be instantia
             subscriberIedOrLn,
           },
           {
+            newSupervisionLn: false,
+            fixedLnInst: -1,
             checkDuplicateSupervisions: true,
             checkEditableSrcRef: false,
             checkMaxSupervisionLimits: false,
@@ -471,6 +475,8 @@ describe("Function that checks whether subscription supervision can be instantia
             subscriberIedOrLn,
           },
           {
+            newSupervisionLn: false,
+            fixedLnInst: -1,
             checkDuplicateSupervisions: true,
             checkEditableSrcRef: true,
             checkMaxSupervisionLimits: false,
