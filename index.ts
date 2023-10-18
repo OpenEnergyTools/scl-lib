@@ -17,6 +17,8 @@ export { CreateReportControlOptions } from "./tReportControl/createReportControl
 export { updateReportControl } from "./tReportControl/updateReportControl.js";
 export { createReportControl } from "./tReportControl/createReportControl.js";
 
+export { updateGSEControl } from "./tGSEControl/updateGSEControl.js";
+
 export { macAddressGenerator } from "./generator/macAddressGenerator.js";
 export { appIdGenerator } from "./generator/appIdGenerator.js";
 export { lnInstGenerator } from "./generator/lnInstGenerator.js";
