@@ -1,30 +1,12 @@
 import { Insert, createElement } from "../foundation/utils.js";
 import { getReference } from "../general/getReference.js";
 
+import { connectedAp } from "../tControlWithIEDName/connctedAp.js";
+import { pathId } from "../tControl/pathId.js";
+
 import { uniqueElementName } from "../foundation/uniqueElementName.js";
 import { canAddGSEControl } from "./canAddGSEControl.js";
 import { createGSE } from "../tGSE/createGSE.js";
-
-/** @returns ConnectedAP element for any given element within an AccessPoint */
-function connectedAp(ln0: Element, apName: string | undefined): Element | null {
-  const accessPointName =
-    apName ?? ln0.closest("AccessPoint")?.getAttribute("name");
-  const iedName = ln0.closest("IED")?.getAttribute("name");
-
-  return ln0.ownerDocument.querySelector(
-    `:root > Communication > SubNetwork > ConnectedAP[iedName="${iedName}"][apName="${accessPointName}"]`
-  );
-}
-
-function appId(ln0: Element, cbName: string): string {
-  const iedName = ln0.closest("IED")?.getAttribute("name");
-  const ldInst = ln0.closest("LDevice")?.getAttribute("inst");
-  const prefix = ln0.getAttribute("prefix") ?? "";
-  const lnClass = ln0.getAttribute("lnClass");
-  const inst = ln0.getAttribute("inst");
-
-  return `${iedName}/${ldInst}/${prefix}${lnClass}${inst}/${cbName}`;
-}
 
 function invalidGSEControl(
   ln0: Element,
@@ -108,7 +90,7 @@ export function createGSEControl(
   if (!options.gseControl?.name) attributes.name = cbName;
   if (!options.gseControl?.confRev) attributes.confRev = "1";
   if (!options.gseControl?.type) attributes.type = "GOOSE";
-  if (!options.gseControl?.appID) attributes.appID = appId(ln0, cbName);
+  if (!options.gseControl?.appID) attributes.appID = pathId(ln0, cbName);
   const generatedConfRev = options.gseControl?.datSet ? "1" : "0";
   const userConfRev = options.gseControl?.confRev;
   attributes.confRev = userConfRev ? userConfRev : generatedConfRev;

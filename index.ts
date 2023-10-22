@@ -20,6 +20,11 @@ export { createReportControl } from "./tReportControl/createReportControl.js";
 export { createGSEControl } from "./tGSEControl/createGSEControl.js";
 export { updateGSEControl } from "./tGSEControl/updateGSEControl.js";
 
+export {
+  CreateSampledValueControlOptions,
+  createSampledValueControl,
+} from "./tSampledValueControl/createSampledValueControl.js";
+
 export { macAddressGenerator } from "./generator/macAddressGenerator.js";
 export { appIdGenerator } from "./generator/appIdGenerator.js";
 export { lnInstGenerator } from "./generator/lnInstGenerator.js";
