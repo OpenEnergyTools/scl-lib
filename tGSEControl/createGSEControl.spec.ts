@@ -166,7 +166,7 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("0");
     expect((insert[0].node as Element).getAttribute("type")).to.equal("GOOSE");
-    expect((insert[0].node as Element).getAttribute("appId")).to.equal(
+    expect((insert[0].node as Element).getAttribute("appID")).to.equal(
       "IED1/first/LLN0/newGSEControl_003"
     );
   });
@@ -180,7 +180,7 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("0");
     expect((insert[0].node as Element).getAttribute("type")).to.equal("GOOSE");
-    expect((insert[0].node as Element).getAttribute("appId")).to.equal(
+    expect((insert[0].node as Element).getAttribute("appID")).to.equal(
       "IED1/first/LLN0/newGSEControl_003"
     );
   });
@@ -192,7 +192,7 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
         desc: "someDesc",
         confRev: "2",
         type: "GSSE",
-        appId: "someAppID",
+        appID: "someAppID",
       },
     });
 
@@ -202,7 +202,7 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("2");
     expect((insert[0].node as Element).getAttribute("type")).to.equal("GSSE");
-    expect((insert[0].node as Element).getAttribute("appId")).to.equal(
+    expect((insert[0].node as Element).getAttribute("appID")).to.equal(
       "someAppID"
     );
   });
@@ -222,7 +222,7 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
         desc: "someDesc",
         confRev: "2",
         type: "GSSE",
-        appId: "someAppID",
+        appID: "someAppID",
       },
     });
     expect(insert.length).to.equal(2);

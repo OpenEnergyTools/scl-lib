@@ -49,7 +49,7 @@ export type CreateGSEControlOptions = {
     name?: string;
     desc?: string | null;
     /** Id for the new GSEControl. Default is IED.name/LDevice.inst/LLN0/GSEControl.name */
-    appId?: string;
+    appID?: string;
     /** Whether the GSEControl is of type 'GOOSE' or 'GSSE'. Default 'GOOSE' */
     type?: "GOOSE" | "GSSE";
     /** Whether GOOSE is coded with fixed offsets. Default is false */
@@ -108,7 +108,7 @@ export function createGSEControl(
   if (!options.gseControl?.name) attributes.name = cbName;
   if (!options.gseControl?.confRev) attributes.confRev = "1";
   if (!options.gseControl?.type) attributes.type = "GOOSE";
-  if (!options.gseControl?.appId) attributes.appId = appId(ln0, cbName);
+  if (!options.gseControl?.appID) attributes.appID = appId(ln0, cbName);
   const generatedConfRev = options.gseControl?.datSet ? "1" : "0";
   const userConfRev = options.gseControl?.confRev;
   attributes.confRev = userConfRev ? userConfRev : generatedConfRev;
