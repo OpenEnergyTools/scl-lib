@@ -321,6 +321,97 @@ describe("Utility function to create schema valid SampledValueControl insert edi
     ).to.equal("6");
   });
 
+  it("always add required SmvOpts child element", () => {
+    const insert = createSampledValueControl(ied);
+    expect((insert[0].node as Element).querySelector("SmvOpts")).to.not.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("refreshTime")
+    ).to.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("sampleSynchronized")
+    ).to.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("sampleRate")
+    ).to.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("dataSet")
+    ).to.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("security")
+    ).to.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("timestamp")
+    ).to.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("synchSourceId")
+    ).to.be.null;
+  });
+
+  it("allows to set non default SmvOpts attributes add required SmvOpts child element", () => {
+    const insert = createSampledValueControl(ied, {
+      smvOpts: {
+        refreshTime: "true",
+        sampleSynchronized: "false",
+        sampleRate: "true",
+        dataSet: "true",
+        security: "true",
+        timestamp: "true",
+        synchSourceId: "true",
+      },
+    });
+
+    expect((insert[0].node as Element).querySelector("SmvOpts")).to.not.be.null;
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("refreshTime")
+    ).to.equal("true");
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("sampleSynchronized")
+    ).to.equal("false");
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("sampleRate")
+    ).to.equal("true");
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("dataSet")
+    ).to.equal("true");
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("security")
+    ).to.equal("true");
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("timestamp")
+    ).to.equal("true");
+    expect(
+      (insert[0].node as Element)
+        .querySelector("SmvOpts")
+        ?.getAttribute("synchSourceId")
+    ).to.equal("true");
+  });
+
   it("does not return SMV insert with missing ldInst", () => {
     const insert = createSampledValueControl(lDevice2);
     expect(insert.length).to.equal(1);

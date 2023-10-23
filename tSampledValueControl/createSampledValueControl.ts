@@ -125,6 +125,13 @@ export function createSampledValueControl(
     attributes
   );
 
+  const smvOpts = createElement(
+    ln0.ownerDocument,
+    "SmvOpts",
+    options.smvOpts ?? {}
+  );
+  smvControl.appendChild(smvOpts);
+
   const edits: Insert[] = [];
   edits.push({
     parent: ln0,
