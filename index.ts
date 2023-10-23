@@ -25,6 +25,8 @@ export {
   createSampledValueControl,
 } from "./tSampledValueControl/createSampledValueControl.js";
 
+export { removeFCDA } from "./tFCDA/removeFCDA.js";
+
 export { macAddressGenerator } from "./generator/macAddressGenerator.js";
 export { appIdGenerator } from "./generator/appIdGenerator.js";
 export { lnInstGenerator } from "./generator/lnInstGenerator.js";
