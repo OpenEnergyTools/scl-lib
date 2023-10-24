@@ -5,7 +5,7 @@ import { matchDataAttributes } from "../tExtRef/matchDataAttributes.js";
 import { matchSrcAttributes } from "../tExtRef/matchSrcAttributes.js";
 import { unsubscribe } from "../tExtRef/unsubscribe.js";
 
-function fCDAsSubscription(fcda: Element): Element[] {
+export function fCDAsSubscription(fcda: Element): Element[] {
   const doc = fcda.ownerDocument;
   const iedName = fcda.closest("IED")?.getAttribute("name");
   if (!iedName) return [];
