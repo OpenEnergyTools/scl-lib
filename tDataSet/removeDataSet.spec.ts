@@ -12,7 +12,7 @@ describe("Utility function to remove DataSet element", () => {
     withSubscriptionSupervision,
     "DataSet"
   ) as Element;
-  const edits = removeDataSet(dataSet);
+  const edits = removeDataSet({ node: dataSet });
   const extRefs = Array.from(
     dataSet.ownerDocument.querySelectorAll(
       'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"], ExtRef[srcCBName="someGse3"]'
@@ -20,10 +20,13 @@ describe("Utility function to remove DataSet element", () => {
   );
   const doi = extRefs[0].ownerDocument.querySelector(
     'LN[lnClass="LGOS"][inst="1"] > DOI'
-  );
+  )!;
   const ln = extRefs[0].ownerDocument.querySelector(
     'LN[lnClass="LGOS"][inst="2"]'
   );
+
+  it("returns empty string when remove.node is not DataSet", () =>
+    expect(removeDataSet({ node: doi })).to.be.empty);
 
   it("removes DataSet also removes/updates dependant data", () =>
     expect(edits.length).to.equal(10));

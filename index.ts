@@ -25,6 +25,8 @@ export {
   createSampledValueControl,
 } from "./tSampledValueControl/createSampledValueControl.js";
 
+export { removeDataSet } from "./tDataSet/removeDataSet.js";
+
 export { removeFCDA } from "./tFCDA/removeFCDA.js";
 
 export { macAddressGenerator } from "./generator/macAddressGenerator.js";
