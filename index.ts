@@ -12,6 +12,7 @@ export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
 export { updateIED } from "./tIED/updateIED.js";
 
 export { controlBlockGseOrSmv } from "./tControl/controlBlockGseOrSmv.js";
+export { removeControlBlock } from "./tControl/removeControlBlock.js";
 
 export { CreateReportControlOptions } from "./tReportControl/createReportControl.js";
 export { updateReportControl } from "./tReportControl/updateReportControl.js";
