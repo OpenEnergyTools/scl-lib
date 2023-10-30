@@ -21,10 +21,14 @@ export { createReportControl } from "./tReportControl/createReportControl.js";
 export { createGSEControl } from "./tGSEControl/createGSEControl.js";
 export { updateGSEControl } from "./tGSEControl/updateGSEControl.js";
 
+export { createGSE } from "./tGSE/createGSE.js";
+
 export {
   CreateSampledValueControlOptions,
   createSampledValueControl,
 } from "./tSampledValueControl/createSampledValueControl.js";
+
+export { createSMV } from "./tSMV/createSMV.js";
 
 export { removeDataSet } from "./tDataSet/removeDataSet.js";
 export { updateDataSet } from "./tDataSet/updateDataSet.js";
