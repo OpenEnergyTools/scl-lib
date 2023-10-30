@@ -27,6 +27,7 @@ export {
 } from "./tSampledValueControl/createSampledValueControl.js";
 
 export { removeDataSet } from "./tDataSet/removeDataSet.js";
+export { updateDataSet } from "./tDataSet/updateDataSet.js";
 
 export { removeFCDA } from "./tFCDA/removeFCDA.js";
 
