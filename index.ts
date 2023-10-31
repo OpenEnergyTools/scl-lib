@@ -36,6 +36,10 @@ export { ChangeGseOrSmvAddressOptions } from "./tAddress/changeGseOrSmvAddress.j
 export { changeSMVContent } from "./tSMV/changeSMVContent.js";
 export { createSMV } from "./tSMV/createSMV.js";
 
+export {
+  CreateDataSetOptions,
+  createDataSet,
+} from "./tDataSet/createDataSet.js";
 export { removeDataSet } from "./tDataSet/removeDataSet.js";
 export { updateDataSet } from "./tDataSet/updateDataSet.js";
 
