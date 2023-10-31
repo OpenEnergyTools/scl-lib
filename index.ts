@@ -32,6 +32,8 @@ export {
   createSampledValueControl,
 } from "./tSampledValueControl/createSampledValueControl.js";
 
+export { ChangeGseOrSmvAddressOptions } from "./tAddress/changeGseOrSmvAddress.js";
+export { changeSMVContent } from "./tSMV/changeSMVContent.js";
 export { createSMV } from "./tSMV/createSMV.js";
 
 export { removeDataSet } from "./tDataSet/removeDataSet.js";
