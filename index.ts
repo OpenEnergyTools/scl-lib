@@ -21,6 +21,10 @@ export { createReportControl } from "./tReportControl/createReportControl.js";
 export { createGSEControl } from "./tGSEControl/createGSEControl.js";
 export { updateGSEControl } from "./tGSEControl/updateGSEControl.js";
 
+export {
+  changeGSEContent,
+  ChangeGSEContentOptions,
+} from "./tGSE/changeGSEContent.js";
 export { createGSE } from "./tGSE/createGSE.js";
 
 export {
