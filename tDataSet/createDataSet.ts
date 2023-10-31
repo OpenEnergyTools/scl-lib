@@ -41,5 +41,9 @@ export function createDataSet(
     ...dataSetAttributes,
   });
 
-  return { parent, node: dataSet, reference: getReference(parent, "DataSet") };
+  return {
+    parent: anyLn,
+    node: dataSet,
+    reference: getReference(parent, "DataSet"),
+  };
 }

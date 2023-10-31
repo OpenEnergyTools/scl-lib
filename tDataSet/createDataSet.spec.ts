@@ -128,6 +128,7 @@ describe("Utility function to create schema valid DataSet insert edit", () => {
     expect((insert!.node as Element).getAttribute("name")).to.equal(
       "newDataSet_003"
     );
+    expect((insert!.parent as Element).tagName).to.equal("LN0");
   });
 
   it("return insert edit DataSet to LN", () => {
