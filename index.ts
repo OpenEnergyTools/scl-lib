@@ -11,6 +11,7 @@ export { removeProcessElement } from "./tSubstation/removeProcessElement.js";
 export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
 export { updateIED } from "./tIED/updateIED.js";
 
+export { findControlBlockSubscription } from "./tControl/findControlSubscription.js";
 export { controlBlockGseOrSmv } from "./tControl/controlBlockGseOrSmv.js";
 export { removeControlBlock } from "./tControl/removeControlBlock.js";
 
