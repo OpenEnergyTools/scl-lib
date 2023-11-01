@@ -32,6 +32,7 @@ export {
   CreateSampledValueControlOptions,
   createSampledValueControl,
 } from "./tSampledValueControl/createSampledValueControl.js";
+export { updateSampledValueControl } from "./tSampledValueControl/updateSampledValueControl.js";
 
 export { ChangeGseOrSmvAddressOptions } from "./tAddress/changeGseOrSmvAddress.js";
 export { changeSMVContent } from "./tSMV/changeSMVContent.js";
