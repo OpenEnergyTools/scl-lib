@@ -48,6 +48,7 @@ describe("ReportControl related functions", () => {
 
         expect(insert).to.exist;
         expect((insert!.parent as Element).tagName).to.equal("LN0");
+        expect(insert!.reference as Element).to.not.be.null;
       });
 
       it("with parent LDevice adds ReportControl to its LN0", () => {

@@ -1,6 +1,7 @@
 import { Insert, createElement } from "../foundation/utils.js";
 import { canAddReportControl } from "./canAddReportControl.js";
 import { uniqueElementName } from "../foundation/uniqueElementName.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 function invalid(
   anyLn: Element,
@@ -158,6 +159,6 @@ export function createReportControl(
   return {
     parent: anyLn,
     node: reportControl,
-    reference: null,
+    reference: getReference(anyLn, "ReportControl"),
   };
 }
