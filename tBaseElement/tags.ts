@@ -157,7 +157,7 @@ const sCLTags = [
   "SecPerSamples",
 ] as const;
 
-type SCLTag = (typeof sCLTags)[number];
+export type SCLTag = (typeof sCLTags)[number];
 
 const tBaseNameSequence = ["Text", "Private"] as const;
 const tNamingSequence = [...tBaseNameSequence] as const;

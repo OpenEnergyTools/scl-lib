@@ -66,6 +66,8 @@ export { canInstantiateSubscriptionSupervision } from "./tLN/canInstantiateSubsc
 
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";
 
+export { find } from "./tBaseElement/find.js";
 export { getReference } from "./tBaseElement/getReference.js";
 export { getChildren } from "./tBaseElement/getChildren.js";
 export { identity } from "./tBaseElement/identity.js";
+export { isPublic } from "./tBaseElement/isPublic.js";
