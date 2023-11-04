@@ -1,6 +1,6 @@
 import { Insert, createElement } from "../foundation/utils.js";
 
-import { getReference } from "../general/getReference.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 export type InsertIedOptions = {
   addCommunicationSection: boolean;

@@ -1,5 +1,5 @@
 import { Insert, Remove, createElement } from "../foundation/utils.js";
-import { getReference } from "../general/getReference.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 export type ChangeGseOrSmvAddressOptions = {
   /** MAC-Address within `P` element in the `GSE` or `SMV` element */

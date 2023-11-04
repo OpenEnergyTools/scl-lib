@@ -1,5 +1,5 @@
 import { Insert, createElement } from "../foundation/utils.js";
-import { getReference } from "../general/getReference.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 import { connectedAp } from "../tControlWithIEDName/connctedAp.js";
 import { pathId } from "../tControl/pathId.js";

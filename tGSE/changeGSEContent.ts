@@ -1,6 +1,6 @@
 import { Insert, Remove, createElement } from "../foundation/utils.js";
 
-import { getReference } from "../general/getReference.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 import {
   ChangeGseOrSmvAddressOptions,

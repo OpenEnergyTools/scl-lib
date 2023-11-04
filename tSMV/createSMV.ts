@@ -1,7 +1,7 @@
 import { Insert, createElement } from "../foundation/utils.js";
 import { macAddressGenerator } from "../generator/macAddressGenerator.js";
 import { appIdGenerator } from "../generator/appIdGenerator.js";
-import { getReference } from "../general/getReference.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 export type CreateSMVOptions = {
   /** MAC-Address within `P` element in the `SMV` element */

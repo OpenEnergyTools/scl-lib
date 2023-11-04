@@ -1,5 +1,5 @@
 import { Insert, Update, createElement } from "../foundation/utils.js";
-import { getReference } from "../general/getReference.js";
+import { getReference } from "../tBaseElement/getReference.js";
 
 import { doesFcdaMeetExtRefRestrictions } from "./doesFcdaMeetExtRefRestrictions.js";
 
