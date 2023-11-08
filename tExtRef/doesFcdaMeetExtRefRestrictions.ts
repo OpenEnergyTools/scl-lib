@@ -1,6 +1,13 @@
 import { fcdaBaseTypes } from "../tFCDA/fcdaBaseTypes.js";
 import { extRefTypeRestrictions } from "./extRefTypeRestrictions.js";
 
+export type DoesFcdaMeetExtRefRestrictionsOptions = {
+  /** The control block type to check against `pServT` */
+  controlBlockType?: "GOOSE" | "Report" | "SMV" | "Poll";
+  /** Whether to only check against basic type. Skips check against pDO and pLN */
+  checkOnlyBType?: boolean;
+};
+
 /**
  * This function checks if restrictions of an `ExtRef` element given by
  * `pDO` and optionally by `pDA`, `pLN` and `pServT` are met by the FCDA/FCD
@@ -13,7 +20,7 @@ import { extRefTypeRestrictions } from "./extRefTypeRestrictions.js";
 export function doesFcdaMeetExtRefRestrictions(
   extRef: Element,
   fcda: Element,
-  controlBlockType?: "GOOSE" | "Report" | "SMV" | "Poll",
+  options: DoesFcdaMeetExtRefRestrictionsOptions = { checkOnlyBType: false }
 ): boolean {
   // Vendor does not provide data for the check so any FCDA meets restriction
   if (!extRef.hasAttribute("pDO")) return true;
@@ -26,9 +33,13 @@ export function doesFcdaMeetExtRefRestrictions(
 
   if (
     extRef.getAttribute("pServT") &&
-    controlBlockType !== extRef.getAttribute("pServT")
+    options.controlBlockType &&
+    options.controlBlockType !== extRef.getAttribute("pServT")
   )
     return false;
+
+  // Some vendors allow subscribing of e.g. ACT to SPS, both bType BOOLEAN
+  if (options.checkOnlyBType) return fcdaTypes.bType === extRefSpec.bType;
 
   if (
     extRef.getAttribute("pLN") &&

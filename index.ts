@@ -57,7 +57,10 @@ export { Connection } from "./tExtRef/subscribe.js";
 export { SubscribeOptions } from "./tExtRef/subscribe.js";
 export { subscribe } from "./tExtRef/subscribe.js";
 export { extRefTypeRestrictions } from "./tExtRef/extRefTypeRestrictions.js";
-export { doesFcdaMeetExtRefRestrictions } from "./tExtRef/doesFcdaMeetExtRefRestrictions.js";
+export {
+  DoesFcdaMeetExtRefRestrictionsOptions,
+  doesFcdaMeetExtRefRestrictions,
+} from "./tExtRef/doesFcdaMeetExtRefRestrictions.js";
 export { sourceControlBlock } from "./tExtRef/sourceControlBlock.js";
 export { isSubscribed } from "./tExtRef/isSubscribed.js";
 

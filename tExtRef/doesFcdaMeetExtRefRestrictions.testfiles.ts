@@ -23,12 +23,14 @@ export const publisherIED = `
                         <FCDA desc="LPLVis" ldInst="QB2_Disconnector" lnClass="LLN0" doName="NamPlt" daName="vendor" fc="DC"/>
                         <FCDA desc="CMVFLOAT32" ldInst="Measurement" lnClass="MMXU" lnInst="1" doName="A.phsA" daName="cVal.mag.f" fc="MX" />    
                         <FCDA desc="WYE" ldInst="Measurement" lnClass="MMXU" lnInst="1" doName="A" fc="MX" />    
+                        <FCDA desc="ACTBool" ldInst="QB2_Disconnector" lnClass="PTOC" lnInst="1" doName="Op" daName="general" fc="ST" />    
                     </DataSet>
                 </LN0>
                 <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
                 <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
                 <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
                 <LN prefix="" lnClass="USER" inst="1" lnType="Dummy.USER"/>
+                <LN prefix="" lnClass="PTOC" inst="1" lnType="Dummy.PTOC"/>
             </LDevice>
             <LDevice inst="Measurement">
                 <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0">
@@ -94,8 +96,18 @@ export const publisherIED = `
         <DO name="NamPlt" type="OpenSCD_LPL_LD"/>
         <DO name="A" type="someWYE"/>
     </LNodeType>
+    <LNodeType lnClass="PTOC" id="Dummy.PTOC" desc="Logical device LN: parent">
+        <DO name="Mod" type="OpenSCD_ENC_Mod"/>
+        <DO name="Beh" type="OpenSCD_ENS_Beh"/>
+        <DO name="Health" type="OpenSCD_ENS_Health"/>
+        <DO name="NamPlt" type="OpenSCD_LPL_LD"/>
+        <DO name="Op" type="someACT"/>
+    </LNodeType>
     <DOType cdc="WYE" id="someWYE">
         <SDO name="phsA" type="someMV"/>
+    </DOType>
+    <DOType cdc="ACT" id="someACT">
+        <DA name="general" bType="BOOLEAN" dchg="true" fc="ST" />
     </DOType>
     <DOType cdc="CMV" id="someMV">
         <DA fc="MX" dchg="true" name="cVal" bType="Struct" type="someVector"/>   

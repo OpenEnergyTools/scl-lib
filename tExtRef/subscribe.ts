@@ -106,7 +106,7 @@ function getDataAttributes(fcda: Element): {
 
 function createSubscribeEdit(
   connection: Connection,
-  parent: Element,
+  parent: Element
 ): Update | Insert | null {
   const doc = connection.sink.ownerDocument;
   const fcda = connection.source.fcda;
@@ -206,10 +206,12 @@ function validSubscribeConditions(connection: Connection): boolean {
   const controlBlock = connection.source.controlBlock;
   const serviceType = controlBlock
     ? serviceTypes[controlBlock.tagName]
-    : undefined;
+    : "Poll";
   if (
     connection.sink.tagName === "ExtRef" &&
-    !doesFcdaMeetExtRefRestrictions(connection.sink, fcda, serviceType)
+    !doesFcdaMeetExtRefRestrictions(connection.sink, fcda, {
+      controlBlockType: serviceType,
+    })
   )
     return false;
 
@@ -241,7 +243,7 @@ function validSubscribeConditions(connection: Connection): boolean {
  */
 export function subscribe(
   connectionOrConnections: Connection | Connection[],
-  options: SubscribeOptions = { force: false },
+  options: SubscribeOptions = { force: false }
 ): (Insert | Update)[] {
   const connections = Array.isArray(connectionOrConnections)
     ? connectionOrConnections
