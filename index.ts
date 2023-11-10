@@ -64,6 +64,7 @@ export { isSubscribed } from "./tExtRef/isSubscribed.js";
 export { Supervision } from "./tLN/canInstantiateSubscriptionSupervision.js";
 export { canInstantiateSubscriptionSupervision } from "./tLN/canInstantiateSubscriptionSupervision.js";
 
+export { maxAttributes, canAddFCDA } from "./tFCDA/canAddFCDA.js";
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";
 
 export { find } from "./tBaseElement/find.js";
