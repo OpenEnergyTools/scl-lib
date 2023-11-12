@@ -3,7 +3,7 @@
   "description": "Function library supporting SCL editing",
   "license": "Apache-2.0",
   "author": "Jakob Vogelsang",
-  "version": "0.9.19",
+  "version": "0.9.21",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
