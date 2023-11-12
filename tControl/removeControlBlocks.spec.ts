@@ -11,6 +11,14 @@ import {
 import { removeControlBlock } from "./removeControlBlock.js";
 
 describe("Utility function to remove control blocks", () => {
+  const ctrlBlock6 = findElement(
+    ed2Subscription,
+    'SampledValueControl[name="someSmv2"]',
+  ) as Element;
+  const ctrlBlock5 = findElement(
+    ed2Subscription,
+    'GSEControl[name="someGse5"]',
+  ) as Element;
   const ctrlBlock4 = findElement(
     ed2Subscription,
     'GSEControl[name="someGse4"]',
@@ -77,5 +85,25 @@ describe("Utility function to remove control blocks", () => {
     expect(((edits[2] as Remove).node as Element).tagName).equal("ExtRef");
     expect(((edits[3] as Remove).node as Element).tagName).equal("ExtRef");
     expect(((edits[4] as Remove).node as Element).tagName).equal("Inputs");
+  });
+
+  it("it removes GSE referenced element", () => {
+    const edits = removeControlBlock({ node: ctrlBlock5 });
+    const extRef = ctrlBlock5.ownerDocument.querySelector(
+      'ExtRef[srcCBName="someGse5"]',
+    );
+    const gse = ctrlBlock5.ownerDocument.querySelector("GSE");
+
+    expect(edits.length).equals(3);
+    expect((edits[1] as Remove).node).equal(extRef);
+    expect((edits[2] as Remove).node).equal(gse);
+  });
+
+  it("it removes SMV referenced element", () => {
+    const edits = removeControlBlock({ node: ctrlBlock6 });
+    const smv = ctrlBlock6.ownerDocument.querySelector("SMV");
+
+    expect(edits.length).equals(2);
+    expect((edits[1] as Remove).node).equal(smv);
   });
 });

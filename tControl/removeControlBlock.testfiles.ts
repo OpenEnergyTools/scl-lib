@@ -1,5 +1,17 @@
 export const ed2Subscription = `
     <SCL version="2007">
+    <Communication>
+        <SubNetwork name="SubNet" >
+            <ConnectedAP iedName="srcIED" apName="someAP" >
+                <GSE ldInst="someLDInst" cbName="someGse5" >
+                    <Address />
+                </GSE>
+                <SMV ldInst="someLDInst" cbName="someSmv2" >
+                    <Address />
+                </SMV>
+            </ConnectedAP>
+        </SubNetwork>
+    </Communication>
     <IED name="sinkIED">
         <AccessPoint name="someAP">
             <Server>
@@ -35,6 +47,18 @@ export const ed2Subscription = `
                                 srcLDInst="someLDInst"
                                 srcLNClass="LLN0"
                                 srcCBName="someGse2"
+                                serviceType="GOOSE" />
+                            <ExtRef 
+                                iedName="srcIED" 
+                                ldInst="someLDInst" 
+                                lnClass="LLN0" 
+                                doName="Op" 
+                                daName="general"
+                                srcLDInst="someLDInst"
+                                srcPrefix=""
+                                srcLNClass="LLN0"
+                                srcLNInst=""
+                                srcCBName="someGse5"
                                 serviceType="GOOSE" />
                             <ExtRef 
                                 iedName="srcIED" 
@@ -168,7 +192,9 @@ export const ed2Subscription = `
                         <GSEControl name="someGse2" datSet="gseDatSet"/>
                         <GSEControl name="someGse3" datSet="gseDatSet"/>
                         <GSEControl name="someGse4" />
+                        <GSEControl name="someGse5" datSet="gseDatSet"/>
                         <SampledValueControl name="someSmv" datSet="smvDataSet"/>
+                        <SampledValueControl name="someSmv2" />
                     </LN0>
                     <LN prefix="" lnClass="PTOC" inst="1" lnType="someLnType">
                         <DataSet name="rpDatSet">

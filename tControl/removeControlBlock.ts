@@ -2,6 +2,7 @@ import { Remove, Update } from "../foundation/utils.js";
 
 import { removeDataSet } from "../tDataSet/removeDataSet.js";
 import { unsubscribe } from "../tExtRef/unsubscribe.js";
+import { controlBlockGseOrSmv } from "./controlBlockGseOrSmv.js";
 
 import { controlBlocks } from "./controlBlocks.js";
 import { findControlBlockSubscription } from "./findControlSubscription.js";
@@ -33,13 +34,17 @@ export function removeControlBlock(remove: Remove): (Remove | Update)[] {
   const dataSet = controlBlock.parentElement?.querySelector(
     `DataSet[name="${controlBlock.getAttribute("datSet")}"]`,
   );
-  if (!dataSet) return ctrlBlockRemoveAction;
-
-  const multiUseDataSet = controlBlocks(dataSet).length > 1;
-  if (multiUseDataSet)
-    return ctrlBlockRemoveAction.concat(
-      unsubscribe(findControlBlockSubscription(controlBlock)),
+  const dataSetRemove: (Remove | Update)[] = [];
+  if (dataSet && controlBlocks(dataSet).length > 1) {
+    dataSetRemove.push(
+      ...unsubscribe(findControlBlockSubscription(controlBlock)),
     );
+  } else if (dataSet) {
+    dataSetRemove.push(...removeDataSet({ node: dataSet }));
+  }
 
-  return ctrlBlockRemoveAction.concat(removeDataSet({ node: dataSet }));
+  const gse = controlBlockGseOrSmv(controlBlock);
+  const gseRemove = gse ? [{ node: gse }] : [];
+
+  return ctrlBlockRemoveAction.concat(dataSetRemove, gseRemove);
 }
