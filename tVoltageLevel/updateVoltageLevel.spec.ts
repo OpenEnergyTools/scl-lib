@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { findElement } from "../foundation/helpers.test.js";
 
-import { Update } from "../foundation/utils.js";
+import { Update, isUpdate } from "../foundation/utils.js";
 import { substation } from "../tSubstation/substation.testfiles.js";
 import { updateVoltageLevel } from "./updateVoltageLevel.js";
 
@@ -78,59 +78,87 @@ describe("update VoltageLevel element", () => {
       });
     });
 
-    it("also updates related ConnectivityNode path", () => {
+    it("updates related ConnectivityNode path", () => {
       const edits = updateVoltageLevel({
         element: aa1e1,
         attributes: { name: "E2" },
       });
 
-      expect(edits.length).to.equal(15);
+      expect(edits.length).to.equal(16);
       expect((edits[0] as Update).element).to.equal(aa1e1);
+
+      const updates = edits.filter(isUpdate);
+
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA1/E2/BB1/L1",
+        ),
+      ).to.exist;
 
       expect((edits[1] as Update).attributes).to.deep.equal({
         pathName: "AA1/E2/BB1/L1",
       });
 
-      expect((edits[2] as Update).attributes).to.deep.equal({
-        pathName: "AA1/E2/Q01/L1",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA1/E2/Q01/L1",
+        ),
+      ).to.exist;
 
-      expect((edits[3] as Update).attributes).to.deep.equal({
-        pathName: "AA1/E2/Q01/L2",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA1/E2/Q01/L2",
+        ),
+      ).to.exist;
 
-      expect((edits[4] as Update).attributes).to.deep.equal({
-        pathName: "AA1/E2/Q02/L1",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA1/E2/Q02/L2",
+        ),
+      ).to.exist;
 
-      expect((edits[5] as Update).attributes).to.deep.equal({
-        pathName: "AA1/E2/Q02/L2",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA1/E2/Q02/L2",
+        ),
+      ).to.exist;
     });
 
-    it("also updates related Terminal connectivityNode and voltageLevelName", () => {
+    it("updates related Terminal and NeutralPoint connectivityNode and voltageLevelName", () => {
       const edits = updateVoltageLevel({
         element: aa1e1,
         attributes: { name: "E2" },
       });
 
-      expect(edits.length).to.equal(15);
-      expect((edits[0] as Update).element).to.equal(aa1e1);
+      expect(edits.length).to.equal(16);
 
-      expect((edits[7] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA1/E2/BB1/L1",
-        voltageLevelName: "E2",
-      });
+      const updates = edits.filter(isUpdate);
 
-      expect((edits[8] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA1/E2/Q01/L1",
-        voltageLevelName: "E2",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { connectivityNode, voltageLevelName } }) =>
+            voltageLevelName === "E2" && connectivityNode === "AA1/E2/BB1/L1",
+        ),
+      ).to.exist;
 
-      expect((edits[12] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA1/E2/Q02/L1",
-        voltageLevelName: "E2",
-      });
+      expect(
+        updates.find(
+          ({
+            element: { tagName },
+            attributes: { connectivityNode, voltageLevelName },
+          }) =>
+            tagName === "NeutralPoint" &&
+            voltageLevelName === "E2" &&
+            connectivityNode === "AA1/E2/BB1/L1",
+        ),
+      ).to.exist;
+
+      expect(
+        updates.filter(
+          ({ attributes: { connectivityNode, voltageLevelName } }) =>
+            voltageLevelName === "E2" && connectivityNode === "AA1/E2/Q01/L1",
+        ),
+      ).to.have.lengthOf(2);
     });
   });
 });

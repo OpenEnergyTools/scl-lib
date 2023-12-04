@@ -76,7 +76,7 @@ describe("update Bay element", () => {
       });
     });
 
-    it("also updates ConnectivityNode path", () => {
+    it("updates ConnectivityNode path", () => {
       const edits = updateBay({
         element: aa1e1q01,
         attributes: { name: "Q03" },
@@ -86,18 +86,19 @@ describe("update Bay element", () => {
       expect(edits[0]).to.satisfy(isUpdate);
       expect((edits[0] as Update).element).to.equal(aa1e1q01);
 
-      expect(edits[1]).to.satisfy(isUpdate);
-      expect((edits[1] as Update).attributes).to.deep.equal({
-        pathName: "AA1/E1/Q03/L1",
-      });
-
-      expect(edits[2]).to.satisfy(isUpdate);
-      expect((edits[2] as Update).attributes).to.deep.equal({
-        pathName: "AA1/E1/Q03/L2",
-      });
+      expect(
+        edits
+          .filter(isUpdate)
+          .find(({ attributes: { pathName } }) => pathName === "AA1/E1/Q03/L1"),
+      ).to.exist;
+      expect(
+        edits
+          .filter(isUpdate)
+          .find(({ attributes: { pathName } }) => pathName === "AA1/E1/Q03/L2"),
+      ).to.exist;
     });
 
-    it("also updates Terminal connectivityNode and bayName", () => {
+    it("updates Terminal connectivityNode and bayName", () => {
       const edits = updateBay({
         element: aa1e1q01,
         attributes: { name: "Q03" },
@@ -107,32 +108,41 @@ describe("update Bay element", () => {
       expect(edits[0]).to.satisfy(isUpdate);
       expect((edits[0] as Update).element).to.equal(aa1e1q01);
 
-      expect(edits[3]).to.satisfy(isUpdate);
-      expect((edits[3] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA1/E1/Q03/L1",
-        bayName: "Q03",
-      });
-
-      expect(edits[4]).to.satisfy(isUpdate);
-      expect((edits[4] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA1/E1/Q03/L1",
-        bayName: "Q03",
-      });
-
-      expect(edits[5]).to.satisfy(isUpdate);
-      expect((edits[5] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA1/E1/Q03/L2",
-        bayName: "Q03",
-      });
+      expect(
+        edits
+          .filter(isUpdate)
+          .filter(
+            ({ attributes: { connectivityNode, bayName } }) =>
+              connectivityNode === "AA1/E1/Q03/L1" && bayName === "Q03",
+          ),
+      ).to.have.lengthOf(2);
+      expect(
+        edits
+          .filter(isUpdate)
+          .find(
+            ({ attributes: { connectivityNode, bayName } }) =>
+              connectivityNode === "AA1/E1/Q03/L2" && bayName === "Q03",
+          ),
+      ).to.exist;
     });
 
-    it("also updates Terminal connectivityNode and bayName outside the bay element", () => {
+    it("updates Terminals and NeutralPoints outside the bay element", () => {
       const edits = updateBay({
         element: aa1e1bb1,
         attributes: { name: "BB2" },
       });
 
-      expect(edits.length).to.equal(5);
+      expect(
+        edits
+          .filter(isUpdate)
+          .find(
+            ({ element, attributes: { connectivityNode, bayName } }) =>
+              connectivityNode === "AA1/E1/BB2/L1" &&
+              bayName === "BB2" &&
+              element.tagName === "NeutralPoint",
+          ),
+      ).to.exist;
+      expect(edits.length).to.equal(6);
     });
   });
 });
