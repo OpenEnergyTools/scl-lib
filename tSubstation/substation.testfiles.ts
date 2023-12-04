@@ -16,6 +16,14 @@ export const substation = `<SCL
           bayName="BB1"
           cNodeName="L1"
         />
+        <NeutralPoint
+          name="N1"
+          connectivityNode="AA1/E1/BB1/L1"
+          substationName="AA1"
+          voltageLevelName="E1"
+          bayName="BB1"
+          cNodeName="L1"
+        />
       </TransformerWinding>
       <TransformerWinding name="PTW2">
         <Terminal

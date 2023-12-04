@@ -2,58 +2,70 @@ import { Update } from "../foundation/utils.js";
 
 function updateConnectivityNodes(
   substation: Element,
-  newName: string,
+  substationName: string,
 ): Update[] {
   const cNodes = Array.from(
     substation.getElementsByTagName("ConnectivityNode"),
   );
 
-  const updates = cNodes.map((cNode) => {
+  const updates = [] as Update[];
+
+  cNodes.forEach((cNode) => {
     const cNodeName = cNode.getAttribute("name");
     const bayName = cNode.parentElement?.getAttribute("name");
     const voltageLevelName =
       cNode.parentElement?.parentElement?.getAttribute("name");
     if (!cNodeName || !bayName || !voltageLevelName) return;
 
-    const newPath = `${newName}/${voltageLevelName}/${bayName}/${cNodeName}`;
-    return { element: cNode, attributes: { pathName: newPath } };
+    const connectivityNode = `${substationName}/${voltageLevelName}/${bayName}/${cNodeName}`;
+    updates.push({
+      element: cNode,
+      attributes: { pathName: connectivityNode },
+    });
+
+    const oldConnectivityNode = cNode.getAttribute("pathName");
+    if (!oldConnectivityNode) return;
+
+    updates.push(
+      ...updateTerminals(substation, {
+        oldConnectivityNode,
+        connectivityNode,
+        substationName,
+      }),
+    );
   });
 
   return updates.filter((update) => update) as Update[];
 }
 
 function updateTerminals(
-  substation: Element,
-  names: {
-    oldSubstation: string;
-    newSubstation: string;
+  element: Element,
+  {
+    oldConnectivityNode,
+    connectivityNode,
+    substationName,
+  }: {
+    oldConnectivityNode: string;
+    connectivityNode: string;
+    substationName: string;
   },
 ): Update[] {
   const terminals = Array.from(
-    substation.querySelectorAll(
-      `Terminal[substationName="${names.oldSubstation}"]`,
+    element.closest("Substation")!.querySelectorAll(
+      `Terminal[connectivityNode="${oldConnectivityNode}"],
+       NeutralPoint[connectivityNode="${oldConnectivityNode}"]`,
     ),
   );
 
-  const updates = terminals.map((terminal) => {
-    const connectivityNode = terminal.getAttribute("connectivityNode");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, voltageLevelName, bayName, cNodeName] = (
-      connectivityNode ?? ""
-    ).split("/");
-    if (!voltageLevelName || !bayName || !cNodeName) return;
+  const updates = terminals.map((terminal) => ({
+    element: terminal,
+    attributes: {
+      connectivityNode,
+      substationName,
+    },
+  }));
 
-    const newConnectivityNode = `${names.newSubstation}/${voltageLevelName}/${bayName}/${cNodeName}`;
-    return {
-      element: terminal,
-      attributes: {
-        connectivityNode: newConnectivityNode,
-        substationName: names.newSubstation,
-      },
-    };
-  });
-
-  return updates.filter((update) => update) as Update[];
+  return updates;
 }
 
 /** Updates `Substation` attributes and cross-referenced elements
@@ -71,11 +83,5 @@ export function updateSubstation(update: Update): Update[] {
   const newName = attributes.name;
   if (!oldName || oldName === newName) return [update];
 
-  return [update].concat(
-    ...updateConnectivityNodes(substation, newName),
-    ...updateTerminals(substation, {
-      oldSubstation: oldName,
-      newSubstation: newName,
-    }),
-  );
+  return [update].concat(...updateConnectivityNodes(substation, newName));
 }

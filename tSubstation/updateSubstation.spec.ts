@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { findElement } from "../foundation/helpers.test.js";
 
-import { Update } from "../foundation/utils.js";
+import { Update, isUpdate } from "../foundation/utils.js";
 import { substation } from "./substation.testfiles.js";
 import { updateSubstation } from "./updateSubstation.js";
 
@@ -72,59 +72,96 @@ describe("update Substation element", () => {
       });
     });
 
-    it("also updates related ConnectivityNode path", () => {
+    it("updates related ConnectivityNode path", () => {
       const edits = updateSubstation({
         element: aa1,
         attributes: { name: "AA2" },
       });
 
-      expect(edits.length).to.equal(23);
+      expect(edits.length).to.equal(24);
       expect((edits[0] as Update).element).to.equal(aa1);
 
-      expect((edits[1] as Update).attributes).to.deep.equal({
-        pathName: "AA2/J1/BB1/L1",
-      });
+      const updates = edits.filter(isUpdate);
 
-      expect((edits[2] as Update).attributes).to.deep.equal({
-        pathName: "AA2/J1/Q01/L1",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA2/J1/BB1/L1",
+        ),
+      ).to.exist;
 
-      expect((edits[3] as Update).attributes).to.deep.equal({
-        pathName: "AA2/J1/Q01/L2",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA2/J1/Q01/L1",
+        ),
+      ).to.exist;
 
-      expect((edits[4] as Update).attributes).to.deep.equal({
-        pathName: "AA2/E1/BB1/L1",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA2/E1/BB1/L1",
+        ),
+      ).to.exist;
 
-      expect((edits[5] as Update).attributes).to.deep.equal({
-        pathName: "AA2/E1/Q01/L1",
-      });
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA2/E1/Q01/L1",
+        ),
+      ).to.exist;
+
+      expect(
+        updates.find(
+          ({ attributes: { pathName } }) => pathName === "AA2/E1/Q02/L1",
+        ),
+      ).to.exist;
     });
 
-    it("also updates related Terminal connectivityNode and substationName", () => {
+    it("updates related Terminal and NeutralPoint connectivityNode and substationName", () => {
       const edits = updateSubstation({
         element: aa1,
         attributes: { name: "AA2" },
       });
 
-      expect(edits.length).to.equal(23);
+      expect(edits.length).to.equal(24);
       expect((edits[0] as Update).element).to.equal(aa1);
 
-      expect((edits[9] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA2/E1/BB1/L1",
-        substationName: "AA2",
-      });
+      const updates = edits.filter(isUpdate);
 
-      expect((edits[14] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA2/J1/Q01/L2",
-        substationName: "AA2",
-      });
+      expect(
+        updates.find(
+          ({
+            element: { tagName },
+            attributes: { substationName, connectivityNode },
+          }) =>
+            tagName === "Terminal" &&
+            connectivityNode === "AA2/E1/BB1/L1" &&
+            substationName === "AA2",
+        ),
+      ).to.exist;
 
-      expect((edits[17] as Update).attributes).to.deep.equal({
-        connectivityNode: "AA2/E1/Q01/L1",
-        substationName: "AA2",
-      });
+      expect(
+        updates.find(
+          ({
+            element: { tagName },
+            attributes: { substationName, connectivityNode },
+          }) =>
+            tagName === "NeutralPoint" &&
+            connectivityNode === "AA2/E1/BB1/L1" &&
+            substationName === "AA2",
+        ),
+      ).to.exist;
+
+      expect(
+        updates.find(
+          ({ attributes: { substationName, connectivityNode } }) =>
+            connectivityNode === "AA2/E1/Q01/L1" && substationName === "AA2",
+        ),
+      ).to.exist;
+
+      expect(
+        updates.find(
+          ({ attributes: { substationName, connectivityNode } }) =>
+            connectivityNode === "AA2/J1/Q01/L2" && substationName === "AA2",
+        ),
+      ).to.exist;
     });
   });
 });
