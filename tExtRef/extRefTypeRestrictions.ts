@@ -1,5 +1,5 @@
 const dataObjects = await fetch(
-  new URL("../foundation/nsd.json", import.meta.url)
+  new URL("../foundation/nsd.json", import.meta.url),
 ).then((res) => res.json());
 
 /**
@@ -16,7 +16,7 @@ const dataObjects = await fetch(
  * the `bType` or undefined if no valid specification can be returned
  */
 export function extRefTypeRestrictions(
-  extRef: Element
+  extRef: Element,
 ): { cdc: string; bType?: string } | undefined {
   const [pDO, pDA] = ["pDO", "pDA"].map((attr) => extRef.getAttribute(attr));
   if (!pDO) return;

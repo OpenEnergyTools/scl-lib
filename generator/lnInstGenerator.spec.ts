@@ -19,7 +19,7 @@ describe("Generator function for `inst` and `lnInst` attributes", () => {
                   <LNode name="None" lnClass="CSWI" lnInst="6"/>
                   <LNode name="None" lnClass="CSWI" lnInst="8"/>
                 </Function>`,
-          "application/xml"
+          "application/xml",
         ).documentElement;
 
         generator = lnInstGenerator(parent, "LNode");
@@ -43,13 +43,13 @@ describe("Generator function for `inst` and `lnInst` attributes", () => {
         const parent = new DOMParser().parseFromString(
           `<Function name="someName">
                 </Function>`,
-          "application/xml"
+          "application/xml",
         ).documentElement;
 
         for (let i = 1; i <= 99; i++) {
           const lNode = new DOMParser().parseFromString(
             `<LNode iedName="None" lnClass="PDIS" lnInst="${i}" />`,
-            "application/xml"
+            "application/xml",
           ).documentElement;
           parent.appendChild(lNode);
         }
@@ -81,7 +81,7 @@ describe("Generator function for `inst` and `lnInst` attributes", () => {
                 <LN prefix="SubSup" lnClass="LGOS" inst="6"/>
                 <LN prefix="SubSup" lnClass="LGOS" inst="8"/>
             </LDevice>`,
-          "application/xml"
+          "application/xml",
         ).documentElement;
 
         generator = lnInstGenerator(parent, "LN");
@@ -105,13 +105,13 @@ describe("Generator function for `inst` and `lnInst` attributes", () => {
         const parent = new DOMParser().parseFromString(
           `<LDevice name="someInst">
             </LDevice>`,
-          "application/xml"
+          "application/xml",
         ).documentElement;
 
         for (let i = 1; i <= 99; i++) {
           const lNode = new DOMParser().parseFromString(
             `<LN prefix="SubSub" lnClass="LGOS" inst="${i}" />`,
-            "application/xml"
+            "application/xml",
           ).documentElement;
           parent.appendChild(lNode);
         }

@@ -18,7 +18,7 @@ export type CreateSMVOptions = {
 export function createSMV(
   parent: Element,
   attributes: { ldInst: string; cbName: string },
-  options: CreateSMVOptions = {}
+  options: CreateSMVOptions = {},
 ): Insert | null {
   if (parent.tagName !== "ConnectedAP") return null;
 

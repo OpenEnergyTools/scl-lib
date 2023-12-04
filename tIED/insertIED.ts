@@ -23,14 +23,14 @@ function addCommunicationElements(newIed: Element, scl: Element): Insert[] {
     });
 
   const newSubNetworks = Array.from(
-    newIed.ownerDocument.querySelectorAll(`:root > Communication > SubNetwork`)
+    newIed.ownerDocument.querySelectorAll(`:root > Communication > SubNetwork`),
   );
 
   newSubNetworks.forEach((newSubNetwork) => {
     const subNetworkName = newSubNetwork.getAttribute("name");
     // check if subnetwork already exists
     const existingSubNetwork = communication.querySelector(
-      `:root > Communication > SubNetwork[name="${subNetworkName}"]`
+      `:root > Communication > SubNetwork[name="${subNetworkName}"]`,
     );
 
     if (!existingSubNetwork) {
@@ -45,7 +45,7 @@ function addCommunicationElements(newIed: Element, scl: Element): Insert[] {
       // subnetwork exists and individual ConnectedAP are copied
       const newConnectedAPs = newIed.ownerDocument.querySelectorAll(
         `:root > Communication > SubNetwork[name="${subNetworkName}"] 
-        > ConnectedAP[iedName="${newIed.getAttribute("name")}"]`
+        > ConnectedAP[iedName="${newIed.getAttribute("name")}"]`,
       );
 
       newConnectedAPs.forEach((newConnectedAP) => {
@@ -64,7 +64,7 @@ function addCommunicationElements(newIed: Element, scl: Element): Insert[] {
 
 function isDataTypeConnectionToIed(
   dataType: Element,
-  newIed: Element
+  newIed: Element,
 ): boolean {
   const dataTypeTemplates: Element = dataType.parentElement!;
   const id = dataType.getAttribute("id");
@@ -74,28 +74,28 @@ function isDataTypeConnectionToIed(
   if (dataType.tagName === "EnumType")
     return Array.from(
       dataTypeTemplates.querySelectorAll(
-        `DOType > DA[type="${id}"],DAType > BDA[type="${id}"]`
-      )
+        `DOType > DA[type="${id}"],DAType > BDA[type="${id}"]`,
+      ),
     ).some((typeChild) =>
-      isDataTypeConnectionToIed(typeChild.parentElement!, newIed)
+      isDataTypeConnectionToIed(typeChild.parentElement!, newIed),
     );
 
   if (dataType.tagName === "DAType")
     return Array.from(
       dataTypeTemplates.querySelectorAll(
-        `DOType > DA[type="${id}"],DAType > BDA[type="${id}"]`
-      )
+        `DOType > DA[type="${id}"],DAType > BDA[type="${id}"]`,
+      ),
     ).some((typeChild) =>
-      isDataTypeConnectionToIed(typeChild.parentElement!, newIed)
+      isDataTypeConnectionToIed(typeChild.parentElement!, newIed),
     );
 
   if (dataType.tagName === "DOType")
     return Array.from(
       dataTypeTemplates.querySelectorAll(
-        `LNodeType > DO[type="${id}"], DOType > SDO[type="${id}"]`
-      )
+        `LNodeType > DO[type="${id}"], DOType > SDO[type="${id}"]`,
+      ),
     ).some((typeChild) =>
-      isDataTypeConnectionToIed(typeChild.parentElement!, newIed)
+      isDataTypeConnectionToIed(typeChild.parentElement!, newIed),
     );
 
   return Array.from(newIed.getElementsByTagName("LN0"))
@@ -106,12 +106,12 @@ function isDataTypeConnectionToIed(
 function addEnumType(
   newIed: Element,
   newEnumType: Element,
-  oldDataTypeTemplates: Element
+  oldDataTypeTemplates: Element,
 ): Insert | undefined {
   if (!isDataTypeConnectionToIed(newEnumType, newIed)) return;
 
   const existEnumType = oldDataTypeTemplates.querySelector(
-    `EnumType[id="${newEnumType.getAttribute("id")}"]`
+    `EnumType[id="${newEnumType.getAttribute("id")}"]`,
   );
   if (existEnumType && newEnumType.isEqualNode(existEnumType)) return;
 
@@ -125,7 +125,7 @@ function addEnumType(
 
     data
       .querySelectorAll(
-        `DOType > DA[type="${idOld}"],DAType > BDA[type="${idOld}"]`
+        `DOType > DA[type="${idOld}"],DAType > BDA[type="${idOld}"]`,
       )
       .forEach((type) => type.setAttribute("type", idNew));
   }
@@ -140,12 +140,12 @@ function addEnumType(
 function addDAType(
   newIed: Element,
   newDAType: Element,
-  oldDataTypeTemplates: Element
+  oldDataTypeTemplates: Element,
 ): Insert | undefined {
   if (!isDataTypeConnectionToIed(newDAType, newIed)) return;
 
   const existDAType = oldDataTypeTemplates.querySelector(
-    `DAType[id="${newDAType.getAttribute("id")}"]`
+    `DAType[id="${newDAType.getAttribute("id")}"]`,
   );
   if (existDAType && newDAType.isEqualNode(existDAType)) return;
 
@@ -159,7 +159,7 @@ function addDAType(
 
     data
       .querySelectorAll(
-        `DOType > DA[type="${idOld}"],DAType > BDA[type="${idOld}"]`
+        `DOType > DA[type="${idOld}"],DAType > BDA[type="${idOld}"]`,
       )
       .forEach((type) => type.setAttribute("type", idNew));
   }
@@ -174,12 +174,12 @@ function addDAType(
 function addDOType(
   newIed: Element,
   newDOType: Element,
-  oldDataTypeTemplates: Element
+  oldDataTypeTemplates: Element,
 ): Insert | undefined {
   if (!isDataTypeConnectionToIed(newDOType, newIed)) return;
 
   const existDOType = oldDataTypeTemplates.querySelector(
-    `DOType[id="${newDOType.getAttribute("id")}"]`
+    `DOType[id="${newDOType.getAttribute("id")}"]`,
   );
   if (existDOType && newDOType.isEqualNode(existDOType)) return;
 
@@ -193,7 +193,7 @@ function addDOType(
 
     data
       .querySelectorAll(
-        `LNodeType > DO[type="${idOld}"], DOType > SDO[type="${idOld}"]`
+        `LNodeType > DO[type="${idOld}"], DOType > SDO[type="${idOld}"]`,
       )
       .forEach((type) => type.setAttribute("type", idNew));
   }
@@ -208,12 +208,12 @@ function addDOType(
 function addLNodeType(
   newIed: Element,
   newLNodeType: Element,
-  oldDataTypeTemplates: Element
+  oldDataTypeTemplates: Element,
 ): Insert | undefined {
   if (!isDataTypeConnectionToIed(newLNodeType, newIed)) return;
 
   const existLNodeType = oldDataTypeTemplates.querySelector(
-    `LNodeType[id="${newLNodeType.getAttribute("id")}"]`
+    `LNodeType[id="${newLNodeType.getAttribute("id")}"]`,
   );
   if (existLNodeType && newLNodeType.isEqualNode(existLNodeType)) return;
 
@@ -225,7 +225,7 @@ function addLNodeType(
     newLNodeType.setAttribute("id", idNew);
 
     Array.from(
-      newIed.querySelectorAll(`LN0[lnType="${idOld}"],LN[lnType="${idOld}"]`)
+      newIed.querySelectorAll(`LN0[lnType="${idOld}"],LN[lnType="${idOld}"]`),
     )
       .filter((anyLn) => !anyLn.closest("Private"))
       .forEach((ln) => ln.setAttribute("lnType", idNew));
@@ -257,29 +257,29 @@ function addDataTypeTemplates(newIed: Element, scl: Element): Insert[] {
   newIed.ownerDocument
     .querySelectorAll(":root > DataTypeTemplates > EnumType")
     .forEach((enumType) =>
-      typeEdits.push(addEnumType(newIed, enumType, dataTypeTemplates!))
+      typeEdits.push(addEnumType(newIed, enumType, dataTypeTemplates!)),
     );
 
   newIed.ownerDocument
     .querySelectorAll(":root > DataTypeTemplates > DAType")
     .forEach((daType) =>
-      typeEdits.push(addDAType(newIed, daType, dataTypeTemplates!))
+      typeEdits.push(addDAType(newIed, daType, dataTypeTemplates!)),
     );
 
   newIed.ownerDocument
     .querySelectorAll(":root > DataTypeTemplates > DOType")
     .forEach((doType) =>
-      typeEdits.push(addDOType(newIed, doType, dataTypeTemplates!))
+      typeEdits.push(addDOType(newIed, doType, dataTypeTemplates!)),
     );
 
   newIed.ownerDocument
     .querySelectorAll(":root > DataTypeTemplates > LNodeType")
     .forEach((lNodeType) =>
-      typeEdits.push(addLNodeType(newIed, lNodeType, dataTypeTemplates!))
+      typeEdits.push(addLNodeType(newIed, lNodeType, dataTypeTemplates!)),
     );
 
   return dataTypeEdit.concat(
-    typeEdits.reverse().filter((item) => item !== undefined) as Insert[]
+    typeEdits.reverse().filter((item) => item !== undefined) as Insert[],
   );
 }
 
@@ -306,7 +306,7 @@ function isSCL(node: Node): node is Element {
 export function insertIed(
   scl: Element,
   ied: Element,
-  options: InsertIedOptions = { addCommunicationSection: true }
+  options: InsertIedOptions = { addCommunicationSection: true },
 ): Insert[] {
   if (!isSCL(scl) || !isIED(ied) || isNameUnique(scl, ied)) return [];
   const insertCommunication: Insert[] = [];

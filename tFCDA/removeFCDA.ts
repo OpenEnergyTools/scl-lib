@@ -18,21 +18,21 @@ export function fCDAsSubscription(fcda: Element): Element[] {
     return Array.from(
       doc.querySelectorAll(
         `:root>IED>AccessPoint>Server>LDevice>LN0>Inputs>ExtRef[iedName="${iedName}"],
-        :root>IED>AccessPoint>Server>LDevice>LN>Inputs>ExtRef[iedName="${iedName}"]`
-      )
+        :root>IED>AccessPoint>Server>LDevice>LN>Inputs>ExtRef[iedName="${iedName}"]`,
+      ),
     ).filter((extRef) => matchDataAttributes(extRef, fcda));
 
   return controlBlocks(fcda).flatMap((controlBlock) =>
     Array.from(
       doc.querySelectorAll(
         `:root>IED>AccessPoint>Server>LDevice>LN0>Inputs>ExtRef[iedName="${iedName}"],
-        :root>IED>AccessPoint>Server>LDevice>LN>Inputs>ExtRef[iedName="${iedName}"]`
-      )
+        :root>IED>AccessPoint>Server>LDevice>LN>Inputs>ExtRef[iedName="${iedName}"]`,
+      ),
     ).filter(
       (extRef) =>
         matchDataAttributes(extRef, fcda) &&
-        matchSrcAttributes(extRef, controlBlock)
-    )
+        matchSrcAttributes(extRef, controlBlock),
+    ),
   );
 }
 

@@ -19,14 +19,14 @@ import { updateDatSet } from "../tControl/updateDatSet.js";
  * @returns action array to update all `SampledValueControl` attributes
  */
 export function updateSampledValueControl(
-  update: Update
+  update: Update,
 ): (Update | Remove | Insert)[] {
   if (update.element.tagName !== "SampledValueControl") return [];
 
   const updates: (Update | Remove | Insert)[] = [];
   if (update.attributes.name) {
     const extRefUpdates: Update[] = findControlBlockSubscription(
-      update.element
+      update.element,
     ).map((extRef) => ({
       element: extRef,
       attributes: { srcCBName: update.attributes.name },
@@ -34,17 +34,17 @@ export function updateSampledValueControl(
 
     const supervisionUpdates: (Remove | Insert)[] = Array.from(
       update.element.ownerDocument.querySelectorAll(
-        ':root > IED > AccessPoint > Server > LDevice > LN[lnClass="LSVS"] > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val'
-      )
+        ':root > IED > AccessPoint > Server > LDevice > LN[lnClass="LSVS"] > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val',
+      ),
     )
       .filter((val) => val.textContent === controlBlockObjRef(update.element))
       .flatMap((val) => {
         const [path] = controlBlockObjRef(update.element)!.split(".");
         const oldValContent = Array.from(val.childNodes).find(
-          (node) => node.nodeType === Node.TEXT_NODE
+          (node) => node.nodeType === Node.TEXT_NODE,
         )!;
         const newValContent = update.element.ownerDocument.createTextNode(
-          `${path}.${update.attributes.name}`
+          `${path}.${update.attributes.name}`,
         ) as Text;
 
         return [

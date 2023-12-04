@@ -6,6 +6,6 @@ export function findControlBlockSubscription(control: Element): Element[] {
   const iedName = control.closest("IED")?.getAttribute("name");
 
   return Array.from(
-    doc.querySelectorAll(`ExtRef[iedName="${iedName}"]`)
+    doc.querySelectorAll(`ExtRef[iedName="${iedName}"]`),
   ).filter((extRef) => matchSrcAttributes(extRef, control));
 }

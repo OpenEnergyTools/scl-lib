@@ -19,7 +19,7 @@ function invalid(anyLn: Element, name: string | null | undefined): boolean {
 
 export function createDataSet(
   parent: Element,
-  options: CreateDataSetOptions = { attributes: {} }
+  options: CreateDataSetOptions = { attributes: {} },
 ): Insert | null {
   const anyLn =
     parent.tagName === "LN0" || parent.tagName === "LN"

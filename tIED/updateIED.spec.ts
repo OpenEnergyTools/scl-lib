@@ -32,7 +32,7 @@ const substation = new DOMParser()
 describe("Function to an update the IED name attributes and its referenced elements", () => {
   it("returns empty array with non IED update", () =>
     expect(updateIED({ element: substation, attributes: {} }).length).to.equal(
-      0
+      0,
     ));
 
   it("returns empty array with missing old IED name", () => {
@@ -41,13 +41,13 @@ describe("Function to an update the IED name attributes and its referenced eleme
     publi.removeAttribute("name");
 
     expect(
-      updateIED({ element: publi, attributes: { name: "newIedName" } }).length
+      updateIED({ element: publi, attributes: { name: "newIedName" } }).length,
     ).to.equal(0);
   });
 
   it("returns no additional edits when name attribute is not updated", () =>
     expect(
-      updateIED({ element: pub, attributes: { desc: "newDesc" } }).length
+      updateIED({ element: pub, attributes: { desc: "newDesc" } }).length,
     ).to.equal(1));
 
   it("updates LNode iedName attributes as well", () => {
@@ -94,7 +94,7 @@ describe("Function to an update the IED name attributes and its referenced eleme
     const subscriber1 = sclDom.querySelector('IED[name="Subscriber1"]')!;
 
     const before = Array.from(sclDom.querySelectorAll("IEDName")).filter(
-      (iedName) => iedName.textContent === "newIedName"
+      (iedName) => iedName.textContent === "newIedName",
     );
     expect(before.length).to.equal(0);
 
@@ -106,7 +106,7 @@ describe("Function to an update the IED name attributes and its referenced eleme
     handleEdit(edits);
 
     const after = Array.from(sclDom.querySelectorAll("IEDName")).filter(
-      (iedName) => iedName.textContent === "newIedName"
+      (iedName) => iedName.textContent === "newIedName",
     );
     expect(after.length).to.equal(8);
   });
@@ -116,7 +116,7 @@ describe("Function to an update the IED name attributes and its referenced eleme
     const publi = sclDom.querySelector('IED[name="Publi"]')!;
 
     const before = Array.from(
-      sclDom.querySelectorAll('LN[lnClass="LGOS"] Val, LN[lnClass="LSVS"] Val')
+      sclDom.querySelectorAll('LN[lnClass="LGOS"] Val, LN[lnClass="LSVS"] Val'),
     ).filter((iedName) => iedName.textContent?.startsWith("newIedName"));
     expect(before.length).to.equal(0);
 
@@ -128,7 +128,7 @@ describe("Function to an update the IED name attributes and its referenced eleme
     handleEdit(edits);
 
     const after = Array.from(
-      sclDom.querySelectorAll('LN[lnClass="LGOS"] Val, LN[lnClass="LSVS"] Val')
+      sclDom.querySelectorAll('LN[lnClass="LGOS"] Val, LN[lnClass="LSVS"] Val'),
     ).filter((iedName) => iedName.textContent?.startsWith("newIedName"));
     expect(after.length).to.equal(4);
   });

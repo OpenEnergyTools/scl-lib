@@ -6,7 +6,7 @@ function updateConnectivityNodes(
     substation: string;
     oldVoltageLevel: string;
     newVoltageLevel: string;
-  }
+  },
 ): Update[] {
   const cNodes = Array.from(element.getElementsByTagName("ConnectivityNode"));
 
@@ -28,14 +28,14 @@ function updateTerminals(
     substation: string;
     oldVoltageLevel: string;
     newVoltageLevel: string;
-  }
+  },
 ): Update[] {
   const terminals = Array.from(
     element
       .closest("Substation")!
       .querySelectorAll(
-        `Terminal[substationName="${names.substation}"][voltageLevelName="${names.oldVoltageLevel}"]`
-      )
+        `Terminal[substationName="${names.substation}"][voltageLevelName="${names.oldVoltageLevel}"]`,
+      ),
   );
 
   const updates = terminals.map((terminal) => {
@@ -88,6 +88,6 @@ export function updateVoltageLevel(update: Update): Update[] {
       substation: substationName,
       oldVoltageLevel: oldName,
       newVoltageLevel: newName,
-    })
+    }),
   );
 }

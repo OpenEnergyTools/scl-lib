@@ -117,7 +117,7 @@ describe("utility function returning identity for SCL elements", () => {
     });
 
     expect(identity(scl.querySelector('LNode[iedName="None"]'))).to.equal(
-      "AA1>E1>COUPLING_BAY>(LLN0 Dummy.LLN0)"
+      "AA1>E1>COUPLING_BAY>(LLN0 Dummy.LLN0)",
     );
   });
 
@@ -126,7 +126,7 @@ describe("utility function returning identity for SCL elements", () => {
     expect(identity(element)).to.equal(
       identity(element.parentElement!) +
         (element.parentElement?.tagName === "SCL" ? "" : ">") +
-        element.getAttribute("name")
+        element.getAttribute("name"),
     );
   });
 });

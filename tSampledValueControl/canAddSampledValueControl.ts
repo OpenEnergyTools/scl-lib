@@ -29,8 +29,8 @@ export function canAddSampledValueControl(ln0: Element): boolean {
     ln0
       .closest(scope)
       ?.querySelectorAll(
-        ":scope Server > LDevice > LN0 > SampledValueControl"
-      ) ?? []
+        ":scope Server > LDevice > LN0 > SampledValueControl",
+      ) ?? [],
   ).length;
 
   return max > existingSampledValueControls;

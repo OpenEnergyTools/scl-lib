@@ -20,7 +20,7 @@ function findElement(str: string, selector: string): Element | null {
 }
 
 function buildAttr(
-  type: "name" | "datSet" | "none" = "none"
+  type: "name" | "datSet" | "none" = "none",
 ): Record<string, string | null> {
   if (type === "name")
     return {
@@ -64,7 +64,7 @@ describe("Utility function to update SampledValueControl attributes", () => {
   it("always updates confRev attribute +10000", () => {
     const smvControl = findElement(
       smvControlDoc,
-      'SampledValueControl[name="someSmv"]'
+      'SampledValueControl[name="someSmv"]',
     )!;
     const actions = updateSampledValueControl({
       element: smvControl,
@@ -86,7 +86,7 @@ describe("Utility function to update SampledValueControl attributes", () => {
     it("also updates subscribed ExtRefs", () => {
       const smvControl = findElement(
         smvControlDoc,
-        'SampledValueControl[name="someSmv3"]'
+        'SampledValueControl[name="someSmv3"]',
       )!;
       const actions = updateSampledValueControl({
         element: smvControl,
@@ -116,7 +116,7 @@ describe("Utility function to update SampledValueControl attributes", () => {
     it("also updates subscriber supervision Val element", () => {
       const smvControl = findElement(
         smvControlDoc,
-        'SampledValueControl[name="someSmv"]'
+        'SampledValueControl[name="someSmv"]',
       )!;
       const actions = updateSampledValueControl({
         element: smvControl,
@@ -144,8 +144,8 @@ describe("Utility function to update SampledValueControl attributes", () => {
 
       const oldText = Array.from(
         smvControl.ownerDocument.querySelector(
-          'LN[lnClass="LSVS"][inst="1"] Val'
-        )?.childNodes ?? []
+          'LN[lnClass="LSVS"][inst="1"] Val',
+        )?.childNodes ?? [],
       ).find((node) => node.nodeType === Node.TEXT_NODE)!;
       expect(actions[2]).to.satisfy(isRemove);
       expect((actions[2] as Remove).node).to.equal(oldText);
@@ -153,14 +153,14 @@ describe("Utility function to update SampledValueControl attributes", () => {
       expect(actions[3]).to.satisfy(isInsert);
       expect((actions[3] as Insert).parent).to.equal(oldText.parentElement);
       expect((actions[3] as Insert).node.textContent).to.equal(
-        "srcIEDsomeLDInst/LLN0.someNewSmvName"
+        "srcIEDsomeLDInst/LLN0.someNewSmvName",
       );
     });
 
     it("also updates SMV cbName attribute", () => {
       const smvControl = findElement(
         smvControlDoc,
-        'SampledValueControl[name="someSmv2"]'
+        'SampledValueControl[name="someSmv2"]',
       )!;
       const actions = updateSampledValueControl({
         element: smvControl,
@@ -192,7 +192,7 @@ describe("Utility function to update SampledValueControl attributes", () => {
     it("also updates DataSet.name with DataSet being single used", () => {
       const smvControl = findElement(
         smvControlDoc,
-        'SampledValueControl[name="someSmv3"]'
+        'SampledValueControl[name="someSmv3"]',
       )!;
       const actions = updateSampledValueControl({
         element: smvControl,
@@ -222,7 +222,7 @@ describe("Utility function to update SampledValueControl attributes", () => {
     it("also updates DataSet.name with DataSet being single used", () => {
       const smvControl = findElement(
         smvControlDoc,
-        'SampledValueControl[name="someSmv2"]'
+        'SampledValueControl[name="someSmv2"]',
       )!;
       const actions = updateSampledValueControl({
         element: smvControl,

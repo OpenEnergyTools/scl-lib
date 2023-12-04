@@ -68,7 +68,7 @@ const content6 = {
 function testPTypeChange(
   gSE: Element,
   key: string,
-  value: string | undefined
+  value: string | undefined,
 ): void {
   const oldAddress = gSE.querySelector("Address");
 
@@ -82,8 +82,8 @@ function testPTypeChange(
   expect((edits[0] as Insert).parent).to.equal(gSE);
   expect(
     ((edits[0] as Insert).node as Element).querySelector(
-      `Address > P[type="${conv[key]}"]`
-    )?.textContent ?? null
+      `Address > P[type="${conv[key]}"]`,
+    )?.textContent ?? null,
   ).to.equal(value ?? null);
   // eslint-disable-next-line no-unused-expressions
   expect((edits[0] as Insert).reference).to.exist;
@@ -156,22 +156,22 @@ describe("Utility function to change the content of the element GSE", () => {
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="MAC-Address"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="APPID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-ID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-PRIORITY"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.exist;
   });
 
@@ -184,22 +184,22 @@ describe("Utility function to change the content of the element GSE", () => {
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="MAC-Address"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="APPID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-ID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-PRIORITY"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
   });
 
@@ -212,22 +212,22 @@ describe("Utility function to change the content of the element GSE", () => {
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="MAC-Address"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="APPID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.equal("tP_APPID");
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-ID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-PRIORITY"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.equal("tP_VLAN-PRIORITY");
   });
 
@@ -240,22 +240,22 @@ describe("Utility function to change the content of the element GSE", () => {
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="MAC-Address"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="APPID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-ID"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
     expect(
       ((edits[0] as Insert).node as Element)
         .querySelector(':scope > P[type="VLAN-PRIORITY"]')
-        ?.getAttribute("xsi:type")
+        ?.getAttribute("xsi:type"),
     ).to.not.exist;
   });
 

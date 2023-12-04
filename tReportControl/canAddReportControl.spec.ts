@@ -84,11 +84,11 @@ export const scl = `
 
 const ap1ln01 = findElement(
   scl,
-  `IED[name="ied1"]>AccessPoint[name="ap1"] LN0`
+  `IED[name="ied1"]>AccessPoint[name="ap1"] LN0`,
 )!;
 const ap2ln02 = findElement(
   scl,
-  `IED[name="ied1"]>AccessPoint[name="ap2"] LN0`
+  `IED[name="ied1"]>AccessPoint[name="ap2"] LN0`,
 )!;
 const ln02 = findElement(scl, `IED[name="ied2"] LN0`)!;
 const ln03 = findElement(scl, `IED[name="ied3"] LN0`)!;

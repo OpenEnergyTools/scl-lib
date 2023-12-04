@@ -126,7 +126,7 @@ describe("Utility function to create schema valid DataSet insert edit", () => {
     const insert = createDataSet(ied);
 
     expect((insert!.node as Element).getAttribute("name")).to.equal(
-      "newDataSet_003"
+      "newDataSet_003",
     );
     expect((insert!.parent as Element).tagName).to.equal("LN0");
     expect(insert!.reference as Element).to.not.be.null;
@@ -136,7 +136,7 @@ describe("Utility function to create schema valid DataSet insert edit", () => {
     const insert = createDataSet(ln);
 
     expect((insert!.node as Element).getAttribute("name")).to.equal(
-      "newDataSet_002"
+      "newDataSet_002",
     );
   });
 });

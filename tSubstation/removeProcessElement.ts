@@ -6,12 +6,12 @@ function isBusBasCNode(cNode: Element): boolean {
 
 function existOtherTerminalConnection(
   cNode: Element,
-  terminal: Element
+  terminal: Element,
 ): boolean {
   return !!Array.from(
     cNode.ownerDocument.querySelectorAll(
-      `Terminal[connectivityNode="${cNode.getAttribute("pathName")}"]`
-    )
+      `Terminal[connectivityNode="${cNode.getAttribute("pathName")}"]`,
+    ),
   ).filter((otherTerminal) => otherTerminal !== terminal).length;
 }
 
@@ -19,29 +19,29 @@ function cNodesPerTerminal(terminal: Element): Element[] {
   return Array.from(
     terminal.ownerDocument.querySelectorAll(
       `ConnectivityNode[pathName="${terminal.getAttribute(
-        "connectivityNode"
-      )}"]`
-    )
+        "connectivityNode",
+      )}"]`,
+    ),
   );
 }
 
 function terminalPerCNode(cNode: Element): Element[] {
   return Array.from(
     cNode.ownerDocument.querySelectorAll(
-      `Terminal[connectivityNode="${cNode.getAttribute("pathName")}"]`
-    )
+      `Terminal[connectivityNode="${cNode.getAttribute("pathName")}"]`,
+    ),
   );
 }
 
 function outOfScopeTerminal(root: Element, terminal: Element): boolean {
   return !Array.from(root.querySelectorAll("Terminal")).find(
-    (ancestorTerminal) => ancestorTerminal === terminal
+    (ancestorTerminal) => ancestorTerminal === terminal,
   );
 }
 
 function outOfScopeCNode(root: Element, cNode: Element): boolean {
   return !Array.from(root.querySelectorAll("ConnectivityNode")).find(
-    (ancestorCNode) => ancestorCNode === cNode
+    (ancestorCNode) => ancestorCNode === cNode,
   );
 }
 

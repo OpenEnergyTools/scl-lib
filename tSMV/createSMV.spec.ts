@@ -30,7 +30,7 @@ const parent = new DOMParser()
         </SubNetwork>
     </Communication>
 </SCL>`,
-    "application/xml"
+    "application/xml",
   )
   .querySelector("ConnectedAP")!;
 
@@ -50,30 +50,30 @@ describe("Utility function to create insert edit for SMV element", () => {
     expect((edit as Insert).parent).to.equal(parent);
     expect(((edit as Insert).node as Element).tagName).to.equal("SMV");
     expect(((edit as Insert).node as Element).getAttribute("ldInst")).to.equal(
-      "lDevice"
+      "lDevice",
     );
     expect(((edit as Insert).node as Element).getAttribute("cbName")).to.equal(
-      "cb3"
+      "cb3",
     );
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="MAC-Address"]'
-      )?.textContent
+        ':scope > Address > P[type="MAC-Address"]',
+      )?.textContent,
     ).to.equal("01-0C-CD-04-00-01");
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="APPID"]'
-      )?.textContent
+        ':scope > Address > P[type="APPID"]',
+      )?.textContent,
     ).to.equal("4001");
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-ID"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-ID"]',
+      )?.textContent,
     ).to.equal("000");
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-PRIORITY"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-PRIORITY"]',
+      )?.textContent,
     ).to.equal("4");
   });
 
@@ -87,37 +87,37 @@ describe("Utility function to create insert edit for SMV element", () => {
     const edit = createSMV(
       parent,
       { ldInst: "lDevice", cbName: "cb3" },
-      options
+      options,
     );
 
     expect(edit).to.satisfy(isInsert);
     expect((edit as Insert).parent).to.equal(parent);
     expect(((edit as Insert).node as Element).tagName).to.equal("SMV");
     expect(((edit as Insert).node as Element).getAttribute("ldInst")).to.equal(
-      "lDevice"
+      "lDevice",
     );
     expect(((edit as Insert).node as Element).getAttribute("cbName")).to.equal(
-      "cb3"
+      "cb3",
     );
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="MAC-Address"]'
-      )?.textContent
+        ':scope > Address > P[type="MAC-Address"]',
+      )?.textContent,
     ).to.equal("01-0C-CD-04-10-11");
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="APPID"]'
-      )?.textContent
+        ':scope > Address > P[type="APPID"]',
+      )?.textContent,
     ).to.equal("4231");
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-ID"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-ID"]',
+      )?.textContent,
     ).to.equal("004");
     expect(
       ((edit as Insert).node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-PRIORITY"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-PRIORITY"]',
+      )?.textContent,
     ).to.equal("7");
   });
 });

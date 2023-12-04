@@ -103,7 +103,7 @@ const ds1 = findElement(sclBlob, `IED[name="ied3"] LN0>DataSet`) as Element;
 const ds2 = findElement(sclBlob, `IED[name="ied3"] LN>DataSet`) as Element;
 const orphan = findElement(
   "<DataSet ><FCDA /></DataSet>",
-  `DataSet`
+  `DataSet`,
 ) as Element;
 
 describe("Utility function to get maximum definable FCDA per DataSet", () => {

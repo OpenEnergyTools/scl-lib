@@ -21,7 +21,7 @@ export function updateReportControl(update: Update): Update[] {
   if (!attributes.name) return ctrlBlockUpdates;
 
   const extRefUpdates: Update[] = findControlBlockSubscription(
-    reportControl
+    reportControl,
   ).map((extRef) => ({
     element: extRef,
     attributes: { srcCBName: attributes.name },

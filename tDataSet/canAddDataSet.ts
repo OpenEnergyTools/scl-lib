@@ -27,7 +27,7 @@ function maxDataSet(parent: Element): { max: number; scope: string } {
     const existing = parent
       .closest("IED")!
       .querySelectorAll(
-        ":scope > AccessPoint > Server > LDevice DataSet"
+        ":scope > AccessPoint > Server > LDevice DataSet",
       ).length;
 
     return {
@@ -47,8 +47,8 @@ export function canAddDataSet(ln0: Element): boolean {
     ln0
       .closest(scope)
       ?.querySelectorAll(
-        ":scope Server > LDevice > LN0 > DataSet, :scope Server > LDevice > LN > DataSet"
-      ) ?? []
+        ":scope Server > LDevice > LN0 > DataSet, :scope Server > LDevice > LN > DataSet",
+      ) ?? [],
   ).length;
 
   return max > existingDataSets;

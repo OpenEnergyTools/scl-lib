@@ -162,12 +162,12 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
 
     expect(insert.length).to.equal(1);
     expect((insert[0].node as Element).getAttribute("name")).to.equal(
-      "newGSEControl_003"
+      "newGSEControl_003",
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("0");
     expect((insert[0].node as Element).getAttribute("type")).to.equal("GOOSE");
     expect((insert[0].node as Element).getAttribute("appID")).to.equal(
-      "IED1/first/LLN0/newGSEControl_003"
+      "IED1/first/LLN0/newGSEControl_003",
     );
   });
 
@@ -176,12 +176,12 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
 
     expect(insert.length).to.equal(1);
     expect((insert[0].node as Element).getAttribute("name")).to.equal(
-      "newGSEControl_003"
+      "newGSEControl_003",
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("0");
     expect((insert[0].node as Element).getAttribute("type")).to.equal("GOOSE");
     expect((insert[0].node as Element).getAttribute("appID")).to.equal(
-      "IED1/first/LLN0/newGSEControl_003"
+      "IED1/first/LLN0/newGSEControl_003",
     );
   });
 
@@ -198,12 +198,12 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
 
     expect(insert.length).to.equal(1);
     expect((insert[0].node as Element).getAttribute("name")).to.equal(
-      "newGSEControl_003"
+      "newGSEControl_003",
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("2");
     expect((insert[0].node as Element).getAttribute("type")).to.equal("GSSE");
     expect((insert[0].node as Element).getAttribute("appID")).to.equal(
-      "someAppID"
+      "someAppID",
     );
   });
 
@@ -227,59 +227,61 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
     });
     expect(insert.length).to.equal(2);
     expect((insert[1].node as Element).getAttribute("ldInst")).to.equal(
-      "first"
+      "first",
     );
     expect((insert[1].node as Element).getAttribute("cbName")).to.equal(
-      "newGSEControl_002"
+      "newGSEControl_002",
     );
     expect((insert[1].parent as Element).getAttribute("apName")).to.equal(
-      "AP1"
+      "AP1",
     );
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="MAC-Address"]'
-      )?.textContent
+        ':scope > Address > P[type="MAC-Address"]',
+      )?.textContent,
     ).to.equal("01-0C-CD-01-00-00");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="APPID"]'
-      )?.textContent
+        ':scope > Address > P[type="APPID"]',
+      )?.textContent,
     ).to.equal("0000");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-ID"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-ID"]',
+      )?.textContent,
     ).to.equal("000");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-PRIORITY"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-PRIORITY"]',
+      )?.textContent,
     ).to.equal("4");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MinTime")
-        ?.getAttribute("unit")
+        ?.getAttribute("unit"),
     ).to.equal("s");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MinTime")
-        ?.getAttribute("multiplier")
+        ?.getAttribute("multiplier"),
     ).to.equal("m");
     expect(
-      (insert[1].node as Element).querySelector(":scope > MinTime")?.textContent
+      (insert[1].node as Element).querySelector(":scope > MinTime")
+        ?.textContent,
     ).to.equal("10");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MaxTime")
-        ?.getAttribute("unit")
+        ?.getAttribute("unit"),
     ).to.equal("s");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MaxTime")
-        ?.getAttribute("multiplier")
+        ?.getAttribute("multiplier"),
     ).to.equal("m");
     expect(
-      (insert[1].node as Element).querySelector(":scope > MaxTime")?.textContent
+      (insert[1].node as Element).querySelector(":scope > MaxTime")
+        ?.textContent,
     ).to.equal("10000");
   });
 
@@ -297,59 +299,61 @@ describe("Utility function to create schema valid GSEControl insert edit", () =>
     });
     expect(insert.length).to.equal(2);
     expect((insert[1].node as Element).getAttribute("ldInst")).to.equal(
-      "first"
+      "first",
     );
     expect((insert[1].node as Element).getAttribute("cbName")).to.equal(
-      "newGSEControl_001"
+      "newGSEControl_001",
     );
     expect((insert[1].parent as Element).getAttribute("apName")).to.equal(
-      "AP2"
+      "AP2",
     );
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="MAC-Address"]'
-      )?.textContent
+        ':scope > Address > P[type="MAC-Address"]',
+      )?.textContent,
     ).to.equal("01-0C-CD-01-00-13");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="APPID"]'
-      )?.textContent
+        ':scope > Address > P[type="APPID"]',
+      )?.textContent,
     ).to.equal("0003");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-ID"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-ID"]',
+      )?.textContent,
     ).to.equal("002");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-PRIORITY"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-PRIORITY"]',
+      )?.textContent,
     ).to.equal("6");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MinTime")
-        ?.getAttribute("unit")
+        ?.getAttribute("unit"),
     ).to.equal("s");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MinTime")
-        ?.getAttribute("multiplier")
+        ?.getAttribute("multiplier"),
     ).to.equal("m");
     expect(
-      (insert[1].node as Element).querySelector(":scope > MinTime")?.textContent
+      (insert[1].node as Element).querySelector(":scope > MinTime")
+        ?.textContent,
     ).to.equal("16");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MaxTime")
-        ?.getAttribute("unit")
+        ?.getAttribute("unit"),
     ).to.equal("s");
     expect(
       (insert[1].node as Element)
         .querySelector(":scope > MaxTime")
-        ?.getAttribute("multiplier")
+        ?.getAttribute("multiplier"),
     ).to.equal("m");
     expect(
-      (insert[1].node as Element).querySelector(":scope > MaxTime")?.textContent
+      (insert[1].node as Element).querySelector(":scope > MaxTime")
+        ?.textContent,
     ).to.equal("1345");
   });
 

@@ -15,13 +15,13 @@ export function updateDatSet(update: Update): Update | null {
       controlBlock.parentElement?.querySelectorAll(
         `:scope > ReportControl[datSet="${oldDatSet}"], 
          :scope > GSEControl[datSet="${oldDatSet}"], 
-         :scope > SampledValueControl[datSet="${oldDatSet}"]`
-      ) ?? []
+         :scope > SampledValueControl[datSet="${oldDatSet}"]`,
+      ) ?? [],
     ).length === 1;
   if (!isDataSetUsedByThisElementOnly) return null;
 
   const dataSet = update.element.parentElement?.querySelector(
-    `DataSet[name="${oldDatSet}"]`
+    `DataSet[name="${oldDatSet}"]`,
   );
   if (!dataSet) return null;
 

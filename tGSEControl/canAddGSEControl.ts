@@ -25,7 +25,7 @@ export function canAddGSEControl(ln0: Element): boolean {
   const existingGseControls = Array.from(
     ln0
       .closest(scope)
-      ?.querySelectorAll(":scope Server > LDevice > LN0 > GSEControl") ?? []
+      ?.querySelectorAll(":scope Server > LDevice > LN0 > GSEControl") ?? [],
   ).length;
 
   return max > existingGseControls;

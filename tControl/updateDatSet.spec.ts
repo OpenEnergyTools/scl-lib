@@ -13,7 +13,7 @@ const multipleDataSetUse = new DOMParser()
         <GSEControl name="gse1" datSet="dataSetName" />
         <GSEControl name="gse2" datSet="dataSetName" />
     </Parent>`,
-    "application/xml"
+    "application/xml",
   )
   .querySelector("GSEControl")!;
 
@@ -23,14 +23,14 @@ const gseControl = new DOMParser()
         <DataSet name="dataSetName" />
         <GSEControl name="gse1" datSet="dataSetName" />
     </Parent>`,
-    "application/xml"
+    "application/xml",
   )
   .querySelector("GSEControl")!;
 
 const orphanReportControl = new DOMParser()
   .parseFromString(
     `<ReportControl name="rpControl" datSet="dataSetName" />`,
-    "application/xml"
+    "application/xml",
   )
   .querySelector("ReportControl")!;
 
@@ -39,7 +39,7 @@ const missingDatSet = new DOMParser()
     `<Parent>
         <SampledValueControl name="smv" datSet="dataSetName" />
     </Parent>`,
-    "application/xml"
+    "application/xml",
   )
   .querySelector("SampledValueControl")!;
 
@@ -53,7 +53,7 @@ describe("Utility function updating tControl datSet attribute", () => {
       updateDatSet({
         element: orphanReportControl,
         attributes: { datSet: "newDatSetName" },
-      })
+      }),
     ).to.be.null);
 
   it("return empty edit array with missing DataSet element", () =>
@@ -61,7 +61,7 @@ describe("Utility function updating tControl datSet attribute", () => {
       updateDatSet({
         element: missingDatSet,
         attributes: { datSet: "newDatSetName" },
-      })
+      }),
     ).to.be.null);
 
   it("return empty edit array DataSet in used by multiple control blocks", () =>
@@ -69,7 +69,7 @@ describe("Utility function updating tControl datSet attribute", () => {
       updateDatSet({
         element: multipleDataSetUse,
         attributes: { datSet: "newDatSetName" },
-      })
+      }),
     ).to.be.null);
 
   it("return DataSet.name update edit for control block element datSet update", () => {

@@ -18,13 +18,13 @@ export function controlBlockGseOrSmv(ctrlBlock: Element): Element | null {
   if (!ctrlLdInst || !ied || !apName) return null;
 
   const serverAts = Array.from(
-    ied.querySelectorAll(`AccessPoint > ServerAt[apName="${apName}"`)
+    ied.querySelectorAll(`AccessPoint > ServerAt[apName="${apName}"`),
   ).map((ap) => ap.closest("AccessPoint")!.getAttribute("name"));
 
   const iedName = ied.getAttribute("name");
   const connectedAps = `:root > Communication > SubNetwork > ConnectedAP[iedName="${iedName}"]`;
   const connectedApNames = [apName, ...serverAts].map(
-    (ap) => `[apName="${ap}"]`
+    (ap) => `[apName="${ap}"]`,
   );
   const cbName = ctrlBlock.getAttribute("name");
   const addressElement = `${addressTag}[ldInst="${ctrlLdInst}"][cbName="${cbName}"]`;
@@ -32,6 +32,6 @@ export function controlBlockGseOrSmv(ctrlBlock: Element): Element | null {
   return doc.querySelector(
     crossProduct([connectedAps], connectedApNames, [">"], [addressElement])
       .map((strings) => strings.join(""))
-      .join(",")
+      .join(","),
   );
 }

@@ -32,18 +32,20 @@ describe("Function generating a control block reference", () => {
 
   it("return correct object reference for GSEControl element", () =>
     expect(
-      controlBlockObjRef(findElement(singleIedWithCtrlBlocks, "GSEControl")!)
+      controlBlockObjRef(findElement(singleIedWithCtrlBlocks, "GSEControl")!),
     ).to.equal("someIEDsomeLDevice/LLN0.gseControl"));
 
   it("return correct object reference for ReportControl element", () =>
     expect(
-      controlBlockObjRef(findElement(singleIedWithCtrlBlocks, "ReportControl")!)
+      controlBlockObjRef(
+        findElement(singleIedWithCtrlBlocks, "ReportControl")!,
+      ),
     ).to.equal("someIEDsomeLDevice/II_PTOC1.rpControl"));
 
   it("return correct object reference for SampledValueControl element", () =>
     expect(
       controlBlockObjRef(
-        findElement(singleIedWithCtrlBlocks, "SampledValueControl")!
-      )
+        findElement(singleIedWithCtrlBlocks, "SampledValueControl")!,
+      ),
     ).to.equal("someIEDsomeLDevice/LLN0.smvControl"));
 });

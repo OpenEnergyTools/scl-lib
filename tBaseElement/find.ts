@@ -10,7 +10,7 @@ export const voidSelector = ":not(*)";
 function crossProduct<T>(...arrays: T[][]): T[][] {
   return arrays.reduce<T[][]>(
     (a, b) => <T[][]>a.flatMap((d) => b.map((e) => [d, e].flat())),
-    [[]]
+    [[]],
   );
 }
 
@@ -33,13 +33,13 @@ function terminalSelector(tagName: SCLTag, identity: string): string {
   const [parentIdentity, connectivityNode] = pathParts(identity);
 
   const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-    selector(parentTag, parentIdentity).split(",")
+    selector(parentTag, parentIdentity).split(","),
   );
 
   return crossProduct(
     parentSelectors,
     [">"],
-    [`${tagName}[connectivityNode="${connectivityNode}"]`]
+    [`${tagName}[connectivityNode="${connectivityNode}"]`],
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -55,13 +55,13 @@ function lNodeSelector(tagName: SCLTag, identity: string): string {
     if (!lnClass || !lnType) return voidSelector;
 
     const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-      selector(parentTag, parentIdentity).split(",")
+      selector(parentTag, parentIdentity).split(","),
     );
 
     return crossProduct(
       parentSelectors,
       [">"],
-      [`${tagName}[iedName="None"][lnClass="${lnClass}"][lnType="${lnType}"]`]
+      [`${tagName}[iedName="None"][lnClass="${lnClass}"][lnType="${lnType}"]`],
     )
       .map((strings) => strings.join(""))
       .join(",");
@@ -93,7 +93,7 @@ function lNodeSelector(tagName: SCLTag, identity: string): string {
     ldInstSelectors,
     prefixSelectors,
     lnClassSelectors,
-    lnInstSelectors
+    lnInstSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -104,7 +104,7 @@ function kDCSelector(tagName: SCLTag, identity: string): string {
   const [iedName, apName] = childIdentity.split(" ");
   return `${selector(
     "IED",
-    parentIdentity
+    parentIdentity,
   )}>${tagName}[iedName="${iedName}"][apName="${apName}"]`;
 }
 
@@ -115,7 +115,7 @@ function associationSelector(tagName: SCLTag, identity: string): string {
     childIdentity.split(/[ /]/);
 
   const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-    selector(parentTag, parentIdentity).split(",")
+    selector(parentTag, parentIdentity).split(","),
   );
 
   const [
@@ -140,7 +140,7 @@ function associationSelector(tagName: SCLTag, identity: string): string {
     ldInstSelectors,
     prefixSelectors,
     lnClassSelectors,
-    lnInstSelectors
+    lnInstSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -160,7 +160,7 @@ function fCDASelector(tagName: SCLTag, identity: string): string {
   const [ldInst, prefix, lnClass, lnInst] = childIdentity.split(/[ /.]/);
 
   const matchDoDa = childIdentity.match(
-    /.([A-Z][A-Za-z0-9.]*) ([A-Za-z0-9.]*) \(/
+    /.([A-Z][A-Za-z0-9.]*) ([A-Za-z0-9.]*) \(/,
   );
   const doName = matchDoDa && matchDoDa[1] ? matchDoDa[1] : "";
   const daName = matchDoDa && matchDoDa[2] ? matchDoDa[2] : "";
@@ -183,7 +183,7 @@ function fCDASelector(tagName: SCLTag, identity: string): string {
     ixSelectors,
   ] = [
     parentTags(tagName).flatMap((parentTag) =>
-      selector(parentTag, parentIdentity).split(",")
+      selector(parentTag, parentIdentity).split(","),
     ),
     [`[ldInst="${ldInst}"]`],
     prefix ? [`[prefix="${prefix}"]`] : [":not([prefix])", '[prefix=""]'],
@@ -206,7 +206,7 @@ function fCDASelector(tagName: SCLTag, identity: string): string {
     doNameSelectors,
     daNameSelectors,
     fcSelectors,
-    ixSelectors
+    ixSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -216,7 +216,7 @@ function lNSelector(tagName: SCLTag, identity: string): string {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
   const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-    selector(parentTag, parentIdentity).split(",")
+    selector(parentTag, parentIdentity).split(","),
   );
 
   const [prefix, lnClass, inst] = childIdentity.split(" ");
@@ -235,7 +235,7 @@ function lNSelector(tagName: SCLTag, identity: string): string {
     [tagName],
     prefixSelectors,
     lnClassSelectors,
-    instSelectors
+    instSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -245,7 +245,7 @@ function clientLNSelector(tagName: SCLTag, identity: string): string {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
   const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-    selector(parentTag, parentIdentity).split(",")
+    selector(parentTag, parentIdentity).split(","),
   );
 
   const [iedName, apRef, ldInst, prefix, lnClass, lnInst] =
@@ -276,7 +276,7 @@ function clientLNSelector(tagName: SCLTag, identity: string): string {
     ldInstSelectors,
     prefixSelectors,
     lnClassSelectors,
-    lnInstSelectors
+    lnInstSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -285,7 +285,7 @@ function clientLNSelector(tagName: SCLTag, identity: string): string {
 function ixNamingSelector(
   tagName: SCLTag,
   identity: string,
-  depth = -1
+  depth = -1,
 ): string {
   // eslint-disable-next-line no-param-reassign
   if (depth === -1) depth = identity.split(">").length;
@@ -301,7 +301,7 @@ function ixNamingSelector(
     .flatMap((parentTag) =>
       parentTag === "SDI"
         ? ixNamingSelector(parentTag, parentIdentity, depth - 1).split(",")
-        : selector(parentTag, parentIdentity).split(",")
+        : selector(parentTag, parentIdentity).split(","),
     )
     // eslint-disable-next-line no-shadow
     .filter((selector) => !selector.startsWith(voidSelector));
@@ -318,7 +318,7 @@ function ixNamingSelector(
     [">"],
     [tagName],
     nameSelectors,
-    ixSelectors
+    ixSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -343,7 +343,7 @@ function physConnSelector(tagName: SCLTag, identity: string): string {
 
   const [parentSelectors, typeSelectors] = [
     parentTags(tagName).flatMap((parentTag) =>
-      selector(parentTag, parentIdentity).split(",")
+      selector(parentTag, parentIdentity).split(","),
     ),
     pcType ? [`[type="${pcType}"]`] : [""],
   ];
@@ -376,7 +376,7 @@ function namingSelector(tagName: SCLTag, identity: string, depth = -1): string {
     .flatMap((parentTag) =>
       selectorTags[parentTag] === selectorTags.Substation
         ? namingSelector(parentTag, parentIdentity, depth - 1).split(",")
-        : selector(parentTag, parentIdentity).split(",")
+        : selector(parentTag, parentIdentity).split(","),
     )
     // eslint-disable-next-line no-shadow
     .filter((selector) => !selector.startsWith(voidSelector));
@@ -548,12 +548,12 @@ function selector(tagName: SCLTag, identity: string): string {
 function findExtRef(
   root: XMLDocument | Element | DocumentFragment,
   tagName: IndexedSCLTags,
-  identity: string
+  identity: string,
 ): Element | null {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
   const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-    selector(parentTag, parentIdentity).split(",")
+    selector(parentTag, parentIdentity).split(","),
   );
 
   if (childIdentity.endsWith("]")) {
@@ -571,7 +571,7 @@ function findExtRef(
       parentSelectors,
       [">"],
       [tagName],
-      intAddrSelectors
+      intAddrSelectors,
     )
       .map((strings) => strings.join(""))
       .join(",");
@@ -676,7 +676,7 @@ function findExtRef(
     srcLDInstSelectors,
     srcPrefixSelectors,
     srcLNClassSelectors,
-    srcLNInstSelectors
+    srcLNInstSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -690,7 +690,7 @@ function findExtRef(
 function findIEDName(
   root: XMLDocument | Element | DocumentFragment,
   tagName: IndexedSCLTags,
-  identity: string
+  identity: string,
 ): Element | null {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
@@ -706,7 +706,7 @@ function findIEDName(
     lnInstSelectors,
   ] = [
     parentTags(tagName).flatMap((parentTag) =>
-      selector(parentTag, parentIdentity).split(",")
+      selector(parentTag, parentIdentity).split(","),
     ),
     apRef ? [`[apRef="${apRef}"]`] : [":not([apRef])", '[apRef=""]'],
     ldInst ? [`[ldInst="${ldInst}"]`] : [":not([ldInst])", '[ldInst=""]'],
@@ -723,7 +723,7 @@ function findIEDName(
     ldInstSelectors,
     prefixSelectors,
     lnClassSelectors,
-    lnInstSelectors
+    lnInstSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -738,7 +738,7 @@ function findIEDName(
 function findP(
   root: XMLDocument | Element | DocumentFragment,
   tagName: IndexedSCLTags,
-  identity: string
+  identity: string,
 ): Element | null {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
@@ -752,7 +752,7 @@ function findP(
 
   const [parentSelectors, typeSelectors] = [
     parentTags(tagName).flatMap((parentTag) =>
-      selector(parentTag, parentIdentity).split(",")
+      selector(parentTag, parentIdentity).split(","),
     ),
     [`[type="${type}"]`],
   ];
@@ -761,7 +761,7 @@ function findP(
     parentSelectors,
     [">"],
     [tagName],
-    typeSelectors
+    typeSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -775,7 +775,7 @@ function findP(
 function findProtNs(
   root: XMLDocument | Element | DocumentFragment,
   tagName: IndexedSCLTags,
-  identity: string
+  identity: string,
 ): Element | null {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
@@ -783,7 +783,7 @@ function findProtNs(
 
   const [parentSelectors, typeSelector] = [
     parentTags(tagName).flatMap((parentTag) =>
-      selector(parentTag, parentIdentity).split(",")
+      selector(parentTag, parentIdentity).split(","),
     ),
     type && type !== "8-MMS"
       ? [`[type="${type}"]`]
@@ -794,7 +794,7 @@ function findProtNs(
     parentSelectors,
     [">"],
     [tagName],
-    typeSelector
+    typeSelector,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -809,7 +809,7 @@ function findProtNs(
 function findVal(
   root: XMLDocument | Element | DocumentFragment,
   tagName: IndexedSCLTags,
-  identity: string
+  identity: string,
 ): Element | null {
   const [parentIdentity, childIdentity] = pathParts(identity);
 
@@ -817,7 +817,7 @@ function findVal(
   const index = parseFloat(indexText);
 
   const parentSelectors = parentTags(tagName).flatMap((parentTag) =>
-    selector(parentTag, parentIdentity).split(",")
+    selector(parentTag, parentIdentity).split(","),
   );
 
   const [nameSelectors] = [sGroup ? [`[sGroup="${sGroup}"]`] : [""]];
@@ -826,7 +826,7 @@ function findVal(
     parentSelectors,
     [">"],
     [tagName],
-    nameSelectors
+    nameSelectors,
   )
     .map((strings) => strings.join(""))
     .join(",");
@@ -840,7 +840,7 @@ function findVal(
 type FindFunction = (
   doc: XMLDocument | Element | DocumentFragment,
   tagName: IndexedSCLTags,
-  identity: string
+  identity: string,
 ) => Element | null;
 
 const sclTags: Record<IndexedSCLTags, FindFunction> = {
@@ -860,7 +860,7 @@ function isIndexedSCL(tag: string): tag is IndexedSCLTags {
 export function find(
   root: XMLDocument | Element | DocumentFragment,
   tagName: string,
-  identity: string | number
+  identity: string | number,
 ): Element | null {
   if (typeof identity !== "string" || !isSCLTag(tagName)) return null;
 
@@ -868,7 +868,7 @@ export function find(
 
   return (
     Array.from(
-      root.querySelectorAll(selectorTags[tagName](tagName, identity))
+      root.querySelectorAll(selectorTags[tagName](tagName, identity)),
     ).filter(isPublic)[0] ?? null
   );
 }

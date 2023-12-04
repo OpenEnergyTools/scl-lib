@@ -2,13 +2,13 @@ function maxRptEnabled(reportControl: Element): number {
   return parseInt(
     reportControl.querySelector(":scope > RptEnabled")?.getAttribute("max") ??
       "1",
-    10
+    10,
   );
 }
 
 function sumReportControlInstances(
   root: XMLDocument | Element,
-  buffered = true
+  buffered = true,
 ): number {
   const selector = buffered
     ? `ReportControl[buffered="true"]`

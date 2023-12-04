@@ -14,8 +14,8 @@ export function maxReportControl(parent: Element): {
       parseInt(
         parent.closest(root)?.querySelector(selector)?.getAttribute(attr) ??
           "-1",
-        10
-      )
+        10,
+      ),
     );
   });
 

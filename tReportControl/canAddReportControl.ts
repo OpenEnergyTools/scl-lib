@@ -13,7 +13,7 @@ export function canAddReportControl(
   options: { buffered: boolean; newInstances?: number } = {
     buffered: true,
     newInstances: 1,
-  }
+  },
 ): boolean {
   const { max, maxBuf } = maxReportControl(parent);
   const { bufInstances, unBufInstances } = numberReportControlInstances(parent);

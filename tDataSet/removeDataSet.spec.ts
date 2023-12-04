@@ -10,19 +10,19 @@ import { removeDataSet } from "./removeDataSet.js";
 describe("Utility function to remove DataSet element", () => {
   const dataSet = findElement(
     withSubscriptionSupervision,
-    "DataSet"
+    "DataSet",
   ) as Element;
   const edits = removeDataSet({ node: dataSet });
   const extRefs = Array.from(
     dataSet.ownerDocument.querySelectorAll(
-      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"], ExtRef[srcCBName="someGse3"]'
-    )
+      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"], ExtRef[srcCBName="someGse3"]',
+    ),
   );
   const doi = extRefs[0].ownerDocument.querySelector(
-    'LN[lnClass="LGOS"][inst="1"] > DOI'
+    'LN[lnClass="LGOS"][inst="1"] > DOI',
   )!;
   const ln = extRefs[0].ownerDocument.querySelector(
-    'LN[lnClass="LGOS"][inst="2"]'
+    'LN[lnClass="LGOS"][inst="2"]',
   );
 
   it("returns empty string when remove.node is not DataSet", () =>

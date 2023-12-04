@@ -8,15 +8,15 @@ import { updateBay } from "./updateBay.js";
 const aa1 = findElement(substation, 'Substation[name="AA1"]') as Element;
 const aa1e1q01 = findElement(
   substation,
-  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="Q01"]'
+  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="Q01"]',
 ) as Element;
 const aa1e1bb1 = findElement(
   substation,
-  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="BB1"]'
+  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="BB1"]',
 ) as Element;
 const aa2d1q01 = findElement(
   substation,
-  'Substation[name="AA2"]>VoltageLevel[name="D1"]>Bay[name="Q01"]'
+  'Substation[name="AA2"]>VoltageLevel[name="D1"]>Bay[name="Q01"]',
 ) as Element;
 
 const orphanBay = new DOMParser()

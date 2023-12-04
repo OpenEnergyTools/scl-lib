@@ -6,7 +6,7 @@ import { getReference } from "../tBaseElement/getReference.js";
 function invalid(
   anyLn: Element,
   name: string | null | undefined,
-  datSet: string | null | undefined
+  datSet: string | null | undefined,
 ): boolean {
   const uniqueName = name
     ? !anyLn.querySelector(`:scope > ReportControl[name="${name}"]`)
@@ -88,7 +88,7 @@ export type CreateReportControlOptions = {
  * */
 export function createReportControl(
   parent: Element,
-  options: CreateReportControlOptions = { rpt: {}, trgOps: {}, optFields: {} }
+  options: CreateReportControlOptions = { rpt: {}, trgOps: {}, optFields: {} },
 ): Insert | null {
   const anyLn =
     parent.tagName === "LN0" || parent.tagName === "LN"
@@ -118,8 +118,8 @@ export function createReportControl(
   const confRev = options.confRev
     ? options.confRev
     : rptAttrs.datSet
-    ? "1"
-    : "0";
+      ? "1"
+      : "0";
 
   if (
     options.rpt?.intgPd &&
@@ -143,7 +143,7 @@ export function createReportControl(
     const optFields = createElement(
       anyLn.ownerDocument,
       "OptFields",
-      optFieldsAttrs
+      optFieldsAttrs,
     );
 
     reportControl.insertBefore(optFields, null);

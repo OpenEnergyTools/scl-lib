@@ -6,7 +6,7 @@ import {
 
 export function changeSMVContent(
   element: Element,
-  options: ChangeGseOrSmvAddressOptions
+  options: ChangeGseOrSmvAddressOptions,
 ): (Insert | Remove)[] {
   return changeGseOrSmvAddress(element, options);
 }

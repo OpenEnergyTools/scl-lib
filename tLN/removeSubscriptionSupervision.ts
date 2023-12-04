@@ -12,14 +12,14 @@ type GroupedExtRefs = {
 /** @returns Element to remove the subscription supervision */
 function removableSupervisionElement(
   ctrlBlock: Element,
-  subscriberIed: Element
+  subscriberIed: Element,
 ): Element | null {
   const supervisionType = ctrlBlock.tagName === "GSEControl" ? "LGOS" : "LSVS";
 
   const valElement = Array.from(
     subscriberIed.querySelectorAll(
-      `LN[lnClass="${supervisionType}"] > DOI > DAI > Val`
-    )
+      `LN[lnClass="${supervisionType}"] > DOI > DAI > Val`,
+    ),
   ).find((val) => val.textContent === controlBlockObjRef(ctrlBlock));
   if (!valElement) return null;
 
@@ -28,7 +28,7 @@ function removableSupervisionElement(
 
   // do not remove logical nodes `LGOS`, `LSVS` unless privately tagged
   const canRemoveLn = ln.querySelector(
-    ':scope > Private[type="OpenSCD.create"]'
+    ':scope > Private[type="OpenSCD.create"]',
   );
 
   return canRemoveLn ? ln : doi;
@@ -38,7 +38,7 @@ function removableSupervisionElement(
 function isSrcRefEditable(ctrlBlock: Element, subscriberIed: Element): boolean {
   const supervisionElement = removableSupervisionElement(
     ctrlBlock,
-    subscriberIed
+    subscriberIed,
   );
   const ln = supervisionElement?.closest("LN") ?? null;
   if (!ln) return false;
@@ -46,7 +46,7 @@ function isSrcRefEditable(ctrlBlock: Element, subscriberIed: Element): boolean {
   if (
     supervisionElement?.querySelector(
       ':scope DAI[name="setSrcRef"][valImport="true"][valKind="RO"],' +
-        ' :scope DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]'
+        ' :scope DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]',
     )
   )
     return true;
@@ -59,12 +59,12 @@ function isSrcRefEditable(ctrlBlock: Element, subscriberIed: Element): boolean {
 
   const goOrSvCBRef = rootNode.querySelector(
     `DataTypeTemplates > 
-        LNodeType[id="${lnType}"][lnClass="${lnClass}"] > DO[name="${cbRefType}"]`
+        LNodeType[id="${lnType}"][lnClass="${lnClass}"] > DO[name="${cbRefType}"]`,
   );
 
   const cbRefId = goOrSvCBRef?.getAttribute("type");
   const setSrcRef = rootNode.querySelector(
-    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`
+    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`,
   );
 
   return (
@@ -104,7 +104,7 @@ function isControlBlockSubscribed(extRefs: Element[]): boolean {
       otherExtRef.getAttribute("srcLDInst") === srcLDInst &&
       otherExtRef.getAttribute("srcLNClass") === srcLNClass &&
       otherExtRef.getAttribute("iedName") === iedName &&
-      otherExtRef.getAttribute("serviceType") === serviceType
+      otherExtRef.getAttribute("serviceType") === serviceType,
   );
 }
 
@@ -116,7 +116,7 @@ function cannotRemoveSupervision(extRefGroup: GroupedExtRefs): boolean {
 }
 
 function groupPerControlBlock(
-  extRefs: Element[]
+  extRefs: Element[],
 ): Record<string, GroupedExtRefs> {
   const groupedExtRefs: Record<string, GroupedExtRefs> = {};
   extRefs.forEach((extRef) => {
@@ -154,7 +154,7 @@ export function removeSubscriptionSupervision(extRefs: Element[]): Remove[] {
 
         return removableSupervisionElement(
           extRefGroup.ctrlBlock,
-          extRefGroup.subscriberIed
+          extRefGroup.subscriberIed,
         )!;
       })
       .filter((element) => element) as Element[]

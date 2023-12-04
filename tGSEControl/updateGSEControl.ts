@@ -25,23 +25,23 @@ export function updateGSEControl(update: Update): (Update | Remove | Insert)[] {
   const updates: (Update | Remove | Insert)[] = [];
   if (update.attributes.name) {
     const extRefUpdates: Update[] = findControlBlockSubscription(
-      update.element
+      update.element,
     ).map((extRef) => ({
       element: extRef,
       attributes: { srcCBName: update.attributes.name },
     }));
 
     const supervisionUpdates: (Remove | Insert)[] = Array.from(
-      update.element.ownerDocument.querySelectorAll("Val")
+      update.element.ownerDocument.querySelectorAll("Val"),
     )
       .filter((val) => val.textContent === controlBlockObjRef(update.element))
       .flatMap((val) => {
         const [path] = controlBlockObjRef(update.element)!.split(".");
         const oldValContent = Array.from(val.childNodes).find(
-          (node) => node.nodeType === Node.TEXT_NODE
+          (node) => node.nodeType === Node.TEXT_NODE,
         )!;
         const newValContent = update.element.ownerDocument.createTextNode(
-          `${path}.${update.attributes.name}`
+          `${path}.${update.attributes.name}`,
         ) as Text;
 
         return [

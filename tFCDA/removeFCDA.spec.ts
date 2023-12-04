@@ -29,7 +29,7 @@ describe("Utility functions to remove FCDA element", () => {
   it("without subscription only removes FCDA", () => {
     const fcda = findElement(
       singleConnection,
-      'DataSet[name="someDataSet2"] FCDA'
+      'DataSet[name="someDataSet2"] FCDA',
     ) as Element;
 
     expect(removeFCDA({ node: fcda })[0]).to.deep.equal({
@@ -59,7 +59,7 @@ describe("Utility functions to remove FCDA element", () => {
   it("removes Ed2 subscriptions if any found", () => {
     const fcda = findElement(
       multipleConnectionsEd2,
-      'DataSet[name="someDataSet2"] FCDA'
+      'DataSet[name="someDataSet2"] FCDA',
     ) as Element;
 
     const edits = removeFCDA({ node: fcda });
