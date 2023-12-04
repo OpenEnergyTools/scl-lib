@@ -27,7 +27,7 @@ export function removeDataSet(remove: Remove): (Remove | Update)[] {
     (ctrlBlock) => ({
       element: ctrlBlock,
       attributes: { datSet: null, confRev: "0" },
-    })
+    }),
   );
 
   return dataSetRemove.concat(extRefEdits, ctrlBlockUpdates);

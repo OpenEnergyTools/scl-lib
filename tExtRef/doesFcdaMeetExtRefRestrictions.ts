@@ -13,7 +13,7 @@ import { extRefTypeRestrictions } from "./extRefTypeRestrictions.js";
 export function doesFcdaMeetExtRefRestrictions(
   extRef: Element,
   fcda: Element,
-  controlBlockType?: "GOOSE" | "Report" | "SMV" | "Poll"
+  controlBlockType?: "GOOSE" | "Report" | "SMV" | "Poll",
 ): boolean {
   // Vendor does not provide data for the check so any FCDA meets restriction
   if (!extRef.hasAttribute("pDO")) return true;

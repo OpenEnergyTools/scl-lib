@@ -37,7 +37,7 @@ function type(supervision: Supervision): "GoCBRef" | "SvCBRef" {
 /** @returns Whether a supervision LN holds a valid control block object ref */
 function holdsValidObjRef(ln: Element, type: "GoCBRef" | "SvCBRef"): boolean {
   const objRef = ln.querySelector(
-    `:scope > DOI[name="${type}"] > DAI[name="setSrcRef"] > Val`
+    `:scope > DOI[name="${type}"] > DAI[name="setSrcRef"] > Val`,
   )?.textContent;
   if (!objRef) return false;
 
@@ -65,11 +65,11 @@ function exceedSupervisionLimits(supervision: Supervision): boolean {
   if (!max || isNaN(parseInt(max, 10))) return false;
 
   const existingSupervisionLogicalNode = Array.from(
-    subscriberIed.querySelectorAll(`LN[lnClass="${lnClass}"]`)
+    subscriberIed.querySelectorAll(`LN[lnClass="${lnClass}"]`),
   );
 
   const availableSupervisorSpots = existingSupervisionLogicalNode.filter(
-    (ln) => !holdsValidObjRef(ln, type(supervision))
+    (ln) => !holdsValidObjRef(ln, type(supervision)),
   );
 
   return (
@@ -85,7 +85,7 @@ function isSrcRefEditable(supervision: Supervision): boolean {
     supervision.subscriberIedOrLn.tagName === "LN"
       ? supervision.subscriberIedOrLn
       : supervision.subscriberIedOrLn.querySelector(
-          `LN[lnClass="${lnClass}"]`
+          `LN[lnClass="${lnClass}"]`,
         )!;
 
   const doiName = type(supervision);
@@ -94,7 +94,7 @@ function isSrcRefEditable(supervision: Supervision): boolean {
       `:scope > DOI[name="${doiName}"] > 
         DAI[name="setSrcRef"][valImport="true"][valKind="RO"],
        :scope > DOI[name="${doiName}"] > 
-        DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]`
+        DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]`,
     )
   )
     return true;
@@ -106,13 +106,13 @@ function isSrcRefEditable(supervision: Supervision): boolean {
   const goOrSvCBRef = rootNode.querySelector(
     `DataTypeTemplates > 
             LNodeType[id="${lnType}"][lnClass="${lnClass}"] > DO[name="${type(
-      supervision
-    )}"]`
+              supervision,
+            )}"]`,
   );
 
   const cbRefId = goOrSvCBRef?.getAttribute("type");
   const setSrcRef = rootNode.querySelector(
-    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`
+    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`,
   );
 
   return (
@@ -132,7 +132,7 @@ function existFirstSupervisionOfType(supervision: Supervision): boolean {
     supervision.sourceControlBlock.tagName === "GSEControl" ? "LGOS" : "LSVS";
 
   const firstSupervisionOfType = supervision.subscriberIedOrLn.querySelector(
-    `:scope > AccessPoint > Server > LDevice > LN[lnClass="${lnClass}"]`
+    `:scope > AccessPoint > Server > LDevice > LN[lnClass="${lnClass}"]`,
   );
 
   return firstSupervisionOfType ? true : false;
@@ -155,11 +155,11 @@ function isControlBlockSupervised(supervision: Supervision): boolean {
   return Array.from(
     subscriberIed?.querySelectorAll(
       `:scope > AccessPoint > Server > LDevice > LN[lnClass="${lnClass}"] 
-      > DOI[name="${refType}"] > DAI[name="setSrcRef"] > Val`
-    )
+      > DOI[name="${refType}"] > DAI[name="setSrcRef"] > Val`,
+    ),
   ).some(
     (val) =>
-      val.textContent === controlBlockObjRef(supervision.sourceControlBlock)
+      val.textContent === controlBlockObjRef(supervision.sourceControlBlock),
   );
 }
 
@@ -180,7 +180,7 @@ export function canInstantiateSubscriptionSupervision(
     checkEditableSrcRef: true,
     checkDuplicateSupervisions: true,
     checkMaxSupervisionLimits: true,
-  }
+  },
 ): boolean {
   if (
     options.checkDuplicateSupervisions &&

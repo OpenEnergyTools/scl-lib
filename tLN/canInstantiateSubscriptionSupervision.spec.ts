@@ -158,73 +158,73 @@ export const doc = new DOMParser().parseFromString(
       </DOType>
     </DataTypeTemplates>
   </SCL>`,
-  "application/xml"
+  "application/xml",
 );
 
 describe("Function that checks whether subscription supervision can be instantiated", () => {
   describe("check for already existing control block supervision", () => {
     it("return false when control block supervision does already exist", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE1"]'
+        'GSEControl[name="GOOSE1"]',
       )!;
       const subscriberIedOrLn = doc.querySelector(
-        'IED[name="GOOSE_Subscriber"]'
+        'IED[name="GOOSE_Subscriber"]',
       )!;
 
       expect(
         canInstantiateSubscriptionSupervision({
           sourceControlBlock,
           subscriberIedOrLn,
-        })
+        }),
       ).to.be.false;
     });
 
     it("checks for duplicate sibling supervision", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE3"]'
+        'GSEControl[name="GOOSE3"]',
       )!;
       const iedOrLn1 = doc.querySelector(
-        'IED[name="GOOSE_Subscriber"] LN[lnClass="LGOS"][inst="3"]'
+        'IED[name="GOOSE_Subscriber"] LN[lnClass="LGOS"][inst="3"]',
       )!;
       expect(
         canInstantiateSubscriptionSupervision({
           sourceControlBlock,
           subscriberIedOrLn: iedOrLn1,
-        })
+        }),
       ).to.be.true;
 
       const iedOrLn2 = doc.querySelector(
-        'IED[name="GOOSE_Subscriber"] LN[lnClass="LGOS"][inst="5"]'
+        'IED[name="GOOSE_Subscriber"] LN[lnClass="LGOS"][inst="5"]',
       )!;
       expect(
         canInstantiateSubscriptionSupervision({
           sourceControlBlock,
           subscriberIedOrLn: iedOrLn2,
-        })
+        }),
       ).to.be.true;
     });
 
     it("return true when control block supervision does not exist", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE3"]'
+        'GSEControl[name="GOOSE3"]',
       )!;
       const subscriberIedOrLn = doc.querySelector(
-        'IED[name="GOOSE_Subscriber"]'
+        'IED[name="GOOSE_Subscriber"]',
       )!;
       expect(
         canInstantiateSubscriptionSupervision({
           sourceControlBlock,
           subscriberIedOrLn,
-        })
+        }),
       ).to.be.true;
     });
 
     it("ignored check with checkDuplicateSupervisions set to false", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE1"]'
+        'GSEControl[name="GOOSE1"]',
       )!;
       const subscriberIedOrLn = doc.querySelector(
-        'IED[name="GOOSE_Subscriber"]'
+        'IED[name="GOOSE_Subscriber"]',
       )!;
 
       expect(
@@ -237,8 +237,8 @@ describe("Function that checks whether subscription supervision can be instantia
             checkDuplicateSupervisions: false,
             checkEditableSrcRef: true,
             checkMaxSupervisionLimits: true,
-          }
-        )
+          },
+        ),
       ).to.be.true;
     });
   });
@@ -247,46 +247,46 @@ describe("Function that checks whether subscription supervision can be instantia
     describe("for GSEControl", () => {
       it("return false when valImport or valKind is missing from LGOS", () => {
         const sourceControlBlock = doc.querySelector(
-          'GSEControl[name="GOOSE3"]'
+          'GSEControl[name="GOOSE3"]',
         )!;
         const subscriberIedOrLn = doc.querySelector(
-          'IED[name="SupervisionNotSupported"]'
+          'IED[name="SupervisionNotSupported"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock: sourceControlBlock,
             subscriberIedOrLn,
-          })
+          }),
         ).to.be.false;
       });
 
       it("return false when valImport or valKind is missing on selected LN", () => {
         const sourceControlBlock = doc.querySelector(
-          'GSEControl[name="GOOSE3"]'
+          'GSEControl[name="GOOSE3"]',
         )!;
         const lgos = doc.querySelector(
-          'IED[name="SupervisionNotSupported"]  LN[lnClass="LGOS"]'
+          'IED[name="SupervisionNotSupported"]  LN[lnClass="LGOS"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn: lgos,
-          })
+          }),
         ).to.be.false;
       });
 
       it("checks for DA and DAI for valImport/valKind", () => {
         const sourceControlBlock = doc.querySelector(
-          'SampledValueControl[name="someSmv"]'
+          'SampledValueControl[name="someSmv"]',
         )!;
         const lsvs = doc.querySelector(
-          'IED[name="SV_Subscriber"]  LN[lnClass="LSVS"]'
+          'IED[name="SV_Subscriber"]  LN[lnClass="LSVS"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn: lsvs,
-          })
+          }),
         ).to.be.true;
       });
     });
@@ -294,57 +294,57 @@ describe("Function that checks whether subscription supervision can be instantia
     describe("for SampledValueControl", () => {
       it("return false when valImport or valKind is missing on the from LSVS", () => {
         const sourceControlBlock = doc.querySelector(
-          'SampledValueControl[name="someSmv"]'
+          'SampledValueControl[name="someSmv"]',
         )!;
         const subscriberIedOrLn = doc.querySelector(
-          'IED[name="SV_Subscriber"]'
+          'IED[name="SV_Subscriber"]',
         )!;
 
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn,
-          })
+          }),
         ).to.be.true;
       });
 
       it("return false when valImport or valKind is missing on selected LN", () => {
         const sourceControlBlock = doc.querySelector(
-          'SampledValueControl[name="someSmv"]'
+          'SampledValueControl[name="someSmv"]',
         )!;
         const lsvs = doc.querySelector(
-          'IED[name="SV_Subscriber"] LN[lnClass="LSVS"][inst="2"]'
+          'IED[name="SV_Subscriber"] LN[lnClass="LSVS"][inst="2"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn: lsvs,
-          })
+          }),
         ).to.be.false;
       });
 
       it("checks for DA and DAI for valImport/valKind", () => {
         const sourceControlBlock = doc.querySelector(
-          'SampledValueControl[name="someSmv"]'
+          'SampledValueControl[name="someSmv"]',
         )!;
         const lsvs = doc.querySelector(
-          'IED[name="SV_Subscriber"]  LN[lnClass="LSVS"]'
+          'IED[name="SV_Subscriber"]  LN[lnClass="LSVS"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn: lsvs,
-          })
+          }),
         ).to.be.true;
       });
     });
 
     it("ignores check with checkEditableSrcRef set to false", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE3"]'
+        'GSEControl[name="GOOSE3"]',
       )!;
       const subscriberIedOrLn = doc.querySelector(
-        'IED[name="SupervisionNotSupported"]'
+        'IED[name="SupervisionNotSupported"]',
       )!;
 
       expect(
@@ -357,8 +357,8 @@ describe("Function that checks whether subscription supervision can be instantia
             checkDuplicateSupervisions: true,
             checkEditableSrcRef: false,
             checkMaxSupervisionLimits: false,
-          }
-        )
+          },
+        ),
       ).to.be.true;
     });
   });
@@ -366,27 +366,27 @@ describe("Function that checks whether subscription supervision can be instantia
   describe("checks whether there is a form supervision logical node", () => {
     it("return false with missing LGOS", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE3"]'
+        'GSEControl[name="GOOSE3"]',
       )!;
       const subscriberIedOrLn = doc.querySelector('IED[name="Publisher"]')!;
       expect(
         canInstantiateSubscriptionSupervision({
           sourceControlBlock,
           subscriberIedOrLn,
-        })
+        }),
       ).to.be.false;
     });
 
     it("return false with missing LSVS", () => {
       const sourceControlBlock = doc.querySelector(
-        'SampledValueControl[name="someSmv"]'
+        'SampledValueControl[name="someSmv"]',
       )!;
       const subscriberIedOrLn = doc.querySelector('IED[name="Publisher"]')!;
       expect(
         canInstantiateSubscriptionSupervision({
           sourceControlBlock,
           subscriberIedOrLn,
-        })
+        }),
       ).to.be.false;
     });
   });
@@ -395,31 +395,31 @@ describe("Function that checks whether subscription supervision can be instantia
     describe("for GSEControl", () => {
       it("return false when existing supervisions is exceeding maxGo", () => {
         const sourceControlBlock = doc.querySelector(
-          'GSEControl[name="GOOSE3"]'
+          'GSEControl[name="GOOSE3"]',
         )!;
         const subscriberIedOrLn = doc.querySelector(
-          'IED[name="SvAndGo_Subscriber"]'
+          'IED[name="SvAndGo_Subscriber"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn,
-          })
+          }),
         ).to.be.false;
       });
 
       it("return true when existing supervisions is within maxGo", () => {
         const sourceControlBlock = doc.querySelector(
-          'GSEControl[name="GOOSE3"]'
+          'GSEControl[name="GOOSE3"]',
         )!;
         const subscriberIedOrLn = doc.querySelector(
-          'IED[name="GOOSE_Subscriber"]'
+          'IED[name="GOOSE_Subscriber"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn,
-          })
+          }),
         ).to.be.true;
       });
     });
@@ -427,41 +427,41 @@ describe("Function that checks whether subscription supervision can be instantia
     describe("for SampledValueControl", () => {
       it("return false when existing supervisions is exceeding maxSv", () => {
         const sourceControlBlock = doc.querySelector(
-          'SampledValueControl[name="someSmv3"]'
+          'SampledValueControl[name="someSmv3"]',
         )!;
         const subscriberIedOrLn = doc.querySelector(
-          'IED[name="SvAndGo_Subscriber"]'
+          'IED[name="SvAndGo_Subscriber"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn,
-          })
+          }),
         ).to.be.false;
       });
 
       it("return true when existing supervisions is within maxSv", () => {
         const sourceControlBlock = doc.querySelector(
-          'SampledValueControl[name="someSmv3"]'
+          'SampledValueControl[name="someSmv3"]',
         )!;
         const subscriberIedOrLn = doc.querySelector(
-          'IED[name="SV_Subscriber"]'
+          'IED[name="SV_Subscriber"]',
         )!;
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
             subscriberIedOrLn,
-          })
+          }),
         ).to.be.true;
       });
     });
 
     it("ignores check with checkEditableSrcRef set to false", () => {
       const sourceControlBlock = doc.querySelector(
-        'GSEControl[name="GOOSE3"]'
+        'GSEControl[name="GOOSE3"]',
       )!;
       const subscriberIedOrLn = doc.querySelector(
-        'IED[name="SvAndGo_Subscriber"]'
+        'IED[name="SvAndGo_Subscriber"]',
       )!;
 
       expect(
@@ -474,8 +474,8 @@ describe("Function that checks whether subscription supervision can be instantia
             checkDuplicateSupervisions: true,
             checkEditableSrcRef: true,
             checkMaxSupervisionLimits: false,
-          }
-        )
+          },
+        ),
       ).to.be.true;
     });
   });
@@ -488,7 +488,7 @@ describe("Function that checks whether subscription supervision can be instantia
       canInstantiateSubscriptionSupervision({
         sourceControlBlock,
         subscriberIedOrLn: ln1,
-      })
+      }),
     ).to.be.false;
 
     const ln2 = doc.querySelector('LN[lnClass="LGOS"][inst="3"]')!;
@@ -497,7 +497,7 @@ describe("Function that checks whether subscription supervision can be instantia
       canInstantiateSubscriptionSupervision({
         sourceControlBlock,
         subscriberIedOrLn: ln2,
-      })
+      }),
     ).to.be.true;
   });
 });

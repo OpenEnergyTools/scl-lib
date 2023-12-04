@@ -140,7 +140,7 @@ describe("ReportControl related functions", () => {
         });
         const expectedReport = findElement(
           defaultIntgPdReport,
-          "ReportControl"
+          "ReportControl",
         )!;
 
         expect(insert).to.exist;
@@ -163,7 +163,7 @@ describe("ReportControl related functions", () => {
         });
         const expectedReport = findElement(
           defaultPeriodReport,
-          "ReportControl"
+          "ReportControl",
         )!;
 
         expect(insert).to.exist;
@@ -186,7 +186,7 @@ describe("ReportControl related functions", () => {
 
       it("return null with invalid datSet reference", () => {
         expect(
-          createReportControl(ln02, { rpt: { datSet: "someInvalidDatSet" } })
+          createReportControl(ln02, { rpt: { datSet: "someInvalidDatSet" } }),
         ).to.be.null;
       });
 

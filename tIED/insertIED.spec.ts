@@ -8,24 +8,24 @@ import { insertIed } from "./insertIED.js";
 function findEdit(
   edits: Insert[],
   type: "parent" | "node",
-  node: Node
+  node: Node,
 ): Insert | undefined {
   return edits.find(
     (edit) =>
       (type === "parent" && edit.parent === node) ||
-      (type === "node" && edit.node === node)
+      (type === "node" && edit.node === node),
   );
 }
 
 function numberInserts(
   edits: Insert[],
   type: "parent" | "node",
-  tag: string
+  tag: string,
 ): number {
   return edits.filter(
     (edit) =>
       (type === "parent" && (edit.parent as Element).tagName === tag) ||
-      (type === "node" && (edit.node as Element).tagName === tag)
+      (type === "node" && (edit.node as Element).tagName === tag),
   ).length;
 }
 
@@ -225,10 +225,10 @@ describe("Function to an importIED and its referenced elements", () => {
     handleEdit(imports);
 
     const brokenType = Array.from(
-      scl1.querySelectorAll("DO, SDO, DA, BDA, LN, LN0 ")
+      scl1.querySelectorAll("DO, SDO, DA, BDA, LN, LN0 "),
     )
       .filter(
-        (elem) => elem.hasAttribute("type") || elem.hasAttribute("lnType")
+        (elem) => elem.hasAttribute("type") || elem.hasAttribute("lnType"),
       )
       .map((elem) => {
         if (elem.tagName === "LN" || elem.tagName === "LN0")
@@ -238,8 +238,8 @@ describe("Function to an importIED and its referenced elements", () => {
       .filter(
         (type) =>
           scl1.querySelector(
-            `LNodeType[id="${type}"], DOType[id="${type}"], DAType[id="${type}"], EnumType[id="${type}"]`
-          ) === null
+            `LNodeType[id="${type}"], DOType[id="${type}"], DAType[id="${type}"], EnumType[id="${type}"]`,
+          ) === null,
       );
 
     expect(brokenType.length).to.equal(0);
@@ -262,14 +262,14 @@ describe("Function to an importIED and its referenced elements", () => {
     handleEdit(imports);
 
     const orphanTypes = Array.from(
-      scl2.querySelectorAll("LNodeType, DOType, DAType, EnumType")
+      scl2.querySelectorAll("LNodeType, DOType, DAType, EnumType"),
     )
       .map((type) => type.getAttribute("id"))
       .filter(
         (id) =>
           scl2.querySelector(
-            `LN[lnType="${id}"], LN0[lnType="${id}"], DO[type="${id}"], SDO[type="${id}"], DA[type="${id}"], BDA[type="${id}"]`
-          ) === null
+            `LN[lnType="${id}"], LN0[lnType="${id}"], DO[type="${id}"], SDO[type="${id}"], DA[type="${id}"], BDA[type="${id}"]`,
+          ) === null,
       );
 
     expect(orphanTypes.length).to.equal(0);

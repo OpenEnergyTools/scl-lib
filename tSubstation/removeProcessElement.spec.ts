@@ -7,17 +7,17 @@ import { removeProcessElement } from "./removeProcessElement.js";
 
 const aa1e1bb1 = findElement(
   substation,
-  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="BB1"]'
+  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="BB1"]',
 ) as Element;
 
 const aa1ptr1 = findElement(
   substation,
-  'Substation[name="AA1"]>PowerTransformer[name="PTR1"]'
+  'Substation[name="AA1"]>PowerTransformer[name="PTR1"]',
 ) as Element;
 
 const aa1e1q01qa1 = findElement(
   substation,
-  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="Q01"]>ConductingEquipment[name="QA1"]'
+  'Substation[name="AA1"]>VoltageLevel[name="E1"]>Bay[name="Q01"]>ConductingEquipment[name="QA1"]',
 ) as Element;
 
 const aa1 = findElement(substation, 'Substation[name="AA1"]') as Element;

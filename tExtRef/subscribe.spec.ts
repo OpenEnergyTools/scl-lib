@@ -52,7 +52,7 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       const sink = docEd2.querySelector(`Inputs`)!;
 
       expect(
-        subscribe([{ sink, source: { fcda: orphanFcda } }]).length
+        subscribe([{ sink, source: { fcda: orphanFcda } }]).length,
       ).to.equal(0);
     });
 
@@ -98,11 +98,11 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       expect(edits.length).to.equal(1);
       expect(edits[0]).to.satisfies(isInsert);
       expect(((edits[0] as Insert).parent as Element).tagName).to.equal(
-        "Inputs"
+        "Inputs",
       );
       expect(((edits[0] as Insert).node as Element).tagName).to.equal("ExtRef");
       expect(((edits[0] as Insert).reference as Element).tagName).to.equal(
-        "ExtRef"
+        "ExtRef",
       );
 
       const extRef = (edits[0] as Insert).node as Element;
@@ -207,7 +207,7 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1stVal"]`)!;
         const sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`
+          `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`,
         )!;
 
         const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
@@ -235,7 +235,7 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         const controlBlock = undefined;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1stVal"]`)!;
         const sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`
+          `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`,
         )!;
 
         const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
@@ -265,7 +265,7 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1q"]`)!;
         const sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`,
         )!;
 
         const edits = subscribe([{ sink, source: { fcda, controlBlock } }]);
@@ -273,7 +273,7 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         expect(edits[0]).to.satisfies(isInsert);
         expect(((edits[0] as Insert).parent as Element).tagName).to.equal("LN");
         expect(((edits[0] as Insert).node as Element).tagName).to.equal(
-          "Inputs"
+          "Inputs",
         );
         expect((edits[0] as Insert).reference).to.equal(null);
 
@@ -296,18 +296,18 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
       it("makes sure to create as many inputs as needed", () => {
         const controlBlock = undefined;
         let fcda = docEd2.querySelector(
-          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="stVal"]`
+          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="stVal"]`,
         )!;
         let sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`,
         )!;
         const extRef3 = { sink, source: { fcda, controlBlock } };
 
         fcda = docEd2.querySelector(
-          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="q"]`
+          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="q"]`,
         )!;
         sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`,
         )!;
         const extRef4 = { sink, source: { fcda, controlBlock } };
 
@@ -324,7 +324,7 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         const controlBlock = docEd2.querySelector(`GSEControl[name="GOOSE1"]`)!;
         const fcda = docEd2.querySelector(`FCDA[desc="goose1stVal"]`)!;
         const sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`
+          `IED[name="GOOSE_Subscriber"] ExtRef[intAddr="Pos;CSWI1/Pos/stVal"]`,
         )!;
 
         const edits = subscribe({ sink, source: { fcda, controlBlock } });
@@ -335,10 +335,10 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         let controlBlock: Element | undefined =
           docEd2.querySelector(`SampledValueControl`)!;
         let fcda = docEd2.querySelector(
-          `IED[name="GOOSE_Publisher"] DataSet[name="SamplVal"] > FCDA[daName="instMag.i"]`
+          `IED[name="GOOSE_Publisher"] DataSet[name="SamplVal"] > FCDA[daName="instMag.i"]`,
         )!;
         let sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] ExtRef[intAddr="someTCTRinstMag"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] ExtRef[intAddr="someTCTRinstMag"]`,
         )!;
         const extRef1 = {
           sink,
@@ -346,27 +346,27 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         };
 
         fcda = docEd2.querySelector(
-          `IED[name="GOOSE_Publisher"] DataSet[name="SamplVal"] > FCDA[daName="q"]`
+          `IED[name="GOOSE_Publisher"] DataSet[name="SamplVal"] > FCDA[daName="q"]`,
         )!;
         sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] ExtRef[intAddr="someTCTRq"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] ExtRef[intAddr="someTCTRq"]`,
         )!;
         const extRef2 = { sink, source: { fcda, controlBlock } };
 
         controlBlock = undefined;
         fcda = docEd2.querySelector(
-          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="stVal"]`
+          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="stVal"]`,
         )!;
         sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`,
         )!;
         const extRef3 = { sink, source: { fcda, controlBlock } };
 
         fcda = docEd2.querySelector(
-          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="q"]`
+          `IED[name="GOOSE_Publisher"] DataSet[name="GOOSE2sDataSet"] > FCDA[daName="q"]`,
         )!;
         sink = docEd2.querySelector(
-          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`
+          `IED[name="GOOSE_Subscriber"] LDevice[inst="Earth_Switch"] LN[lnClass="XSWI"]`,
         )!;
         const extRef4 = { sink, source: { fcda, controlBlock } };
 

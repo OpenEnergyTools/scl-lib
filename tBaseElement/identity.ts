@@ -27,7 +27,7 @@ function lNodeIdentity(e: Element): string {
 
 function kDCIdentity(e: Element): string {
   return `${identity(e.parentElement)}>${e.getAttribute(
-    "iedName"
+    "iedName",
   )} ${e.getAttribute("apName")}`;
 }
 
@@ -90,7 +90,7 @@ function extRefIdentity(e: Element): string | number {
   const iedName = e.getAttribute("iedName");
   const intAddr = e.getAttribute("intAddr");
   const intAddrIndex = Array.from(
-    e.parentElement.querySelectorAll(`ExtRef[intAddr="${intAddr}"]`)
+    e.parentElement.querySelectorAll(`ExtRef[intAddr="${intAddr}"]`),
   ).indexOf(e);
   if (intAddr) return `${parentIdentity}>${intAddr}[${intAddrIndex}]`;
   const [
@@ -146,7 +146,7 @@ function extRefIdentity(e: Element): string | number {
 
 function lNIdentity(e: Element): string {
   const [prefix, lnClass, inst] = ["prefix", "lnClass", "inst"].map((name) =>
-    e.getAttribute(name)
+    e.getAttribute(name),
   );
   return `${identity(e.parentElement)}>${prefix ?? ""} ${lnClass} ${inst}`;
 }
@@ -181,14 +181,14 @@ function valIdentity(e: Element): string | number {
 
 function connectedAPIdentity(e: Element): string {
   const [iedName, apName] = ["iedName", "apName"].map((name) =>
-    e.getAttribute(name)
+    e.getAttribute(name),
   );
   return `${iedName} ${apName}`;
 }
 
 function controlBlockIdentity(e: Element): string {
   const [ldInst, cbName] = ["ldInst", "cbName"].map((name) =>
-    e.getAttribute(name)
+    e.getAttribute(name),
   );
   return `${ldInst} ${cbName}`;
 }

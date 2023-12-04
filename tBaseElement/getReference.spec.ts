@@ -9,7 +9,7 @@ describe("getReference", () => {
           <IED name="IED"></IED>
           <DataTypeTemplates></DataTypeTemplates>
         </SCL>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "SomeInvalidTag")).to.equal(null);
   });
@@ -21,7 +21,7 @@ describe("getReference", () => {
           <IED name="IED"></IED>
           <DataTypeTemplates></DataTypeTemplates>
         </SCL>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "VoltageLevel")).to.equal(null);
   });
@@ -29,7 +29,7 @@ describe("getReference", () => {
   it("returns null for invalid parent element", () => {
     const scl = new DOMParser().parseFromString(
       `SomeInvalidSCL`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "Bay")).to.equal(null);
   });
@@ -40,10 +40,10 @@ describe("getReference", () => {
           <Private>testprivate</Private>
           <ConductingEquipment name="QA1"></ConductingEquipment>
         </Bay>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "LNode")).to.equal(
-      scl.querySelector("ConductingEquipment")
+      scl.querySelector("ConductingEquipment"),
     );
 
     const scl2 = new DOMParser().parseFromString(
@@ -52,10 +52,10 @@ describe("getReference", () => {
           <PowerTransformer name="pTrans"></PowerTransformer>
           <ConductingEquipment name="QA1"></ConductingEquipment>
         </Bay>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl2, "LNode")).to.equal(
-      scl2.querySelector("PowerTransformer")
+      scl2.querySelector("PowerTransformer"),
     );
   });
 
@@ -66,7 +66,7 @@ describe("getReference", () => {
           <IED name="IED"></IED>
           <DataTypeTemplates></DataTypeTemplates>
         </SCL>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "Substation")).to.equal(scl.querySelector("IED"));
   });
@@ -77,7 +77,7 @@ describe("getReference", () => {
           <Private></Private>
           <LNode></LNode>
         </Substation>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "VoltageLevel")).to.be.null;
   });
@@ -88,7 +88,7 @@ describe("getReference", () => {
           <Private></Private>
           <Function></Function>
         </VoltageLevel>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "Bay")).to.equal(scl.querySelector("Function"));
   });
@@ -99,10 +99,10 @@ describe("getReference", () => {
           <Private></Private>
           <ConnectivityNode></ConnectivityNode>
         </Bay>`,
-      "application/xml"
+      "application/xml",
     ).documentElement;
     expect(getReference(scl, "ConductingEquipment")).to.equal(
-      scl.querySelector("ConnectivityNode")
+      scl.querySelector("ConnectivityNode"),
     );
   });
 });

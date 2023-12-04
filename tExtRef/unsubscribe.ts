@@ -31,7 +31,7 @@ export type UnsubscribeOptions = {
  */
 export function unsubscribe(
   extRefs: Element[],
-  options: UnsubscribeOptions = { ignoreSupervision: false }
+  options: UnsubscribeOptions = { ignoreSupervision: false },
 ): (Update | Remove)[] {
   const updateEdits: Update[] = [];
   const removeEdits: Remove[] = [];

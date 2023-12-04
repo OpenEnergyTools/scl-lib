@@ -35,7 +35,7 @@ export function isInsert(edit: Edit): edit is Insert {
 export function createElement(
   doc: XMLDocument,
   tag: string,
-  attrs: Record<string, string | null>
+  attrs: Record<string, string | null>,
 ): Element {
   const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
   Object.entries(attrs)
@@ -50,6 +50,6 @@ export function createElement(
 export function crossProduct<T>(...arrays: T[][]): T[][] {
   return arrays.reduce<T[][]>(
     (a, b) => <T[][]>a.flatMap((d) => b.map((e) => [d, e].flat())),
-    [[]]
+    [[]],
   );
 }

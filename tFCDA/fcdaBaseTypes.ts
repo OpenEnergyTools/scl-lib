@@ -1,23 +1,23 @@
 function dataAttributeSpecification(
   anyLn: Element,
   doName: string,
-  daName: string | null
+  daName: string | null,
 ): { cdc: string; bType?: string } | undefined {
   const doc = anyLn.ownerDocument;
   const lNodeType = doc.querySelector(
     `:root > DataTypeTemplates > LNodeType[id="${anyLn.getAttribute(
-      "lnType"
-    )}"]`
+      "lnType",
+    )}"]`,
   );
 
   const doNames = doName.split(".");
   let leaf: Element | null | undefined = lNodeType;
   for (const doName of doNames) {
     const dO: Element | null | undefined = leaf?.querySelector(
-      `DO[name="${doName}"], SDO[name="${doName}"]`
+      `DO[name="${doName}"], SDO[name="${doName}"]`,
     );
     leaf = doc.querySelector(
-      `:root > DataTypeTemplates > DOType[id="${dO?.getAttribute("type")}"]`
+      `:root > DataTypeTemplates > DOType[id="${dO?.getAttribute("type")}"]`,
     );
   }
   const cdc = leaf?.getAttribute("cdc");
@@ -28,14 +28,14 @@ function dataAttributeSpecification(
   const daNames = daName.split(".");
   for (const daName of daNames) {
     const dA: Element | null | undefined = leaf?.querySelector(
-      `DA[name="${daName}"], BDA[name="${daName}"]`
+      `DA[name="${daName}"], BDA[name="${daName}"]`,
     );
     leaf =
       daNames.indexOf(daName) < daNames.length - 1
         ? doc.querySelector(
             `:root > DataTypeTemplates > DAType[id="${dA?.getAttribute(
-              "type"
-            )}"]`
+              "type",
+            )}"]`,
           )
         : dA;
   }
@@ -53,7 +53,7 @@ function dataAttributeSpecification(
  * or undefined if one of them cannot be determined
  */
 export function fcdaBaseTypes(
-  fcda: Element
+  fcda: Element,
 ): { cdc: string; bType?: string } | undefined {
   const sourceIed = fcda.closest("IED");
   const [ldInst, prefix, lnClass, lnInst, doName, daName] = [
@@ -68,8 +68,8 @@ export function fcdaBaseTypes(
 
   const anyLn = Array.from(
     sourceIed.querySelectorAll(
-      `LDevice[inst="${ldInst}"] > LN, LDevice[inst="${ldInst}"] > LN0`
-    )
+      `LDevice[inst="${ldInst}"] > LN, LDevice[inst="${ldInst}"] > LN0`,
+    ),
   ).find((anyLn) => {
     return (
       (anyLn.getAttribute("prefix") ?? "") === (prefix ?? "") &&

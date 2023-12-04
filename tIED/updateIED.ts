@@ -18,14 +18,14 @@ const elementsWithIedNameAttribute = [
 function updateIEDNameTextContent(
   ied: Element,
   oldIedName: string,
-  newIedName: string
+  newIedName: string,
 ): Edit[] {
   return Array.from(ied.ownerDocument.getElementsByTagName("IEDName"))
     .filter(isPublic)
     .filter((iedName) => iedName.textContent === oldIedName)
     .map((iedName) => {
       const node = Array.from(iedName.childNodes).find(
-        (node) => node.nodeType === Node.TEXT_NODE
+        (node) => node.nodeType === Node.TEXT_NODE,
       )!;
 
       return [
@@ -43,7 +43,7 @@ function updateIEDNameTextContent(
 function validSubscriptionSupervision(
   ied: Element,
   otherIED: Element,
-  oldIedName: string
+  oldIedName: string,
 ): Element[] {
   // for GSEControl elements
   const lgosVals = Array.from(ied.querySelectorAll("GSEControl"))
@@ -53,8 +53,8 @@ function validSubscriptionSupervision(
       return !!otherIED.querySelector(
         `:scope > AccessPoint > Server > LDevice 
         ExtRef[iedName="${oldIedName}"][srcLDInst="${srcLDInst}"][srcCBName="${srcCB.getAttribute(
-          "name"
-        )}"]`
+          "name",
+        )}"]`,
       );
     })
     .map((srcCB) => {
@@ -62,8 +62,8 @@ function validSubscriptionSupervision(
       return Array.from(
         otherIED.querySelectorAll(
           `:scope > AccessPoint > Server > LDevice > LN[lnClass="LGOS"] > 
-            DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val`
-        )
+            DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val`,
+        ),
       ).find((val) => val.textContent === objRef);
     })
     .filter((val) => val) as Element[];
@@ -76,8 +76,8 @@ function validSubscriptionSupervision(
       return !!otherIED.querySelector(
         `:scope > AccessPoint > Server > LDevice 
           ExtRef[iedName="${oldIedName}"][srcLDInst="${srcLDInst}"][srcCBName="${srcCB.getAttribute(
-          "name"
-        )}"]`
+            "name",
+          )}"]`,
       );
     })
     .map((srcCB) => {
@@ -85,8 +85,8 @@ function validSubscriptionSupervision(
       return Array.from(
         otherIED.querySelectorAll(
           `:scope > AccessPoint > Server > LDevice > LN[lnClass="LSVS"] > 
-          DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val`
-        )
+          DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val`,
+        ),
       ).find((val) => val.textContent === objRef);
     })
     .filter((val) => val) as Element[];
@@ -97,12 +97,12 @@ function validSubscriptionSupervision(
 function updateSubscriptionSupervision(
   ied: Element,
   oldIedName: string,
-  newIedName: string
+  newIedName: string,
 ): Edit[] {
   const vals = Array.from(
-    ied.ownerDocument.querySelectorAll(":root > IED")
+    ied.ownerDocument.querySelectorAll(":root > IED"),
   ).flatMap((otherIED) =>
-    validSubscriptionSupervision(ied, otherIED, oldIedName)
+    validSubscriptionSupervision(ied, otherIED, oldIedName),
   );
 
   return vals.flatMap((val) => {
@@ -111,7 +111,7 @@ function updateSubscriptionSupervision(
     const newTextNode = document.createTextNode(newContent);
 
     const node = Array.from(val.childNodes).find(
-      (childNode) => childNode.nodeType === Node.TEXT_NODE
+      (childNode) => childNode.nodeType === Node.TEXT_NODE,
     )!;
 
     return [{ node }, { parent: val, node: newTextNode }];
@@ -121,7 +121,7 @@ function updateSubscriptionSupervision(
 function updateIedNameAttributes(
   ied: Element,
   oldIedName: string,
-  newIedName: string
+  newIedName: string,
 ): Update[] {
   const selector = elementsWithIedNameAttribute
     .map((iedNameElement) => `${iedNameElement}[iedName="${oldIedName}"]`)

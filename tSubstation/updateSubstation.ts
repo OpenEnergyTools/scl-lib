@@ -2,10 +2,10 @@ import { Update } from "../foundation/utils.js";
 
 function updateConnectivityNodes(
   substation: Element,
-  newName: string
+  newName: string,
 ): Update[] {
   const cNodes = Array.from(
-    substation.getElementsByTagName("ConnectivityNode")
+    substation.getElementsByTagName("ConnectivityNode"),
   );
 
   const updates = cNodes.map((cNode) => {
@@ -27,12 +27,12 @@ function updateTerminals(
   names: {
     oldSubstation: string;
     newSubstation: string;
-  }
+  },
 ): Update[] {
   const terminals = Array.from(
     substation.querySelectorAll(
-      `Terminal[substationName="${names.oldSubstation}"]`
-    )
+      `Terminal[substationName="${names.oldSubstation}"]`,
+    ),
   );
 
   const updates = terminals.map((terminal) => {
@@ -76,6 +76,6 @@ export function updateSubstation(update: Update): Update[] {
     ...updateTerminals(substation, {
       oldSubstation: oldName,
       newSubstation: newName,
-    })
+    }),
   );
 }

@@ -15,7 +15,7 @@ const gseAppIdRange = Array(maxGseAppId - minGseAppId)
 const gseTripAppIdRange = Array(maxGseTripAppId - minGseTripAppId)
   .fill(1)
   .map((_, i) =>
-    (minGseTripAppId + i).toString(16).toUpperCase().padStart(4, "0")
+    (minGseTripAppId + i).toString(16).toUpperCase().padStart(4, "0"),
   );
 
 const smvAppIdRange = Array(maxSmvAppId - minSmvAppId)
@@ -45,12 +45,12 @@ const smvAppIdRange = Array(maxSmvAppId - minSmvAppId)
 export function appIdGenerator(
   doc: XMLDocument,
   serviceType: "SMV" | "GSE",
-  type1A = false
+  type1A = false,
 ): () => string | null {
   const appIds = new Set(
     Array.from(
-      doc.querySelectorAll(`${serviceType} > Address > P[type="APPID"]`)
-    ).map((appId) => appId.textContent!)
+      doc.querySelectorAll(`${serviceType} > Address > P[type="APPID"]`),
+    ).map((appId) => appId.textContent!),
   );
 
   const range =
@@ -58,8 +58,8 @@ export function appIdGenerator(
     serviceType === "SMV"
       ? smvAppIdRange
       : type1A
-      ? gseTripAppIdRange
-      : gseAppIdRange;
+        ? gseTripAppIdRange
+        : gseAppIdRange;
 
   return () => {
     const uniqueAppId = range.find((appId) => !appIds.has(appId));

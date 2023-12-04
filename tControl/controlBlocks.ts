@@ -7,7 +7,7 @@ export function controlBlocks(fcdaOrDataSet: Element): Element[] {
     parentLn?.querySelectorAll(
       `:scope > ReportControl[datSet="${datSet}"],
       :scope > GSEControl[datSet="${datSet}"],
-      :scope > SampledValueControl[datSet="${datSet}"]`
-    ) ?? []
+      :scope > SampledValueControl[datSet="${datSet}"]`,
+    ) ?? [],
   );
 }

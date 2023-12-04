@@ -171,14 +171,14 @@ describe("Utility function to create schema valid SampledValueControl insert edi
 
     expect(insert.length).to.equal(1);
     expect((insert[0].node as Element).getAttribute("name")).to.equal(
-      "newSampledValueControl_003"
+      "newSampledValueControl_003",
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("0");
     expect((insert[0].node as Element).getAttribute("multicast")).to.equal(
-      "true"
+      "true",
     );
     expect((insert[0].node as Element).getAttribute("smvID")).to.equal(
-      "IED1/first/LLN0/newSampledValueControl_003"
+      "IED1/first/LLN0/newSampledValueControl_003",
     );
   });
 
@@ -187,11 +187,11 @@ describe("Utility function to create schema valid SampledValueControl insert edi
 
     expect(insert.length).to.equal(1);
     expect((insert[0].node as Element).getAttribute("name")).to.equal(
-      "newSampledValueControl_003"
+      "newSampledValueControl_003",
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("0");
     expect((insert[0].node as Element).getAttribute("multicast")).to.equal(
-      "true"
+      "true",
     );
     expect((insert[0].node as Element).getAttribute("smpRate")).to.equal("80");
     expect((insert[0].node as Element).getAttribute("nofASDU")).to.equal("1");
@@ -214,19 +214,19 @@ describe("Utility function to create schema valid SampledValueControl insert edi
 
     expect(insert.length).to.equal(1);
     expect((insert[0].node as Element).getAttribute("name")).to.equal(
-      "newSampledValueControl_003"
+      "newSampledValueControl_003",
     );
     expect((insert[0].node as Element).getAttribute("confRev")).to.equal("2");
     expect((insert[0].node as Element).getAttribute("multicast")).to.equal(
-      "false"
+      "false",
     );
     expect((insert[0].node as Element).getAttribute("smvID")).to.equal(
-      "someSmvID"
+      "someSmvID",
     );
     expect((insert[0].node as Element).getAttribute("smpRate")).to.equal("90");
     expect((insert[0].node as Element).getAttribute("nofASDU")).to.equal("2");
     expect((insert[0].node as Element).getAttribute("smpMod")).to.equal(
-      "SecPerSmp"
+      "SecPerSmp",
     );
   });
 
@@ -249,33 +249,33 @@ describe("Utility function to create schema valid SampledValueControl insert edi
     });
     expect(insert.length).to.equal(2);
     expect((insert[1].node as Element).getAttribute("ldInst")).to.equal(
-      "first"
+      "first",
     );
     expect((insert[1].node as Element).getAttribute("cbName")).to.equal(
-      "newSampledValueControl_002"
+      "newSampledValueControl_002",
     );
     expect((insert[1].parent as Element).getAttribute("apName")).to.equal(
-      "AP1"
+      "AP1",
     );
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="MAC-Address"]'
-      )?.textContent
+        ':scope > Address > P[type="MAC-Address"]',
+      )?.textContent,
     ).to.equal("01-0C-CD-04-00-00");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="APPID"]'
-      )?.textContent
+        ':scope > Address > P[type="APPID"]',
+      )?.textContent,
     ).to.equal("4000");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-ID"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-ID"]',
+      )?.textContent,
     ).to.equal("000");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-PRIORITY"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-PRIORITY"]',
+      )?.textContent,
     ).to.equal("4");
   });
 
@@ -291,33 +291,33 @@ describe("Utility function to create schema valid SampledValueControl insert edi
     });
     expect(insert.length).to.equal(2);
     expect((insert[1].node as Element).getAttribute("ldInst")).to.equal(
-      "first"
+      "first",
     );
     expect((insert[1].node as Element).getAttribute("cbName")).to.equal(
-      "newSampledValueControl_001"
+      "newSampledValueControl_001",
     );
     expect((insert[1].parent as Element).getAttribute("apName")).to.equal(
-      "AP2"
+      "AP2",
     );
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="MAC-Address"]'
-      )?.textContent
+        ':scope > Address > P[type="MAC-Address"]',
+      )?.textContent,
     ).to.equal("01-0C-CD-04-00-13");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="APPID"]'
-      )?.textContent
+        ':scope > Address > P[type="APPID"]',
+      )?.textContent,
     ).to.equal("4003");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-ID"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-ID"]',
+      )?.textContent,
     ).to.equal("002");
     expect(
       (insert[1].node as Element).querySelector(
-        ':scope > Address > P[type="VLAN-PRIORITY"]'
-      )?.textContent
+        ':scope > Address > P[type="VLAN-PRIORITY"]',
+      )?.textContent,
     ).to.equal("6");
   });
 
@@ -327,37 +327,37 @@ describe("Utility function to create schema valid SampledValueControl insert edi
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("refreshTime")
+        ?.getAttribute("refreshTime"),
     ).to.be.null;
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("sampleSynchronized")
+        ?.getAttribute("sampleSynchronized"),
     ).to.be.null;
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("sampleRate")
+        ?.getAttribute("sampleRate"),
     ).to.be.null;
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("dataSet")
+        ?.getAttribute("dataSet"),
     ).to.be.null;
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("security")
+        ?.getAttribute("security"),
     ).to.be.null;
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("timestamp")
+        ?.getAttribute("timestamp"),
     ).to.be.null;
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("synchSourceId")
+        ?.getAttribute("synchSourceId"),
     ).to.be.null;
   });
 
@@ -378,37 +378,37 @@ describe("Utility function to create schema valid SampledValueControl insert edi
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("refreshTime")
+        ?.getAttribute("refreshTime"),
     ).to.equal("true");
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("sampleSynchronized")
+        ?.getAttribute("sampleSynchronized"),
     ).to.equal("false");
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("sampleRate")
+        ?.getAttribute("sampleRate"),
     ).to.equal("true");
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("dataSet")
+        ?.getAttribute("dataSet"),
     ).to.equal("true");
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("security")
+        ?.getAttribute("security"),
     ).to.equal("true");
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("timestamp")
+        ?.getAttribute("timestamp"),
     ).to.equal("true");
     expect(
       (insert[0].node as Element)
         .querySelector("SmvOpts")
-        ?.getAttribute("synchSourceId")
+        ?.getAttribute("synchSourceId"),
     ).to.equal("true");
   });
 

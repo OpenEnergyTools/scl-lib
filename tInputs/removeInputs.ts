@@ -21,7 +21,7 @@ export function removeInputs(extRefs: Remove[]): Remove[] {
 
   parentInputs.forEach((input, _index, inputs) => {
     const inputNotRemovedYet = !removeInputs.some(
-      (removeInput) => removeInput.node === input
+      (removeInput) => removeInput.node === input,
     );
 
     if (isInputLeaf(input, inputs) && inputNotRemovedYet)

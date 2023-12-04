@@ -3,7 +3,7 @@ export function uniqueElementName(parent: Element, tagName: string): string {
   const nameCore = `new${tagName}`;
 
   const siblingNames = Array.from(
-    parent.querySelectorAll(`:scope > ${tagName}`)
+    parent.querySelectorAll(`:scope > ${tagName}`),
   ).map((child) => child.getAttribute("name") ?? child.tagName);
   if (!siblingNames.length) return `${nameCore}_001`;
 

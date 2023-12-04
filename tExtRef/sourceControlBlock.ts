@@ -65,9 +65,9 @@ export function sourceControlBlock(extRef: Element): Element | null {
       [`${lDevice}>${anyLN}${lnClass}${lnInst}`],
       lnPrefixQualifiers,
       [">"],
-      cbTypes
+      cbTypes,
     )
       .map((strings) => strings.join(""))
-      .join(",")
+      .join(","),
   );
 }

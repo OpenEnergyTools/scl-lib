@@ -52,7 +52,7 @@ describe("Function returning query selector", () => {
         if (element && isPublic(element))
           expect(element).to.satisfy(
             // eslint-disable-next-line no-shadow
-            (element: Element) => element === find(doc, tag, identity(element))
+            (element: Element) => element === find(doc, tag, identity(element)),
           );
       });
     });

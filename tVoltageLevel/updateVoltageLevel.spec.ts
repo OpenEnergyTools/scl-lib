@@ -8,12 +8,12 @@ import { updateVoltageLevel } from "./updateVoltageLevel.js";
 const aa1 = findElement(substation, 'Substation[name="AA1"]') as Element;
 const aa1e1 = findElement(
   substation,
-  'Substation[name="AA1"]>VoltageLevel[name="E1"]'
+  'Substation[name="AA1"]>VoltageLevel[name="E1"]',
 ) as Element;
 
 const aa2d1 = findElement(
   substation,
-  'Substation[name="AA2"]>VoltageLevel[name="D1"]'
+  'Substation[name="AA2"]>VoltageLevel[name="D1"]',
 ) as Element;
 
 const orphanVoltageLevel = new DOMParser()

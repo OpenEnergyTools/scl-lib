@@ -13,17 +13,17 @@ describe("APPID generator function", () => {
     const gseAppIdRange = Array(maxGseAppId - minGseAppId)
       .fill(1)
       .map((_, i) =>
-        (minGseAppId + i).toString(16).toUpperCase().padStart(4, "0")
+        (minGseAppId + i).toString(16).toUpperCase().padStart(4, "0"),
       );
 
     const maxedAppIds = new DOMParser().parseFromString(
       `<ConnectedAP>
             ${gseAppIdRange.map(
               (appId) =>
-                `<GSE><Address><P type="APPID">${appId}</P></Address></GSE>`
+                `<GSE><Address><P type="APPID">${appId}</P></Address></GSE>`,
             )}
           </ConnectedAP>`,
-      "application/xml"
+      "application/xml",
     );
 
     beforeEach(() => {
@@ -43,7 +43,7 @@ describe("APPID generator function", () => {
                 <GSE><Address><P type="APPID">000F</P></Address></GSE>
                 <GSE><Address><P type="APPID">0010</P></Address></GSE>
             </ConnectedAP>`,
-        "application/xml"
+        "application/xml",
       );
 
       appidGenerator = appIdGenerator(doc, "GSE");
@@ -73,17 +73,17 @@ describe("APPID generator function", () => {
     const gseTripAppIdRange = Array(maxGseTripAppId - minGseTripAppId)
       .fill(1)
       .map((_, i) =>
-        (minGseTripAppId + i).toString(16).toUpperCase().padStart(4, "0")
+        (minGseTripAppId + i).toString(16).toUpperCase().padStart(4, "0"),
       );
 
     const maxedAppIds = new DOMParser().parseFromString(
       `<ConnectedAP>
               ${gseTripAppIdRange.map(
                 (appId) =>
-                  `<GSE><Address><P type="APPID">${appId}</P></Address></GSE>`
+                  `<GSE><Address><P type="APPID">${appId}</P></Address></GSE>`,
               )}
             </ConnectedAP>`,
-      "application/xml"
+      "application/xml",
     );
 
     beforeEach(() => {
@@ -103,7 +103,7 @@ describe("APPID generator function", () => {
                 <GSE><Address><P type="APPID">800F</P></Address></GSE>
                 <GSE><Address><P type="APPID">8010</P></Address></GSE>
             </ConnectedAP>`,
-        "application/xml"
+        "application/xml",
       );
 
       appidGenerator = appIdGenerator(doc, "GSE", true);
@@ -132,17 +132,17 @@ describe("APPID generator function", () => {
     const smvAppIdRange = Array(maxSmvAppId - minSmvAppId)
       .fill(1)
       .map((_, i) =>
-        (minSmvAppId + i).toString(16).toUpperCase().padStart(4, "0")
+        (minSmvAppId + i).toString(16).toUpperCase().padStart(4, "0"),
       );
 
     const maxedAppIds = new DOMParser().parseFromString(
       `<ConnectedAP>
                 ${smvAppIdRange.map(
                   (appId) =>
-                    `<SMV><Address><P type="APPID">${appId}</P></Address></SMV>`
+                    `<SMV><Address><P type="APPID">${appId}</P></Address></SMV>`,
                 )}
               </ConnectedAP>`,
-      "application/xml"
+      "application/xml",
     );
 
     beforeEach(() => {
@@ -162,7 +162,7 @@ describe("APPID generator function", () => {
               <SMV><Address><P type="APPID">4011</P></Address></SMV>
               <SMV><Address><P type="APPID">4009</P></Address></SMV>
             </ConnectedAP>`,
-        "application/xml"
+        "application/xml",
       );
 
       appidGenerator = appIdGenerator(doc, "SMV");

@@ -13,23 +13,23 @@ import { removeControlBlock } from "./removeControlBlock.js";
 describe("Utility function to remove control blocks", () => {
   const ctrlBlock4 = findElement(
     ed2Subscription,
-    'GSEControl[name="someGse4"]'
+    'GSEControl[name="someGse4"]',
   ) as Element;
   const ctrlBlock3 = findElement(
     ed2Subscription,
-    'GSEControl[name="someGse3"]'
+    'GSEControl[name="someGse3"]',
   ) as Element;
   const ctrlBlock2 = findElement(
     ed2Subscription,
-    'GSEControl[name="someGse2"]'
+    'GSEControl[name="someGse2"]',
   ) as Element;
   const ctrlBlock1 = findElement(
     ed2Subscription,
-    'SampledValueControl[name="someSmv"]'
+    'SampledValueControl[name="someSmv"]',
   ) as Element;
   const orphanCtrlBlock = findElement(
     orphanControlBlock,
-    "GSEControl"
+    "GSEControl",
   ) as Element;
   const someExtRef = findElement(ed2Subscription, "ExtRef") as Element;
 
@@ -59,7 +59,7 @@ describe("Utility function to remove control blocks", () => {
   it("it removes subscribed data in case of multi use DataSet", () => {
     const edits = removeControlBlock({ node: ctrlBlock2 });
     const extRef = ctrlBlock2.ownerDocument.querySelector(
-      'ExtRef[srcCBName="someGse2"]'
+      'ExtRef[srcCBName="someGse2"]',
     );
 
     expect(edits.length).equals(3);
@@ -69,7 +69,7 @@ describe("Utility function to remove control blocks", () => {
   it("it removes subscribed data form single use DataSet", () => {
     const edits = removeControlBlock({ node: ctrlBlock1 });
     const dataSet = ctrlBlock1.ownerDocument.querySelector(
-      'DataSet[name="smvDataSet"]'
+      'DataSet[name="smvDataSet"]',
     );
 
     expect(edits.length).equals(6);

@@ -16,7 +16,7 @@ export type ChangeGseOrSmvAddressOptions = {
 
 export function changeGseOrSmvAddress(
   gseOrSmv: Element,
-  options: ChangeGseOrSmvAddressOptions
+  options: ChangeGseOrSmvAddressOptions,
 ): (Insert | Remove)[] {
   const edits: (Insert | Remove)[] = [];
 
@@ -43,13 +43,13 @@ export function changeGseOrSmvAddress(
           child.setAttributeNS(
             "http://www.w3.org/2001/XMLSchema-instance",
             "xsi:type",
-            `tP_${type}`
+            `tP_${type}`,
           );
       } else if (options.instType)
         child.setAttributeNS(
           "http://www.w3.org/2001/XMLSchema-instance",
           "xsi:type",
-          `tP_${type}`
+          `tP_${type}`,
         );
 
       child.textContent = value;

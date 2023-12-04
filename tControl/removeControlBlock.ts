@@ -21,7 +21,7 @@ import { findControlBlockSubscription } from "./findControlSubscription.js";
 export function removeControlBlock(remove: Remove): (Remove | Update)[] {
   if (
     !["ReportControl", "GSEControl", "SampledValueControl"].includes(
-      (remove.node as Element).tagName
+      (remove.node as Element).tagName,
     )
   )
     return [];
@@ -31,14 +31,14 @@ export function removeControlBlock(remove: Remove): (Remove | Update)[] {
   const ctrlBlockRemoveAction: (Remove | Update)[] = [{ node: controlBlock }];
 
   const dataSet = controlBlock.parentElement?.querySelector(
-    `DataSet[name="${controlBlock.getAttribute("datSet")}"]`
+    `DataSet[name="${controlBlock.getAttribute("datSet")}"]`,
   );
   if (!dataSet) return ctrlBlockRemoveAction;
 
   const multiUseDataSet = controlBlocks(dataSet).length > 1;
   if (multiUseDataSet)
     return ctrlBlockRemoveAction.concat(
-      unsubscribe(findControlBlockSubscription(controlBlock))
+      unsubscribe(findControlBlockSubscription(controlBlock)),
     );
 
   return ctrlBlockRemoveAction.concat(removeDataSet({ node: dataSet }));

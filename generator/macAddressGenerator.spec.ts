@@ -24,10 +24,10 @@ describe("MAC-Address generator function", () => {
       `<ConnectedAP>
           ${gseMacRange.map(
             (mac) =>
-              `<GSE><Address><P type="MAC-Address">${mac}</P></Address></GSE>`
+              `<GSE><Address><P type="MAC-Address">${mac}</P></Address></GSE>`,
           )}
         </ConnectedAP>`,
-      "application/xml"
+      "application/xml",
     );
 
     beforeEach(() => {
@@ -48,7 +48,7 @@ describe("MAC-Address generator function", () => {
               <GSE><Address><P type="MAC-Address">01-0C-CD-01-00-15</P></Address></GSE>
               <GSE><Address><P type="MAC-Address">01-0C-CD-01-00-0F</P></Address></GSE>
           </ConnectedAP>`,
-        "application/xml"
+        "application/xml",
       );
 
       macGenerator = macAddressGenerator(doc, "GSE");
@@ -82,10 +82,10 @@ describe("MAC-Address generator function", () => {
       `<ConnectedAP>
           ${smvMacRange.map(
             (mac) =>
-              `<SMV><Address><P type="MAC-Address">${mac}</P></Address></SMV>`
+              `<SMV><Address><P type="MAC-Address">${mac}</P></Address></SMV>`,
           )}
         </ConnectedAP>`,
-      "application/xml"
+      "application/xml",
     );
 
     beforeEach(() => {
@@ -106,7 +106,7 @@ describe("MAC-Address generator function", () => {
               <SMV><Address><P type="MAC-Address">01-0C-CD-04-00-15</P></Address></SMV>
               <SMV><Address><P type="MAC-Address">01-0C-CD-04-00-0B</P></Address></SMV>
           </ConnectedAP>`,
-        "application/xml"
+        "application/xml",
       );
 
       macGenerator = macAddressGenerator(doc, "SMV");

@@ -7,7 +7,7 @@ function updateConnectivityNodes(
     voltageLevel: string;
     oldBay: string;
     newBay: string;
-  }
+  },
 ): Update[] {
   const cNodes = Array.from(element.getElementsByTagName("ConnectivityNode"));
 
@@ -29,14 +29,14 @@ function updateTerminals(
     voltageLevel: string;
     oldBay: string;
     newBay: string;
-  }
+  },
 ): Update[] {
   const terminals = Array.from(
     element
       .closest("Substation")!
       .querySelectorAll(
-        `Terminal[substationName="${names.substation}"][voltageLevelName="${names.voltageLevel}"][bayName="${names.oldBay}"]`
-      )
+        `Terminal[substationName="${names.substation}"][voltageLevelName="${names.voltageLevel}"][bayName="${names.oldBay}"]`,
+      ),
   );
 
   const updates = terminals.map((terminal) => {
@@ -91,6 +91,6 @@ export function updateBay(update: Update): Update[] {
       voltageLevel: voltageLevelName,
       oldBay: oldName,
       newBay: newName,
-    })
+    }),
   );
 }

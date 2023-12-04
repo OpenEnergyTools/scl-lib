@@ -12,7 +12,7 @@ import { canAddSampledValueControl } from "../tSampledValueControl/canAddSampled
 function invalidSampledValueControl(
   ln0: Element,
   name: string | null | undefined,
-  datSet: string | null | undefined
+  datSet: string | null | undefined,
 ): boolean {
   const uniqueName = name
     ? !ln0.querySelector(`:scope > SampledValueControl[name="${name}"]`)
@@ -95,7 +95,7 @@ export function createSampledValueControl(
   options: CreateSampledValueControlOptions = {
     smvControl: {},
     smv: {},
-  }
+  },
 ): Insert[] {
   const ln0 = parent.tagName === "LN0" ? parent : parent.querySelector("LN0");
   if (!ln0) return [];
@@ -122,13 +122,13 @@ export function createSampledValueControl(
   const smvControl = createElement(
     ln0.ownerDocument,
     "SampledValueControl",
-    attributes
+    attributes,
   );
 
   const smvOpts = createElement(
     ln0.ownerDocument,
     "SmvOpts",
-    options.smvOpts ?? {}
+    options.smvOpts ?? {},
   );
   smvControl.appendChild(smvOpts);
 

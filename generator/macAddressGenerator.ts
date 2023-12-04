@@ -33,12 +33,12 @@ const smvMacRange = Array(maxSmvMacAddress - minSmvMacAddress)
  */
 export function macAddressGenerator(
   doc: XMLDocument,
-  serviceType: "SMV" | "GSE"
+  serviceType: "SMV" | "GSE",
 ): () => string | null {
   const macs = new Set(
     Array.from(
-      doc.querySelectorAll(`${serviceType} > Address > P[type="MAC-Address"]`)
-    ).map((mac) => mac.textContent!)
+      doc.querySelectorAll(`${serviceType} > Address > P[type="MAC-Address"]`),
+    ).map((mac) => mac.textContent!),
   );
 
   const range = serviceType === "SMV" ? smvMacRange : gseMacRange;

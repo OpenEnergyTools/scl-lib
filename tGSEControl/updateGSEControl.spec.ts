@@ -20,7 +20,7 @@ function findElement(str: string, selector: string): Element | null {
 }
 
 function buildAttr(
-  type: "name" | "datSet" | "none" = "none"
+  type: "name" | "datSet" | "none" = "none",
 ): Record<string, string | null> {
   if (type === "name")
     return {
@@ -65,7 +65,7 @@ describe("Utility function to update GSEControl attributes", () => {
   it("always updates confRev attribute +10000", () => {
     const gseControl = findElement(
       gseControlDoc,
-      'GSEControl[name="someGse"]'
+      'GSEControl[name="someGse"]',
     )!;
     const actions = updateGSEControl({
       element: gseControl,
@@ -89,7 +89,7 @@ describe("Utility function to update GSEControl attributes", () => {
     it("also updates subscribed ExtRefs", () => {
       const gseControl = findElement(
         gseControlDoc,
-        'GSEControl[name="someGse3"]'
+        'GSEControl[name="someGse3"]',
       )!;
       const actions = updateGSEControl({
         element: gseControl,
@@ -119,7 +119,7 @@ describe("Utility function to update GSEControl attributes", () => {
     it("also updates subscriber supervision Val element", () => {
       const gseControl = findElement(
         gseControlDoc,
-        'GSEControl[name="someGse"]'
+        'GSEControl[name="someGse"]',
       )!;
       const actions = updateGSEControl({
         element: gseControl,
@@ -152,8 +152,8 @@ describe("Utility function to update GSEControl attributes", () => {
 
       const oldText = Array.from(
         gseControl.ownerDocument.querySelector(
-          'LN[lnClass="LGOS"][inst="1"] Val'
-        )?.childNodes ?? []
+          'LN[lnClass="LGOS"][inst="1"] Val',
+        )?.childNodes ?? [],
       ).find((node) => node.nodeType === Node.TEXT_NODE)!;
       expect(actions[3]).to.satisfy(isRemove);
       expect((actions[3] as Remove).node).to.equal(oldText);
@@ -161,14 +161,14 @@ describe("Utility function to update GSEControl attributes", () => {
       expect(actions[4]).to.satisfy(isInsert);
       expect((actions[4] as Insert).parent).to.equal(oldText.parentElement);
       expect((actions[4] as Insert).node.textContent).to.equal(
-        "srcIEDsomeLDInst/LLN0.someNewGseName"
+        "srcIEDsomeLDInst/LLN0.someNewGseName",
       );
     });
 
     it("also updates subscriber supervision Val element", () => {
       const gseControl = findElement(
         gseControlDoc,
-        'GSEControl[name="someGse2"]'
+        'GSEControl[name="someGse2"]',
       )!;
       const actions = updateGSEControl({
         element: gseControl,
@@ -196,8 +196,8 @@ describe("Utility function to update GSEControl attributes", () => {
 
       const oldText = Array.from(
         gseControl.ownerDocument.querySelector(
-          'LN[lnClass="LGOS"][inst="2"] Val'
-        )?.childNodes ?? []
+          'LN[lnClass="LGOS"][inst="2"] Val',
+        )?.childNodes ?? [],
       ).find((node) => node.nodeType === Node.TEXT_NODE)!;
       expect(actions[2]).to.satisfy(isRemove);
       expect((actions[2] as Remove).node).to.equal(oldText);
@@ -205,7 +205,7 @@ describe("Utility function to update GSEControl attributes", () => {
       expect(actions[3]).to.satisfy(isInsert);
       expect((actions[3] as Insert).parent).to.equal(oldText.parentElement);
       expect((actions[3] as Insert).node.textContent).to.equal(
-        "srcIEDsomeLDInst/LLN0.someNewGseName"
+        "srcIEDsomeLDInst/LLN0.someNewGseName",
       );
 
       expect(actions[4]).to.satisfy(isUpdate);
@@ -220,7 +220,7 @@ describe("Utility function to update GSEControl attributes", () => {
     it("also updates DataSet.name with DataSet being single used", () => {
       const gseControl = findElement(
         gseControlDoc,
-        'GSEControl[name="someGse3"]'
+        'GSEControl[name="someGse3"]',
       )!;
       const actions = updateGSEControl({
         element: gseControl,
@@ -250,7 +250,7 @@ describe("Utility function to update GSEControl attributes", () => {
     it("also updates DataSet.name with DataSet being single used", () => {
       const gseControl = findElement(
         gseControlDoc,
-        'GSEControl[name="someGse2"]'
+        'GSEControl[name="someGse2"]',
       )!;
       const actions = updateGSEControl({
         element: gseControl,

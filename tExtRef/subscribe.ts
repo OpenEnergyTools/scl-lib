@@ -106,7 +106,7 @@ function getDataAttributes(fcda: Element): {
 
 function createSubscribeEdit(
   connection: Connection,
-  parent: Element
+  parent: Element,
 ): Update | Insert | null {
   const doc = connection.sink.ownerDocument;
   const fcda = connection.source.fcda;
@@ -241,7 +241,7 @@ function validSubscribeConditions(connection: Connection): boolean {
  */
 export function subscribe(
   connectionOrConnections: Connection | Connection[],
-  options: SubscribeOptions = { force: false }
+  options: SubscribeOptions = { force: false },
 ): (Insert | Update)[] {
   const connections = Array.isArray(connectionOrConnections)
     ? connectionOrConnections

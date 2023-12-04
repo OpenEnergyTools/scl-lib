@@ -13,7 +13,7 @@ function findElements(str: string, selector: string): Element[] {
   return Array.from(
     new DOMParser()
       .parseFromString(str, "application/xml")
-      .querySelectorAll(selector)
+      .querySelectorAll(selector),
   );
 }
 
@@ -70,7 +70,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("does not remove ICT defined Ed2.1 attributes", () => {
     const extRef = findElement(
       laterBindingExtRefs,
-      'ExtRef[intAddr="someOtherIntAddr"]'
+      'ExtRef[intAddr="someOtherIntAddr"]',
     )!;
     const edits = unsubscribe([extRef]);
 
@@ -89,14 +89,14 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("per default remove subscription LGOS supervision as well", () => {
     const extRefs = findElements(
       withSubscriptionSupervision,
-      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]'
+      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]',
     );
     const edits = unsubscribe(extRefs);
     const doi = extRefs[0].ownerDocument.querySelector(
-      'LN[lnClass="LGOS"][inst="1"] > DOI'
+      'LN[lnClass="LGOS"][inst="1"] > DOI',
     );
     const ln = extRefs[0].ownerDocument.querySelector(
-      'LN[lnClass="LGOS"][inst="2"]'
+      'LN[lnClass="LGOS"][inst="2"]',
     );
 
     expect(edits.length).to.equal(5);
@@ -115,7 +115,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
     const extRefs = findElements(
       withSubscriptionSupervision,
-      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]'
+      'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]',
     );
     const edits = unsubscribe(extRefs, { ignoreSupervision: true });
 
@@ -131,7 +131,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("does not remove subscription supervision with remaining connections", () => {
     const extRef = findElement(
       withSubscriptionSupervision,
-      'ExtRef[srcCBName="someGse"]'
+      'ExtRef[srcCBName="someGse"]',
     )!;
     const edits = unsubscribe([extRef]);
 
@@ -143,7 +143,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("does not remove subscription supervision without missing object reference", () => {
     const extRef = findElement(
       withSubscriptionSupervision,
-      'ExtRef[srcCBName="someGse3"]'
+      'ExtRef[srcCBName="someGse3"]',
     )!;
     const edits = unsubscribe([extRef]);
 
@@ -155,10 +155,10 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("makes sure to remove subscription LSVS supervision as well", () => {
     const extRefs = findElements(
       withSubscriptionSupervision,
-      'ExtRef[srcCBName="someSmv"]'
+      'ExtRef[srcCBName="someSmv"]',
     );
     const doi = extRefs[0].ownerDocument.querySelector(
-      'LN[lnClass="LSVS"][inst="1"] > DOI'
+      'LN[lnClass="LSVS"][inst="1"] > DOI',
     );
     const edits = unsubscribe(extRefs);
 
@@ -176,7 +176,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {
     const extRefs = findElements(
       withSubscriptionSupervision,
-      'ExtRef[srcCBName="someSmv"]'
+      'ExtRef[srcCBName="someSmv"]',
     );
     const edits = unsubscribe(extRefs, { ignoreSupervision: true });
 
@@ -192,7 +192,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("with pServT present, serviceType is removed", () => {
     const extRefs = findElements(
       laterBindingExtRefs,
-      'ExtRef[intAddr="someOtherIntAddr"]'
+      'ExtRef[intAddr="someOtherIntAddr"]',
     );
     const edits = unsubscribe(extRefs, { ignoreSupervision: true });
 
@@ -204,14 +204,14 @@ describe("Function allowing to unsubscribe multiple external references", () => 
   it("without pServT, serviceType is not removed", () => {
     const extRefs = findElements(
       laterBindingExtRefs,
-      'ExtRef[intAddr="someIntAddr"]'
+      'ExtRef[intAddr="someIntAddr"]',
     )[0];
     const edits = unsubscribe([extRefs], { ignoreSupervision: true });
 
     expect(edits.length).to.equal(1);
     expect((edits[0] as Update).element).to.equal(extRefs);
     expect((edits[0] as Update).attributes).to.not.have.own.property(
-      "serviceType"
+      "serviceType",
     );
   });
 });

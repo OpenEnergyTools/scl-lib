@@ -16,7 +16,7 @@ export type ChangeGSEContentOptions = {
 
 function changeGseTiming(
   gSE: Element,
-  options: ChangeGseTimeOptions
+  options: ChangeGseTimeOptions,
 ): (Insert | Remove)[] {
   const edits: (Insert | Remove)[] = [];
 
@@ -62,7 +62,7 @@ function changeGseTiming(
  * */
 export function changeGSEContent(
   element: Element,
-  options: ChangeGSEContentOptions
+  options: ChangeGSEContentOptions,
 ): (Insert | Remove)[] {
   const addressEdits = options.address
     ? changeGseOrSmvAddress(element, options.address)

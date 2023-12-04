@@ -11,7 +11,7 @@ import { createGSE } from "../tGSE/createGSE.js";
 function invalidGSEControl(
   ln0: Element,
   name: string | null | undefined,
-  datSet: string | null | undefined
+  datSet: string | null | undefined,
 ): boolean {
   const uniqueName = name
     ? !ln0.querySelector(`:scope > GSEControl[name="${name}"]`)
@@ -74,7 +74,7 @@ export type CreateGSEControlOptions = {
  * */
 export function createGSEControl(
   parent: Element,
-  options: CreateGSEControlOptions = { gseControl: {}, gse: {} }
+  options: CreateGSEControlOptions = { gseControl: {}, gse: {} },
 ): Insert[] {
   const ln0 = parent.tagName === "LN0" ? parent : parent.querySelector("LN0");
   if (!ln0) return [];

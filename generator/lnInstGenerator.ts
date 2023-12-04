@@ -1,9 +1,9 @@
 export function getChildElementsByTagName(
   element: Element,
-  tag: string
+  tag: string,
 ): Element[] {
   return Array.from(element.children).filter(
-    (element) => element.tagName === tag
+    (element) => element.tagName === tag,
   );
 }
 
@@ -29,7 +29,7 @@ const lnInstRange = Array(maxLnInst)
  */
 export function lnInstGenerator(
   parent: Element,
-  tagName: "LN" | "LNode"
+  tagName: "LN" | "LNode",
 ): (lnClass: string) => string | undefined {
   const generators = new Map<string, () => string | undefined>();
   const generatedAttribute = tagName === "LN" ? "inst" : "lnInst";
@@ -39,12 +39,12 @@ export function lnInstGenerator(
       const lnInstOrInst = new Set(
         getChildElementsByTagName(parent, tagName)
           .filter((element) => element.getAttribute("lnClass") === lnClass)
-          .map((element) => element.getAttribute(generatedAttribute)!)
+          .map((element) => element.getAttribute(generatedAttribute)!),
       );
 
       generators.set(lnClass, () => {
         const uniqueLnInstOrInst = lnInstRange.find(
-          (lnInst) => !lnInstOrInst.has(lnInst)
+          (lnInst) => !lnInstOrInst.has(lnInst),
         );
         if (uniqueLnInstOrInst) lnInstOrInst.add(uniqueLnInstOrInst);
         return uniqueLnInstOrInst;
