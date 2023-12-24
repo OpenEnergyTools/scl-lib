@@ -58,6 +58,8 @@
 			</ConnectedAP>
 		</SubNetwork>
 		<SubNetwork name="ProcessBus" type="8-MMS">
+			<Text>I'm a text element!</Text>
+			<BitRate unit="b/s">10</BitRate>
 			<ConnectedAP iedName="IED2" apName="P1">
 				<Address>
 					<P type="IP">192.168.0.112</P>
