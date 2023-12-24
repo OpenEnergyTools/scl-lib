@@ -6,6 +6,23 @@ export type InsertIedOptions = {
   addCommunicationSection: boolean;
 };
 
+/**
+ * Copies an SCL SubNetwork element but without its ConnectedAP children.
+ * @param subNetwork - SCL SubNetwork element.
+ * @returns cloned SubNetwork without Element children.
+ */
+function getNewSubNetwork(subNetwork: Element): Element {
+  const newSubNetwork = subNetwork.cloneNode(true) as Element;
+  newSubNetwork.childNodes.forEach((childNode) => {
+    if (
+      childNode.nodeType === Node.ELEMENT_NODE &&
+      childNode.nodeName === "ConnectedAP"
+    )
+      newSubNetwork.removeChild(childNode);
+  });
+  return newSubNetwork;
+}
+
 function addCommunicationElements(newIed: Element, scl: Element): Insert[] {
   const edits: Insert[] = [];
 
@@ -22,41 +39,55 @@ function addCommunicationElements(newIed: Element, scl: Element): Insert[] {
       reference: getReference(scl, "Communication"),
     });
 
-  const newSubNetworks = Array.from(
-    newIed.ownerDocument.querySelectorAll(`:root > Communication > SubNetwork`),
+  const subNetworks = Array.from(
+    newIed.ownerDocument.querySelectorAll(":root > Communication > SubNetwork"),
+  ).filter((subNetwork) =>
+    subNetwork.querySelector(
+      `:scope > ConnectedAP[iedName="${newIed.getAttribute("name")}"]`,
+    ),
   );
 
-  newSubNetworks.forEach((newSubNetwork) => {
-    const subNetworkName = newSubNetwork.getAttribute("name");
-    // check if subnetwork already exists
-    const existingSubNetwork = communication.querySelector(
-      `:root > Communication > SubNetwork[name="${subNetworkName}"]`,
+  subNetworks.forEach((subNetwork) => {
+    const connectedAps = Array.from(
+      subNetwork.querySelectorAll(
+        `:scope > ConnectedAP[iedName="${newIed.getAttribute("name")}"]`,
+      ),
     );
 
-    if (!existingSubNetwork) {
-      // subnetwork is new and can be copied as is
-      const subNetwork = <Element>newSubNetwork.cloneNode(true);
+    const existingSubNetwork = communication.querySelector(
+      `:root > Communication > SubNetwork[name="${subNetwork?.getAttribute(
+        "name",
+      )}"]`,
+    );
+
+    const usedSubNetwork = existingSubNetwork
+      ? existingSubNetwork
+      : getNewSubNetwork(subNetwork);
+
+    if (!existingSubNetwork)
       edits.push({
         parent: communication,
-        node: subNetwork,
+        node: usedSubNetwork,
         reference: getReference(communication, "SubNetwork"),
       });
-    } else {
-      // subnetwork exists and individual ConnectedAP are copied
-      const newConnectedAPs = newIed.ownerDocument.querySelectorAll(
-        `:root > Communication > SubNetwork[name="${subNetworkName}"] 
-        > ConnectedAP[iedName="${newIed.getAttribute("name")}"]`,
+
+    connectedAps.forEach((connectedAp) => {
+      const iedName = newIed.getAttribute("name")!;
+      const apName = connectedAp.getAttribute("apName")!;
+
+      const existingConnectedAp = existingSubNetwork?.querySelector(
+        `:scope > ConnectedAP[iedName="${iedName}"][apName="${apName}"]`,
       );
 
-      newConnectedAPs.forEach((newConnectedAP) => {
-        const connectedAP = <Element>newConnectedAP.cloneNode(true);
+      if (!existingConnectedAp) {
+        const connectedAP = <Element>connectedAp.cloneNode(true);
         edits.push({
-          parent: existingSubNetwork,
+          parent: usedSubNetwork,
           node: connectedAP,
-          reference: getReference(existingSubNetwork, "ConnectedAP"),
+          reference: getReference(usedSubNetwork, "ConnectedAP"),
         });
-      });
-    }
+      }
+    });
   });
 
   return edits;

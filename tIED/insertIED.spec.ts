@@ -34,37 +34,37 @@ function findElements(scl: Element, tag: string): Element[] {
 }
 
 const emptyScl = (
-  await fetch("tIED/importIED/emptyproject.scd")
+  await fetch("tIED/insertIED/emptyproject.scd")
     .then((response) => response.text())
     .then((str) => new DOMParser().parseFromString(str, "application/xml"))
 ).querySelector("SCL")!;
 
 const multipleIEDs = (
-  await fetch("tIED/importIED/multipleieds.scd")
+  await fetch("tIED/insertIED/multipleieds.scd")
     .then((response) => response.text())
     .then((str) => new DOMParser().parseFromString(str, "application/xml"))
 ).querySelector("SCL")!;
 
 const validIed = (
-  await fetch("tIED/importIED/valid.iid")
+  await fetch("tIED/insertIED/valid.iid")
     .then((response) => response.text())
     .then((str) => new DOMParser().parseFromString(str, "application/xml"))
 ).querySelector(':root > IED[name="TestImportIED"]')!;
 
 const validWithMultipleConnAp = (
-  await fetch("tIED/importIED/validWithMultiSubnets.iid")
+  await fetch("tIED/insertIED/validWithMultiSubnets.iid")
     .then((response) => response.text())
     .then((str) => new DOMParser().parseFromString(str, "application/xml"))
 ).querySelector(':root > IED[name="TestImportIED"]')!;
 
 const duplicateIED = (
-  await fetch("tIED/importIED/duplicate.iid")
+  await fetch("tIED/insertIED/duplicate.iid")
     .then((response) => response.text())
     .then((str) => new DOMParser().parseFromString(str, "application/xml"))
 ).querySelector(':root > IED[name="IED3"]')!;
 
 const incompleteIED = (
-  await fetch("tIED/importIED/incomplete.iid")
+  await fetch("tIED/insertIED/incomplete.iid")
     .then((response) => response.text())
     .then((str) => new DOMParser().parseFromString(str, "application/xml"))
 ).querySelector(':root > IED[name="incompleteIED"]')!;
@@ -88,7 +88,7 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("adds data type templates elements", async () => {
     const emptyScl = (
-      await fetch("tIED/importIED/emptyproject.scd")
+      await fetch("tIED/insertIED/emptyproject.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
@@ -103,9 +103,9 @@ describe("Function to an importIED and its referenced elements", () => {
     expect(findElements(emptyScl, "EnumType").length).to.equal(4); // only referenced enumType
   });
 
-  it("add all missing ConnectedAP and SubNetwork", async () => {
+  it("adds all missing ConnectedAP and SubNetwork", async () => {
     const emptyScl = (
-      await fetch("tIED/importIED/emptyproject.scd")
+      await fetch("tIED/insertIED/emptyproject.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
@@ -116,6 +116,56 @@ describe("Function to an importIED and its referenced elements", () => {
     expect(findElements(emptyScl, "Communication").length).to.equal(1);
     expect(findElements(emptyScl, "SubNetwork").length).to.equal(2);
     expect(findElements(emptyScl, "ConnectedAP").length).to.equal(4);
+  });
+
+  it("only adds ConnectedAP and SubNetwork if not already present", async () => {
+    const emptyScl = (
+      await fetch("tIED/insertIED/emptyproject.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    // try to import the same IED twice
+    for (let count = 2; count--; ) {
+      const multipleIEDs = (
+        await fetch("tIED/insertIED/multipleieds.scd")
+          .then((response) => response.text())
+          .then((str) =>
+            new DOMParser().parseFromString(str, "application/xml"),
+          )
+      ).querySelector("SCL")!;
+
+      const ied = multipleIEDs.querySelector('IED[name="IED3"]') as Element;
+
+      const imports = insertIed(emptyScl, ied);
+      handleEdit(imports);
+
+      expect(findElements(emptyScl, "Communication").length).to.equal(1);
+      expect(findElements(emptyScl, "SubNetwork").length).to.equal(1);
+      expect(findElements(emptyScl, "ConnectedAP").length).to.equal(1);
+    }
+  });
+
+  it("preserves SubNetwork children", async () => {
+    const emptyScl = (
+      await fetch("tIED/insertIED/emptyproject.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    const multipleIEDs = (
+      await fetch("tIED/insertIED/multipleieds.scd")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"))
+    ).querySelector("SCL")!;
+
+    const ied = multipleIEDs.querySelector('IED[name="IED3"]') as Element;
+
+    const imports = insertIed(emptyScl, ied);
+    handleEdit(imports);
+
+    expect(findElements(emptyScl, "Text").length).to.equal(1);
+    expect(findElements(emptyScl, "BitRate").length).to.equal(1);
   });
 
   it("with addCommunicationSection set to false does not add communication elements", async () => {
@@ -139,7 +189,7 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("skips existing SubNetwork element", async () => {
     const multipleIEDs = (
-      await fetch("tIED/importIED/multipleieds.scd")
+      await fetch("tIED/insertIED/multipleieds.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
@@ -154,13 +204,13 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("make sure to follow the schema definitions sequence", async () => {
     const scl = (
-      await fetch("tIED/importIED/multipleieds.scd")
+      await fetch("tIED/insertIED/multipleieds.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
 
     const validIed = (
-      await fetch("tIED/importIED/valid.iid")
+      await fetch("tIED/insertIED/valid.iid")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector(':root > IED[name="TestImportIED"]')!;
@@ -182,13 +232,13 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("make sure to follow the schema definitions sequence with missing references", async () => {
     const scl = (
-      await fetch("tIED/importIED/emptyproject.scd")
+      await fetch("tIED/insertIED/emptyproject.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
 
     const validIed = (
-      await fetch("tIED/importIED/valid.iid")
+      await fetch("tIED/insertIED/valid.iid")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector(':root > IED[name="TestImportIED"]')!;
@@ -210,13 +260,13 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("make sure lnType and type reference are not broken", async () => {
     const scl1 = (
-      await fetch("tIED/importIED/multipleieds.scd")
+      await fetch("tIED/insertIED/multipleieds.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
 
     const validIed1 = (
-      await fetch("tIED/importIED/valid.iid")
+      await fetch("tIED/insertIED/valid.iid")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector(':root > IED[name="TestImportIED"]')!;
@@ -247,13 +297,13 @@ describe("Function to an importIED and its referenced elements", () => {
 
   it("make sure no orphan data types are generated", async () => {
     const scl2 = (
-      await fetch("tIED/importIED/multipleieds.scd")
+      await fetch("tIED/insertIED/multipleieds.scd")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector("SCL")!;
 
     const validIed2 = (
-      await fetch("tIED/importIED/valid.iid")
+      await fetch("tIED/insertIED/valid.iid")
         .then((response) => response.text())
         .then((str) => new DOMParser().parseFromString(str, "application/xml"))
     ).querySelector(':root > IED[name="TestImportIED"]')!;
