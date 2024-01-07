@@ -1,5 +1,6 @@
 import { Insert, Update, createElement } from "../foundation/utils.js";
 import { getReference } from "../tBaseElement/getReference.js";
+import { insertSubscriptionSupervisions } from "../tLN/supervision/insertSubscriptionSupervisions.js";
 
 import { doesFcdaMeetExtRefRestrictions } from "./doesFcdaMeetExtRefRestrictions.js";
 
@@ -12,6 +13,8 @@ const serviceTypes: Partial<Record<string, "Report" | "GOOSE" | "SMV">> = {
 export type SubscribeOptions = {
   /** Disables checks before subscription. !!Use with care */
   force: boolean;
+  /** Whether to ignore adding subscription supervision (LGOS / LSVS). Default false */
+  ignoreSupervision: boolean;
 };
 
 export type Connection = {
@@ -106,7 +109,7 @@ function getDataAttributes(fcda: Element): {
 
 function createSubscribeEdit(
   connection: Connection,
-  parent: Element
+  parent: Element,
 ): Update | Insert | null {
   const doc = connection.sink.ownerDocument;
   const fcda = connection.source.fcda;
@@ -243,7 +246,7 @@ function validSubscribeConditions(connection: Connection): boolean {
  */
 export function subscribe(
   connectionOrConnections: Connection | Connection[],
-  options: SubscribeOptions = { force: false }
+  options: SubscribeOptions = { force: false, ignoreSupervision: false },
 ): (Insert | Update)[] {
   const connections = Array.isArray(connectionOrConnections)
     ? connectionOrConnections
@@ -255,8 +258,7 @@ export function subscribe(
 
   const extRefEdits = createSubscribeEdits(validConnections);
 
-  return [
-    ...extRefEdits,
-    //TODO: ...insertSubscriptionSupervisions(extRefEdits),
-  ];
+  if (options.ignoreSupervision) return [...extRefEdits];
+
+  return [...extRefEdits, ...insertSubscriptionSupervisions(extRefEdits)];
 }
