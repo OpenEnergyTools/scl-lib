@@ -8,7 +8,7 @@ export const subscriptionEd2 = `
         <ConnectedAP iedName="GOOSE_Subscriber2" apName="AP1"/>
         <ConnectedAP iedName="GOOSE_Subscriber3" apName="AP1"/>
         <ConnectedAP iedName="GOOSE_Subscriber4" apName="AP1"/>
-        <ConnectedAP iedName="GOOSE_Publisher" apName="AP1">
+        <ConnectedAP iedName="Publisher" apName="AP1">
             <GSE ldInst="QB2_Disconnector" cbName="GOOSE2">
                 <Address>
                     <P xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="MAC-Address" xsi:type="tP_MAC-Address">01-0C-CD-01-00-01</P>
@@ -26,7 +26,7 @@ export const subscriptionEd2 = `
                 <MaxTime unit="s" multiplier="m">1000</MaxTime>
             </GSE>
         </ConnectedAP>
-        <ConnectedAP iedName="GOOSE_Publisher2" apName="AP1">
+        <ConnectedAP iedName="Publisher2" apName="AP1">
             <GSE ldInst="QB2_Disconnector" cbName="GOOSE2">
                 <Address>
                     <P xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="MAC-Address" xsi:type="tP_MAC-Address">01-0C-CD-01-00-03</P>
@@ -53,22 +53,22 @@ export const subscriptionEd2 = `
             <LDevice inst="Earth_Switch">
                 <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0">
                     <Inputs>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
                     </Inputs>
                 </LN0>
                 <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO">
                     <Inputs>
                         <ExtRef desc="missingIntAddr"/>
-                        <ExtRef desc="subscribedExtRef" intAddr="someIntAddr" iedName="GOOSE_Publisher" />
+                        <ExtRef desc="subscribedExtRef" intAddr="someIntAddr" iedName="Publisher" />
                         <ExtRef intAddr="Pos;CSWI1/Pos/stVal" desc="Interlocking.Input"/>
                         <ExtRef intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input"/>
                     </Inputs>
                 </LN>
                 <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI">
                     <Inputs>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/stVal" desc="Interlocking.Input2"/>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/stVal" desc="Interlocking.Input2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input2"/>
                         <ExtRef intAddr="restrictExtRef" desc="Restricted To Pos" pLN="CSWI" pDO="Pos" pDA="stVal"/>
                     </Inputs>
                 </LN>
@@ -91,10 +91,10 @@ export const subscriptionEd2 = `
             <LDevice inst="Earth_Switch">
                 <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0">
                     <Inputs>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
-                        <ExtRef iedName="GOOSE_Publisher2" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
-                        <ExtRef iedName="GOOSE_Publisher2" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
+                        <ExtRef iedName="Publisher2" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
+                        <ExtRef iedName="Publisher2" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2"/>
                     </Inputs>
                 </LN0>
                 <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO">
@@ -105,8 +105,8 @@ export const subscriptionEd2 = `
                 </LN>
                 <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI">
                     <Inputs>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/stVal" desc="Interlocking.Input2"/>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/stVal" desc="Interlocking.Input2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" srcLDInst="QB2_Disconnector" srcPrefix="" srcLNClass="LLN0" srcCBName="GOOSE2" intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input2"/>
                         <ExtRef intAddr="someRestrictedExtRef" desc="Restricted To Pos" pLN="CSWI" pDO="Pos" pDA="stVal"/>
                         <ExtRef intAddr="validAnalogue" pLN="MMXU" pDO="A.phsA" pDA="cVal.mag.f" pServT="Report"/>
                         <ExtRef intAddr="wrongAnalogue" pLN="MMXU" pDO="A.phsA" pDA="cVal.mag.f" pServT="SMV" />
@@ -118,12 +118,12 @@ export const subscriptionEd2 = `
                 <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
                 <LN lnClass="MMXU" inst="1" lnType="Dummy.MMXU" />
             </LDevice>
-            <LDevice inst="SV_supervision">
+            <LDevice inst="GOOSE_supervision">
                 <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
                 <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS">
                     <DOI name="GoCBRef">
                         <DAI name="setSrcRef">
-                            <Val>GOOSE_PublisherQB2_Disconnector/LLN0.GOOSE2</Val>
+                            <Val>PublisherQB2_Disconnector/LLN0.GOOSE2</Val>
                         </DAI>
                     </DOI>
                 </LN>
@@ -131,7 +131,7 @@ export const subscriptionEd2 = `
                     <Private type="OpenSCD.create"/>
                     <DOI name="GoCBRef">
                         <DAI name="setSrcRef">
-                            <Val>GOOSE_Publisher2QB2_Disconnector/LLN0.GOOSE2</Val>
+                            <Val>Publisher2QB2_Disconnector/LLN0.GOOSE2</Val>
                         </DAI>
                     </DOI>
                 </LN>
@@ -139,17 +139,18 @@ export const subscriptionEd2 = `
                     <Private type="OpenSCD.create"/>
                     <DOI name="GoCBRef">
                         <DAI name="setSrcRef">
-                            <Val>GOOSE_PublisherQB2_Disconnector/LLN0.GOOSE1</Val>
+                            <Val>PublisherQB2_Disconnector/LLN0.GOOSE1</Val>
                         </DAI>
                     </DOI>
                 </LN>
+                <LN lnClass="LGOS" inst="4" lnType="Dummy.LGOS" />
             </LDevice>
         </Server>
     </AccessPoint>
 </IED>
-<IED name="GOOSE_Subscriber2" desc="GOOSE subscriber" manufacturer="Dummy">
+<IED name="SMV_Subscriber1" desc="SMV subscriber" manufacturer="Dummy">
     <Services>
-        <SupSubscription maxGo="4" maxSv="0"/>
+        <SupSubscription maxGo="0" maxSv="4"/>
     </Services>
     <AccessPoint name="AP1">
         <Server>
@@ -160,154 +161,20 @@ export const subscriptionEd2 = `
                 <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
                 <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
             </LDevice>
-            <LDevice inst="SV_supervision">
+            <LDevice inst="SMV_supervision">
                 <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS"/>
-                <LN lnClass="LGOS" inst="2" lnType="Dummy.LGOS"/>
-                <LN lnClass="LGOS" inst="3" lnType="Dummy.LGOS"/>
-                <LN lnClass="LGOS" inst="4" lnType="Dummy.LGOS"/>
-            </LDevice>
-        </Server>
-    </AccessPoint>
-</IED>
-<IED name="GOOSE_Subscriber3" desc="GOOSE subscriber" manufacturer="Dummy">
-    <Services>
-        <SupSubscription maxGo="4" maxSv="0"/>
-    </Services>
-    <AccessPoint name="AP1">
-        <Server>
-            <Authentication/>
-            <LDevice inst="Earth_Switch">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-            <LDevice inst="SV_supervision">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS1"/>
-                <LN lnClass="LGOS" inst="2" lnType="Dummy.LGOS1">
-                    <DOI name="SomethingLikeGoCBRef">
-                        <DAI name="setSrcRef" valImport="true" valKind="RO">
-                            <Val>The supervision instance to rule them all!</Val>
-                        </DAI>
-                    </DOI>
-                </LN>
-            </LDevice>
-        </Server>
-    </AccessPoint>
-</IED>
-<IED name="GOOSE_Subscriber4" desc="GOOSE subscriber" manufacturer="Dummy">
-    <Services>
-        <SupSubscription maxGo="4" maxSv="0"/>
-    </Services>
-    <AccessPoint name="AP1">
-        <Server>
-            <Authentication/>
-            <LDevice inst="Earth_Switch">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-            <LDevice inst="SV_supervision">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="2" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="3" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="4" lnType="Dummy.LGOS2"/>
-            </LDevice>
-        </Server>
-    </AccessPoint>
-</IED>
-<IED name="GOOSE_Subscriber5" desc="GOOSE subscriber" manufacturer="Dummy">
-    <Services>
-        <SupSubscription maxGo="4" maxSv="0"/>
-    </Services>
-    <AccessPoint name="AP1">
-        <Server>
-            <Authentication/>
-            <LDevice inst="Earth_Switch">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-            <LDevice inst="GOOSE_supervision">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS1">
-                    <DOI name="GoCBRef">
-                        <DAI name="setSrcRef" valImport="true" valKind="RO">
-                            <Val>The One True Original</Val>
-                        </DAI>
-                    </DOI>
-                </LN>
-                <LN lnClass="LGOS" inst="2" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="3" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="4" lnType="Dummy.LGOS2"/>
-            </LDevice>
-        </Server>
-    </AccessPoint>
-</IED>
-<IED name="GOOSE_Subscriber6" desc="GOOSE subscriber" manufacturer="Dummy">
-    <Services>
-        <SupSubscription maxGo="4" maxSv="0"/>
-    </Services>
-    <AccessPoint name="AP1">
-        <Server>
-            <Authentication/>
-            <LDevice inst="Earth_Switch">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-            <LDevice inst="GOOSE_supervision">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS1">
-                    <DOI name="GoCBRef">
-                        <DAI name="setSrcRef" valImport="true" valKind="Conf">
-                            <Val>The One True Original</Val>
-                        </DAI>
-                    </DOI>
-                </LN>
-                <LN lnClass="LGOS" inst="2" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="3" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="4" lnType="Dummy.LGOS2"/>
-            </LDevice>
-        </Server>
-    </AccessPoint>
-</IED>
-<IED name="GOOSE_Subscriber7" desc="GOOSE subscriber" manufacturer="Dummy">
-    <Services>
-        <SupSubscription maxGo="4" maxSv="0"/>
-    </Services>
-    <AccessPoint name="AP1">
-        <Server>
-            <Authentication/>
-            <LDevice inst="Earth_Switch">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-            <LDevice inst="GOOSE_supervision">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN lnClass="LGOS" inst="1" lnType="Dummy.LGOS1">
+                <LN lnClass="LSVS" inst="1" lnType="Dummy.LSVS">
                     <DOI name="GoCBRef">
                         <DAI name="setSrcRef" valImport="true" valKind="Conf">
                             <Val></Val>
                         </DAI>
                     </DOI>
                 </LN>
-                <LN lnClass="LGOS" inst="2" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="3" lnType="Dummy.LGOS2"/>
-                <LN lnClass="LGOS" inst="4" lnType="Dummy.LGOS2"/>
             </LDevice>
         </Server>
     </AccessPoint>
 </IED>
-<IED name="GOOSE_Publisher" desc="GOOSE publisher" manufacturer="Dummy">
+<IED name="Publisher" desc="GOOSE/SMV publisher" manufacturer="Dummy">
     <AccessPoint name="AP1">
         <Server>
             <Authentication/>
@@ -323,6 +190,7 @@ export const subscriptionEd2 = `
                     </DataSet>
                     <GSEControl name="GOOSE2" type="GOOSE" appID="GOOSE2" confRev="1" datSet="GOOSE2sDataSet"/>
                     <GSEControl name="GOOSE1" type="GOOSE" appID="GOOSE1" confRev="1" datSet="GOOSE1sDataSet"/>
+                    <GSEControl name="GOOSE3" type="GOOSE" appID="GOOSE3" confRev="1" datSet="GOOSE1sDataSet"/>
                 </LN0>
                 <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
                 <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
@@ -359,36 +227,6 @@ export const subscriptionEd2 = `
         </Server>
     </AccessPoint>
 </IED>
-<IED name="GOOSE_Publisher2" desc="GOOSE publisher" manufacturer="Dummy">
-    <AccessPoint name="AP1">
-        <Server>
-            <Authentication/>
-            <LDevice inst="QB2_Disconnector">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0">
-                    <DataSet name="GOOSE2sDataSet">
-                        <FCDA ldInst="QB2_Disconnector" prefix="" lnClass="CSWI" lnInst="1" doName="Pos" daName="stVal" fc="ST"/>
-                        <FCDA ldInst="QB2_Disconnector" prefix="" lnClass="CSWI" lnInst="1" doName="Pos" daName="q" fc="ST"/>
-                    </DataSet>
-                    <DataSet name="GOOSE1sDataSet">
-                        <FCDA ldInst="QB1_Disconnector" prefix="" lnClass="CSWI" lnInst="1" doName="Pos" daName="stVal" fc="ST"/>
-                        <FCDA ldInst="QB1_Disconnector" prefix="" lnClass="CSWI" lnInst="1" doName="Pos" daName="q" fc="ST"/>
-                    </DataSet>
-                    <GSEControl name="GOOSE2" type="GOOSE" appID="GOOSE2" confRev="1" datSet="GOOSE2sDataSet"/>
-                    <GSEControl name="GOOSE1" type="GOOSE" appID="GOOSE1" confRev="1" datSet="GOOSE1sDataSet"/>
-                </LN0>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-            <LDevice inst="QB1_Disconnector">
-                <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
-                <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
-                <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
-                <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
-            </LDevice>
-        </Server>
-    </AccessPoint>
-</IED>
 <DataTypeTemplates>
     <LNodeType lnClass="LGOS" id="Dummy.LGOS">
         <DO name="GoCBRef" type="Dummy.ORG"/>
@@ -409,6 +247,14 @@ export const subscriptionEd2 = `
     </LNodeType>
     <LNodeType lnClass="LGOS" id="Dummy.LGOS2">
         <DO name="GoCBRef" type="Dummy.ORG2"/>
+        <DO name="St" type="OpenSCD_SPS_simple"/>
+        <DO name="Mod" type="OpenSCD_ENC_Mod"/>
+        <DO name="Health" type="OpenSCD_ENS_Health"/>
+        <DO name="Beh" type="OpenSCD_ENS_Beh"/>
+        <DO name="NamPlt" type="OpenSCD_LPL_noLD"/>
+    </LNodeType>
+    <LNodeType lnClass="LSVS" id="Dummy.LSVS">
+        <DO name="SvCBRef" type="Dummy.ORG"/>
         <DO name="St" type="OpenSCD_SPS_simple"/>
         <DO name="Mod" type="OpenSCD_ENC_Mod"/>
         <DO name="Health" type="OpenSCD_ENS_Health"/>
@@ -691,7 +537,7 @@ export const subscriptionEd1 = `
         <ConnectedAP iedName="GOOSE_Subscriber2" apName="AP1"/>
         <ConnectedAP iedName="GOOSE_Subscriber3" apName="AP1"/>
         <ConnectedAP iedName="GOOSE_Subscriber4" apName="AP1"/>
-        <ConnectedAP iedName="GOOSE_Publisher" apName="AP1">
+        <ConnectedAP iedName="Publisher" apName="AP1">
             <GSE ldInst="QB2_Disconnector" cbName="GOOSE2">
                 <Address>
                     <P xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="MAC-Address" xsi:type="tP_MAC-Address">01-0C-CD-01-00-01</P>
@@ -709,7 +555,7 @@ export const subscriptionEd1 = `
                 <MaxTime unit="s" multiplier="m">1000</MaxTime>
             </GSE>
         </ConnectedAP>
-        <ConnectedAP iedName="GOOSE_Publisher2" apName="AP1">
+        <ConnectedAP iedName="Publisher2" apName="AP1">
             <GSE ldInst="QB2_Disconnector" cbName="GOOSE2">
                 <Address>
                     <P xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="MAC-Address" xsi:type="tP_MAC-Address">01-0C-CD-01-00-03</P>
@@ -736,8 +582,8 @@ export const subscriptionEd1 = `
             <LDevice inst="Earth_Switch">
                 <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0">
                     <Inputs>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" />
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" />
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" />
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" />
                     </Inputs>
                 </LN0>
                 <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO">
@@ -748,8 +594,8 @@ export const subscriptionEd1 = `
                 </LN>
                 <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI">
                     <Inputs>
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" />
-                        <ExtRef iedName="GOOSE_Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input2"/>
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="stVal" />
+                        <ExtRef iedName="Publisher" serviceType="GOOSE" ldInst="QB2_Disconnector" lnClass="CSWI" lnInst="1" prefix="" doName="Pos" daName="q" intAddr="Pos;CSWI1/Pos/q" desc="Interlocking.Input2"/>
                     </Inputs>
                 </LN>
                 <LN prefix="" lnClass="XSWI" inst="1" lnType="Dummy.XSWI"/>
@@ -757,7 +603,7 @@ export const subscriptionEd1 = `
         </Server>
     </AccessPoint>
 </IED>
-<IED name="GOOSE_Publisher" desc="GOOSE publisher" manufacturer="Dummy">
+<IED name="Publisher" desc="GOOSE publisher" manufacturer="Dummy">
     <AccessPoint name="AP1">
         <Server>
             <Authentication/>
