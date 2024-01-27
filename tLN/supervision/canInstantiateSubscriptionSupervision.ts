@@ -147,6 +147,9 @@ function isControlBlockSupervised(supervision: Supervision): boolean {
  * - check whether `Service` element requirements are met
  * - check whether the logical node has missing or empty `Val` content
  *   (iedOrLn is LN)
+ *
+ * CAUTION: Using options.allowReplacement and options.newSupervisionLn together
+ *          may result in unexpected behaviour.
  * ```
  * @returns Whether subscription supervision can be done */
 export function canInstantiateSubscriptionSupervision(
@@ -157,6 +160,7 @@ export function canInstantiateSubscriptionSupervision(
     checkEditableSrcRef: true,
     checkDuplicateSupervisions: true,
     checkMaxSupervisionLimits: true,
+    allowReplacement: false,
   },
 ): boolean {
   if (
@@ -170,13 +174,18 @@ export function canInstantiateSubscriptionSupervision(
       supervision.sourceControlBlock.tagName === "GSEControl"
         ? "GoCBRef"
         : "SvCBRef";
-    if (holdsValidObjRef(supervision.subscriberIedOrLn, type)) return false;
+    if (
+      !options.allowReplacement &&
+      holdsValidObjRef(supervision.subscriberIedOrLn, type)
+    )
+      return false;
   } else {
     if (!existFirstSupervisionOfType(supervision)) return false;
   }
 
   if (
     options.checkMaxSupervisionLimits &&
+    !options.allowReplacement &&
     !withinSupervisionLimits(supervision)
   )
     return false;

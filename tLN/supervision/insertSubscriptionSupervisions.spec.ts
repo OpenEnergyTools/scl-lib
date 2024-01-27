@@ -47,7 +47,7 @@ describe("Functions that inserts supervision to subscription edits", () => {
 
   it("return empty array with unsufficient update edit", () => {
     const extRef1 = doc.querySelector(
-      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.stVal"]'
+      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.stVal"]',
     )!;
 
     const attributes1 = {};
@@ -147,7 +147,7 @@ describe("Functions that inserts supervision to subscription edits", () => {
 
   it("return array of edits for update subscription edits", () => {
     const extRef1 = doc.querySelector(
-      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.stVal"]'
+      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.stVal"]',
     )!;
 
     const attributes1 = {
@@ -166,7 +166,7 @@ describe("Functions that inserts supervision to subscription edits", () => {
     const update1 = { element: extRef1, attributes: attributes1 };
 
     const extRef2 = doc.querySelector(
-      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.q"]'
+      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.q"]',
     )!;
 
     const attributes2 = {
@@ -231,10 +231,10 @@ describe("Functions that inserts supervision to subscription edits", () => {
 
   it("return array for multiple combined update/insert edits to multiple IEDs", () => {
     const ied4e1 = doc.querySelector(
-      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.stVal"]'
+      'IED[name="GOOSE_Subscriber4"] ExtRef[intAddr="Pos.stVal"]',
     )!;
     const ied5e1 = doc.querySelector(
-      'IED[name="GOOSE_Subscriber5"] ExtRef[intAddr="Pos.stVal"]'
+      'IED[name="GOOSE_Subscriber5"] ExtRef[intAddr="Pos.stVal"]',
     )!;
     const attributes1 = {
       iedName: "Publisher",
@@ -301,26 +301,26 @@ describe("Functions that inserts supervision to subscription edits", () => {
 
     expect(edits.length).to.equal(6);
     expect(
-      (edits[0].node as Element).querySelector("Val")?.textContent
+      (edits[0].node as Element).querySelector("Val")?.textContent,
     ).to.equal("PublisherGOOSE/LLN0.GOOSE3");
     expect(
-      (edits[1].node as Element).querySelector("Val")?.textContent
+      (edits[1].node as Element).querySelector("Val")?.textContent,
     ).to.equal("PublisherGOOSE/LLN0.GOOSE3");
     expect((edits[1].node as Element).getAttribute("inst")).to.equal("2");
     expect(
-      (edits[2].node as Element).querySelector("Val")?.textContent
+      (edits[2].node as Element).querySelector("Val")?.textContent,
     ).to.equal("PublisherGOOSE/LLN0.GOOSE5");
     expect((edits[2].node as Element).getAttribute("inst")).to.equal("4");
     expect(
-      (edits[3].node as Element).querySelector("Val")?.textContent
+      (edits[3].node as Element).querySelector("Val")?.textContent,
     ).to.equal("PublisherGOOSE/LLN0.GOOSE6");
     expect((edits[3].node as Element).getAttribute("inst")).to.equal("6");
     expect(
-      (edits[4].node as Element).querySelector("Val")?.textContent
+      (edits[4].node as Element).querySelector("Val")?.textContent,
     ).to.equal("PublisherGOOSE/LLN0.GOOSE5");
     expect((edits[4].node as Element).getAttribute("inst")).to.equal("3");
     expect(
-      (edits[5].node as Element).querySelector("Val")?.textContent
+      (edits[5].node as Element).querySelector("Val")?.textContent,
     ).to.equal("PublisherGOOSE/LLN0.GOOSE6");
     expect((edits[5].node as Element).getAttribute("inst")).to.equal("6");
   });

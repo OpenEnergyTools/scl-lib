@@ -24,6 +24,7 @@ export function instantiateSubscriptionSupervision(
     checkEditableSrcRef: true,
     checkDuplicateSupervisions: true,
     checkMaxSupervisionLimits: true,
+    allowReplacement: false,
   },
 ): Insert | null {
   if (!canInstantiateSubscriptionSupervision(supervision, options)) return null;

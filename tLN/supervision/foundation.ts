@@ -31,6 +31,15 @@ export type SupervisionOptions = {
    * empty or invalid and can be used. Defaulting to true.
    */
   checkMaxSupervisionLimits: boolean;
+  /**
+   * Allow replacement of an existing control block reference on an LN.
+   * If checking IED properties by passing in the first supervision instance
+   * be sure to set this.
+   *
+   * CAUTION: Using options.allowReplacement and options.newSupervisionLn together
+   *          may result in unexpected behaviour.
+   */
+  allowReplacement: boolean;
 };
 
 export function type(supervision: Supervision): "GoCBRef" | "SvCBRef" {

@@ -506,4 +506,19 @@ describe("Function that checks whether subscription supervision can be instantia
       }),
     ).to.be.true;
   });
+
+  it("can replace a valid supervision with correct option", () => {
+    const sourceControlBlock = doc.querySelector('GSEControl[name="GOOSE3"]')!;
+    const ln1 = doc.querySelector('LN[lnClass="LGOS"][inst="1"]')!;
+
+    expect(
+      canInstantiateSubscriptionSupervision(
+        {
+          sourceControlBlock,
+          subscriberIedOrLn: ln1,
+        },
+        { allowReplacement: true },
+      ),
+    ).to.be.true;
+  });
 });
