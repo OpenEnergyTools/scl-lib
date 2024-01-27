@@ -17,7 +17,7 @@ import { createSupervisionEdit } from "./createSupervisionEdit.js";
  * @returns A sink IED for a given ExtRef insert or `null`*/
 function findIED(
   edit: Insert,
-  previousEdits: (Insert | Update)[]
+  previousEdits: (Insert | Update)[],
 ): Element | null {
   // case 1: Input is already in the SCL and ExtRef is added to it
   const inputs = edit.parent as Element;
@@ -26,7 +26,7 @@ function findIED(
 
   // case 2: Input element is added as part of the subscription as well.
   const inputsInsertEdit = previousEdits.find(
-    (otherEdit) => isInsert(otherEdit) && otherEdit.node === edit.parent
+    (otherEdit) => isInsert(otherEdit) && otherEdit.node === edit.parent,
   ) as Insert | undefined;
   if (inputsInsertEdit)
     return (inputsInsertEdit.parent as Element).closest("IED");
@@ -36,7 +36,7 @@ function findIED(
 }
 
 function uniqueSupervisions(
-  edits: (Insert | Update)[]
+  edits: (Insert | Update)[],
 ): Record<string, Supervision> {
   const uniqueSupervisions: Record<string, Supervision> = {};
   edits.forEach((edit) => {
@@ -75,7 +75,7 @@ function uniqueSupervisions(
 
     const controlBlock = findControlBlockBySrcAttributes(
       sink!.ownerDocument,
-      source!
+      source!,
     );
     if (!controlBlock) return;
     const controlBlockReference = controlBlockObjRef(controlBlock)!;
@@ -104,7 +104,7 @@ function uniqueSupervisions(
  * @returns Edit array adding supervision on top of the subscription
  */
 export function insertSubscriptionSupervisions(
-  edits: (Update | Insert)[]
+  edits: (Update | Insert)[],
 ): Insert[] {
   /** Global as multiple subscription could be defined for different subscriber IEDs */
   const instGenerator = globalLnInstGenerator();

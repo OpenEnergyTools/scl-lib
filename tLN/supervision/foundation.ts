@@ -7,7 +7,7 @@ export type Supervision = {
    */
   subscriberIedOrLn: Element;
   /** The control block to be supervised */
-  sourceControlBlock: Element;
+  sourceControlBlock?: Element;
 };
 
 export type SupervisionOptions = {
@@ -33,14 +33,38 @@ export type SupervisionOptions = {
   checkMaxSupervisionLimits: boolean;
 };
 
-export function type(supervision: Supervision): "GoCBRef" | "SvCBRef" {
-  const serviceType = supervision.sourceControlBlock.tagName;
-  return serviceType === "GSEControl" ? "GoCBRef" : "SvCBRef";
+export function type(
+  supervision: Supervision,
+): "GoCBRef" | "SvCBRef" | undefined {
+  if (supervision.sourceControlBlock) {
+    const serviceType = supervision.sourceControlBlock.tagName;
+    return serviceType === "GSEControl" ? "GoCBRef" : "SvCBRef";
+  }
+
+  const tagName = supervision.subscriberIedOrLn.tagName;
+  if (tagName === "LN") {
+    const type = supervision.subscriberIedOrLn.getAttribute("lnClass");
+    return type === "LGOS" ? "GoCBRef" : "SvCBRef";
+  }
+
+  return undefined;
 }
 
-export function supervisionLnClass(supervision: Supervision): "LGOS" | "LSVS" {
-  const serviceType = supervision.sourceControlBlock.tagName;
-  return serviceType === "GSEControl" ? "LGOS" : "LSVS";
+export function supervisionLnClass(
+  supervision: Supervision,
+): "LGOS" | "LSVS" | undefined {
+  if (supervision.sourceControlBlock) {
+    const serviceType = supervision.sourceControlBlock.tagName;
+    return serviceType === "GSEControl" ? "LGOS" : "LSVS";
+  }
+
+  const tagName = supervision.subscriberIedOrLn.tagName;
+  if (tagName === "LN") {
+    const lnClass = supervision.subscriberIedOrLn.getAttribute("lnClass");
+    return lnClass === "LGOS" ? "LGOS" : "LSVS";
+  }
+
+  return undefined;
 }
 
 /** @returns Unique attribute `inst` for supervision logical nodes. */
@@ -54,7 +78,7 @@ export function globalLnInstGenerator(): (
 
   return (supervision) => {
     const ied = supervision.subscriberIedOrLn;
-    const lnClass = supervisionLnClass(supervision);
+    const lnClass = supervisionLnClass(supervision)!;
 
     const formLn = ied.querySelector(`LN[lnClass="${lnClass}"]`)!;
     const lDevice = formLn.parentElement!;

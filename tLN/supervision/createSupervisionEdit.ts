@@ -109,10 +109,11 @@ function createSupervisionLogicalNode(
   supervision: Supervision,
   controlBlockReference: string,
   inst: string,
-) {
+): Insert | null {
   const subscriberIed = supervision.subscriberIedOrLn;
+  if (!subscriberIed || !supervision.sourceControlBlock) return null;
 
-  const lnClass = supervisionLnClass(supervision);
+  const lnClass = supervisionLnClass(supervision)!;
 
   const formLn = subscriberIed.querySelector(`LN[lnClass="${lnClass}"]`)!;
   const parent = formLn.parentElement!;
@@ -205,6 +206,8 @@ export function createSupervisionEdit(
   options: CreateSupervisionOptions,
 ): Insert | null {
   const sourceControlBlock = supervision.sourceControlBlock;
+  if (!sourceControlBlock) return null;
+
   const controlBlockReference = controlBlockObjRef(sourceControlBlock);
   if (!controlBlockReference) return null;
 
