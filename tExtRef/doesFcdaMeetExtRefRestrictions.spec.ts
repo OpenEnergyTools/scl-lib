@@ -50,7 +50,7 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     const extRef = findElement(extRefXSWIPosDbPos, "ExtRef") as Element;
 
     expect(
-      doesFcdaMeetExtRefRestrictions(extRef, fcda, { controlBlockType: "SMV" })
+      doesFcdaMeetExtRefRestrictions(extRef, fcda, { controlBlockType: "SMV" }),
     ).to.be.false;
   });
 
@@ -61,7 +61,7 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "GOOSE",
-      })
+      }),
     ).to.be.false;
   });
 
@@ -72,21 +72,21 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "GOOSE",
-      })
+      }),
     ).to.be.false;
   });
 
   it("returns false with not matching cdc", () => {
     const fcda = findElement(
       publisherIED,
-      `FCDA[desc="USERENSnull"]`
+      `FCDA[desc="USERENSnull"]`,
     ) as Element;
     const extRef = findElement(extRefPos, "ExtRef") as Element;
 
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "GOOSE",
-      })
+      }),
     ).to.be.false;
   });
 
@@ -97,35 +97,35 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "GOOSE",
-      })
+      }),
     ).to.be.false;
   });
 
   it("returns false with not matching bType", () => {
     const fcda = findElement(
       publisherIED,
-      `FCDA[desc="USERENSstVal"]`
+      `FCDA[desc="USERENSstVal"]`,
     ) as Element;
     const extRef = findElement(extRefBehstVal, "ExtRef") as Element;
 
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "GOOSE",
-      })
+      }),
     ).to.be.false;
   });
 
   it("returns true for matching types CMV/FLOAT32 ", () => {
     const fcda = findElement(
       publisherIED,
-      `FCDA[desc="CMVFLOAT32"]`
+      `FCDA[desc="CMVFLOAT32"]`,
     ) as Element;
     const extRef = findElement(extRefCMVFLOAT32, "ExtRef") as Element;
 
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "Report",
-      })
+      }),
     ).to.be.true;
   });
 
@@ -136,7 +136,7 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         controlBlockType: "GOOSE",
-      })
+      }),
     ).to.be.true;
   });
 
@@ -155,7 +155,7 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     expect(
       doesFcdaMeetExtRefRestrictions(extRef, fcda, {
         checkOnlyBType: true,
-      })
+      }),
     ).to.be.true;
   });
 });

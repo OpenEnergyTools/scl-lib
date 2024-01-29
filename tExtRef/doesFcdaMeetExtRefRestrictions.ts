@@ -20,7 +20,7 @@ export type DoesFcdaMeetExtRefRestrictionsOptions = {
 export function doesFcdaMeetExtRefRestrictions(
   extRef: Element,
   fcda: Element,
-  options: DoesFcdaMeetExtRefRestrictionsOptions = { checkOnlyBType: false }
+  options: DoesFcdaMeetExtRefRestrictionsOptions = { checkOnlyBType: false },
 ): boolean {
   // Vendor does not provide data for the check so any FCDA meets restriction
   if (!extRef.hasAttribute("pDO")) return true;
