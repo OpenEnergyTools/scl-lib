@@ -34,8 +34,9 @@ export function instantiateSubscriptionSupervision(
       fixedInst: `${options.fixedLnInst}`,
     });
 
-  if (supervision.subscriberIedOrLn.tagName === "LN")
+  if (supervision.subscriberIedOrLn.tagName === "LN") {
     return createSupervisionEdit(supervision, { fixedInst: "-1" });
+  }
 
   /** Global as multiple subscription could be defined for different subscriber IEDs */
   const instGenerator = globalLnInstGenerator();

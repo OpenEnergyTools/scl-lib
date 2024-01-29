@@ -486,7 +486,7 @@ describe("Function that checks whether subscription supervision can be instantia
     });
   });
 
-  it("makes sure to not overwrite valid supervision", () => {
+  it("allows to overwrite an existing subscription supervision", () => {
     const sourceControlBlock = doc.querySelector('GSEControl[name="GOOSE3"]')!;
     const ln1 = doc.querySelector('LN[lnClass="LGOS"][inst="1"]')!;
 
@@ -494,15 +494,6 @@ describe("Function that checks whether subscription supervision can be instantia
       canInstantiateSubscriptionSupervision({
         sourceControlBlock,
         subscriberIedOrLn: ln1,
-      }),
-    ).to.be.false;
-
-    const ln2 = doc.querySelector('LN[lnClass="LGOS"][inst="3"]')!;
-
-    expect(
-      canInstantiateSubscriptionSupervision({
-        sourceControlBlock,
-        subscriberIedOrLn: ln2,
       }),
     ).to.be.true;
   });

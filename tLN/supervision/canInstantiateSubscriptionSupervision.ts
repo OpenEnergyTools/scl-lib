@@ -165,15 +165,11 @@ export function canInstantiateSubscriptionSupervision(
   )
     return false;
 
-  if (supervision.subscriberIedOrLn.tagName === "LN") {
-    const type =
-      supervision.sourceControlBlock.tagName === "GSEControl"
-        ? "GoCBRef"
-        : "SvCBRef";
-    if (holdsValidObjRef(supervision.subscriberIedOrLn, type)) return false;
-  } else {
-    if (!existFirstSupervisionOfType(supervision)) return false;
-  }
+  if (
+    supervision.subscriberIedOrLn.tagName !== "LN" &&
+    !existFirstSupervisionOfType(supervision)
+  )
+    return false;
 
   if (
     options.checkMaxSupervisionLimits &&
