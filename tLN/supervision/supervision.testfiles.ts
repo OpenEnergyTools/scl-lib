@@ -6,8 +6,20 @@ export const supervision = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" versio
           <LDevice inst="Earth_Switch">
             <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0" />
             <LN prefix="" lnClass="CSWI" inst="1" lnType="Dummy.CSWI" />
-            <LN lnClass="LGOS" lnType="Dummy.LGOS2" />
-            <LN lnClass="LSVS" lnType="Dummy.LSVS2" />
+            <LN lnClass="LGOS" lnType="Dummy.LGOS2" >
+              <DOI name="GoCBRef">
+                <DAI name="setSrcRef">
+                  <Val>PublisherGOOSE/LLN0.GOOSE1</Val>
+                </DAI>
+              </DOI>
+            </LN>
+            <LN lnClass="LSVS" lnType="Dummy.LSVS2" >
+              <DOI name="SvCBRef">
+                <DAI name="setSrcRef">
+                  <Val>PublisherSampledValue/LLN0.SMV1</Val>
+                </DAI>
+              </DOI>
+            </LN>
           </LDevice>
         </Server>
       </AccessPoint>

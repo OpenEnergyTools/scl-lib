@@ -66,3 +66,38 @@ export function globalLnInstGenerator(): (
     return lnInstGenerators.get(iedName)!(lnClass);
   };
 }
+
+/** @returns Whether child `DA` with name `setSrcRef` can edited by SCL editor */
+export function isSrcRefEditable(supervisionLn: Element): boolean {
+  const lnClass = supervisionLn.getAttribute("lnClass");
+  const cbRefType = lnClass === "LGOS" ? "GoCBRef" : "SvCBRef";
+
+  if (
+    supervisionLn.querySelector(
+      `:scope > DOI[name="${cbRefType}"] > 
+        DAI[name="setSrcRef"][valImport="true"][valKind="RO"],
+       :scope > DOI[name="${cbRefType}"] > 
+        DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]`,
+    )
+  )
+    return true;
+
+  const rootNode = supervisionLn.ownerDocument;
+  const lnType = supervisionLn.getAttribute("lnType");
+
+  const goOrSvCBRef = rootNode.querySelector(
+    `DataTypeTemplates > 
+        LNodeType[id="${lnType}"][lnClass="${lnClass}"] > DO[name="${cbRefType}"]`,
+  );
+
+  const cbRefId = goOrSvCBRef?.getAttribute("type");
+  const setSrcRef = rootNode.querySelector(
+    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`,
+  );
+
+  return (
+    (setSrcRef?.getAttribute("valKind") === "Conf" ||
+      setSrcRef?.getAttribute("valKind") === "RO") &&
+    setSrcRef.getAttribute("valImport") === "true"
+  );
+}
