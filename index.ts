@@ -72,6 +72,10 @@ export {
 export { canInstantiateSubscriptionSupervision } from "./tLN/supervision/canInstantiateSubscriptionSupervision.js";
 export { instantiateSubscriptionSupervision } from "./tLN/supervision/instantiateSubscriptionSupervision.js";
 export { insertSubscriptionSupervisions } from "./tLN/supervision/insertSubscriptionSupervisions.js";
+export {
+  removeSupervisionOptions,
+  removeSupervision,
+} from "./tLN/supervision/removeSupervision.js";
 
 export { maxAttributes, canAddFCDA } from "./tFCDA/canAddFCDA.js";
 export { fcdaBaseTypes } from "./tFCDA/fcdaBaseTypes.js";

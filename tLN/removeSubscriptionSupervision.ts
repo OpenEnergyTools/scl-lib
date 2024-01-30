@@ -2,6 +2,7 @@ import { Remove } from "../foundation/utils.js";
 
 import { controlBlockObjRef } from "../tControl/controlBlockObjRef.js";
 import { sourceControlBlock } from "../tExtRef/sourceControlBlock.js";
+import { isSrcRefEditable } from "./supervision/foundation.js";
 
 type GroupedExtRefs = {
   extRefs: Element[];
@@ -34,44 +35,19 @@ function removableSupervisionElement(
   return canRemoveLn ? ln : doi;
 }
 
-/** @returns Whether `DA` with name `setSrcRef`  can edited by SCL editor */
-function isSrcRefEditable(ctrlBlock: Element, subscriberIed: Element): boolean {
+/** @returns Whether `DA` with name `setSrcRef` can edited by SCL editor */
+function isSupervisionEditable(
+  ctrlBlock: Element,
+  subscriberIed: Element,
+): boolean {
   const supervisionElement = removableSupervisionElement(
     ctrlBlock,
     subscriberIed,
   );
-  const ln = supervisionElement?.closest("LN") ?? null;
-  if (!ln) return false;
+  const supervisionLn = supervisionElement?.closest("LN") ?? null;
+  if (!supervisionLn) return false;
 
-  if (
-    supervisionElement?.querySelector(
-      ':scope DAI[name="setSrcRef"][valImport="true"][valKind="RO"],' +
-        ' :scope DAI[name="setSrcRef"][valImport="true"][valKind="Conf"]',
-    )
-  )
-    return true;
-
-  const rootNode = ln.ownerDocument;
-
-  const lnClass = ln.getAttribute("lnClass");
-  const cbRefType = lnClass === "LGOS" ? "GoCBRef" : "SvCBRef";
-  const lnType = ln.getAttribute("lnType");
-
-  const goOrSvCBRef = rootNode.querySelector(
-    `DataTypeTemplates > 
-        LNodeType[id="${lnType}"][lnClass="${lnClass}"] > DO[name="${cbRefType}"]`,
-  );
-
-  const cbRefId = goOrSvCBRef?.getAttribute("type");
-  const setSrcRef = rootNode.querySelector(
-    `DataTypeTemplates > DOType[id="${cbRefId}"] > DA[name="setSrcRef"]`,
-  );
-
-  return (
-    (setSrcRef?.getAttribute("valKind") === "Conf" ||
-      setSrcRef?.getAttribute("valKind") === "RO") &&
-    setSrcRef.getAttribute("valImport") === "true"
-  );
+  return isSrcRefEditable(supervisionLn);
 }
 
 /** @returns Whether other subscribed ExtRef of the same control block exist */
@@ -111,7 +87,7 @@ function isControlBlockSubscribed(extRefs: Element[]): boolean {
 function cannotRemoveSupervision(extRefGroup: GroupedExtRefs): boolean {
   return (
     isControlBlockSubscribed(extRefGroup.extRefs) ||
-    !isSrcRefEditable(extRefGroup.ctrlBlock, extRefGroup.subscriberIed)
+    !isSupervisionEditable(extRefGroup.ctrlBlock, extRefGroup.subscriberIed)
   );
 }
 
