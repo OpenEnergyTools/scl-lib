@@ -44,7 +44,7 @@ function withinSupervisionLimits(supervision: Supervision): boolean {
   if (existingSupervisionLNs.length < parseInt(max, 10)) return true;
 
   const availableSupervisorSpots = existingSupervisionLNs.filter(
-    (ln) => !holdsValidObjRef(ln, type(supervision)),
+    (ln) => !holdsValidObjRef(ln, type(supervision)!),
   );
 
   return (
@@ -103,8 +103,9 @@ function isSrcRefEditable(supervision: Supervision): boolean {
  * @returns Whether there is a logical node element `LN` with the class `LGOS`, `LSVS`
  */
 function existFirstSupervisionOfType(supervision: Supervision): boolean {
-  const lnClass =
-    supervision.sourceControlBlock.tagName === "GSEControl" ? "LGOS" : "LSVS";
+  const lnClass = supervisionLnClass(supervision);
+
+  if (!lnClass) return false;
 
   const firstSupervisionOfType = supervision.subscriberIedOrLn.querySelector(
     `:scope > AccessPoint > Server > LDevice > LN[lnClass="${lnClass}"]`,
@@ -115,6 +116,8 @@ function existFirstSupervisionOfType(supervision: Supervision): boolean {
 
 /** @returns Whether [[`controlBlock`]] is supervised in [[`subscriberIed`]] */
 function isControlBlockSupervised(supervision: Supervision): boolean {
+  if (!supervision.sourceControlBlock) return false;
+
   const subscriberIed =
     supervision.subscriberIedOrLn.tagName === "IED"
       ? supervision.subscriberIedOrLn
@@ -134,7 +137,7 @@ function isControlBlockSupervised(supervision: Supervision): boolean {
     ),
   ).some(
     (val) =>
-      val.textContent === controlBlockObjRef(supervision.sourceControlBlock),
+      val.textContent === controlBlockObjRef(supervision.sourceControlBlock!),
   );
 }
 
@@ -147,6 +150,7 @@ function isControlBlockSupervised(supervision: Supervision): boolean {
  * - check whether `Service` element requirements are met
  * - check whether the logical node has missing or empty `Val` content
  *   (iedOrLn is LN)
+ * - if no control block is passed, a supervision LN must be passed not an IED
  * ```
  * @returns Whether subscription supervision can be done */
 export function canInstantiateSubscriptionSupervision(
@@ -159,18 +163,23 @@ export function canInstantiateSubscriptionSupervision(
     checkMaxSupervisionLimits: true,
   },
 ): boolean {
+  // not enough infomration to determine supervision type
+  if (
+    supervision.subscriberIedOrLn.tagName === "IED" &&
+    !supervision.sourceControlBlock
+  )
+    return false;
+
   if (
     options.checkDuplicateSupervisions &&
+    supervision.sourceControlBlock &&
     isControlBlockSupervised(supervision)
   )
     return false;
 
   if (supervision.subscriberIedOrLn.tagName === "LN") {
-    const type =
-      supervision.sourceControlBlock.tagName === "GSEControl"
-        ? "GoCBRef"
-        : "SvCBRef";
-    if (holdsValidObjRef(supervision.subscriberIedOrLn, type)) return false;
+    if (holdsValidObjRef(supervision.subscriberIedOrLn, type(supervision)!))
+      return false;
   } else {
     if (!existFirstSupervisionOfType(supervision)) return false;
   }

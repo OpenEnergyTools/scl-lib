@@ -26,7 +26,11 @@ export function instantiateSubscriptionSupervision(
     checkMaxSupervisionLimits: true,
   },
 ): Insert | null {
-  if (!canInstantiateSubscriptionSupervision(supervision, options)) return null;
+  if (
+    !canInstantiateSubscriptionSupervision(supervision, options) ||
+    !supervision.sourceControlBlock
+  )
+    return null;
 
   if (options.fixedLnInst >= 0)
     return createSupervisionEdit(supervision, {

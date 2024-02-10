@@ -246,7 +246,7 @@ describe("Function that checks whether subscription supervision can be instantia
   });
 
   describe("check whether supervision logical nodes can be edited by SCT", () => {
-    describe("for GSEControl", () => {
+    describe("for GOOSE with a GSEControl", () => {
       it("return false when valImport or valKind is missing from LGOS", () => {
         const sourceControlBlock = doc.querySelector(
           'GSEControl[name="GOOSE3"]',
@@ -293,7 +293,42 @@ describe("Function that checks whether subscription supervision can be instantia
       });
     });
 
-    describe("for SampledValueControl", () => {
+    describe("for GOOSE without a GSEControl", () => {
+      it("return false when valImport or valKind is missing from LGOS", () => {
+        const subscriberIedOrLn = doc.querySelector(
+          'IED[name="SupervisionNotSupported"]',
+        )!;
+        expect(
+          canInstantiateSubscriptionSupervision({
+            subscriberIedOrLn,
+          }),
+        ).to.be.false;
+      });
+
+      it("return false when valImport or valKind is missing on selected LN", () => {
+        const lgos = doc.querySelector(
+          'IED[name="SupervisionNotSupported"]  LN[lnClass="LGOS"]',
+        )!;
+        expect(
+          canInstantiateSubscriptionSupervision({
+            subscriberIedOrLn: lgos,
+          }),
+        ).to.be.false;
+      });
+
+      it("checks for DA and DAI for valImport/valKind", () => {
+        const lsvs = doc.querySelector(
+          'IED[name="SV_Subscriber"]  LN[lnClass="LSVS"]',
+        )!;
+        expect(
+          canInstantiateSubscriptionSupervision({
+            subscriberIedOrLn: lsvs,
+          }),
+        ).to.be.true;
+      });
+    });
+
+    describe("for SV with a SampledValueControl", () => {
       it("return false when valImport or valKind is missing on the from LSVS", () => {
         const sourceControlBlock = doc.querySelector(
           'SampledValueControl[name="someSmv"]',
@@ -335,6 +370,42 @@ describe("Function that checks whether subscription supervision can be instantia
         expect(
           canInstantiateSubscriptionSupervision({
             sourceControlBlock,
+            subscriberIedOrLn: lsvs,
+          }),
+        ).to.be.true;
+      });
+    });
+
+    describe("for SV without a SampledValueControl", () => {
+      it("return false when only an IED is passed", () => {
+        const subscriberIedOrLn = doc.querySelector(
+          'IED[name="SV_Subscriber"]',
+        )!;
+
+        expect(
+          canInstantiateSubscriptionSupervision({
+            subscriberIedOrLn,
+          }),
+        ).to.be.false;
+      });
+
+      it("return false when valImport or valKind is missing on selected LN", () => {
+        const lsvs = doc.querySelector(
+          'IED[name="SV_Subscriber"] LN[lnClass="LSVS"][inst="2"]',
+        )!;
+        expect(
+          canInstantiateSubscriptionSupervision({
+            subscriberIedOrLn: lsvs,
+          }),
+        ).to.be.false;
+      });
+
+      it("checks for DA and DAI for valImport/valKind", () => {
+        const lsvs = doc.querySelector(
+          'IED[name="SV_Subscriber"]  LN[lnClass="LSVS"]',
+        )!;
+        expect(
+          canInstantiateSubscriptionSupervision({
             subscriberIedOrLn: lsvs,
           }),
         ).to.be.true;
