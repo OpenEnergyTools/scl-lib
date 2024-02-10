@@ -60,6 +60,45 @@ describe("matchSrcAttributes", () => {
     expect(matchSrcAttributes(extRef, gse)).to.equal(true);
   });
 
+  it("allows LN0 as parent when srcLNClass is undefined", () => {
+    extRef.removeAttribute("srcPrefix");
+    extRef.removeAttribute("srcLNClass");
+
+    LDevice.appendChild(ln0);
+    ln0.appendChild(gse);
+
+    expect(matchSrcAttributes(extRef, gse)).to.equal(true);
+  });
+
+  it("is insensitive to empty string srcLNClass", () => {
+    extRef.setAttribute("srcLNClass", "");
+
+    LDevice.appendChild(ln0);
+    ln0.appendChild(gse);
+
+    expect(matchSrcAttributes(extRef, gse)).to.equal(true);
+  });
+
+  it("it uses ldInst when srcLDInst is undefined", () => {
+    extRef.removeAttribute("srcLDInst", "");
+    extRef.setAttribute("ldInst", "ldInst");
+
+    LDevice.appendChild(ln0);
+    ln0.appendChild(gse);
+
+    expect(matchSrcAttributes(extRef, gse)).to.equal(true);
+  });
+
+  it("is insensitive to empty string srcLDInst", () => {
+    extRef.setAttribute("srcLDInst", "");
+    extRef.setAttribute("ldInst", "ldInst");
+
+    LDevice.appendChild(ln0);
+    ln0.appendChild(gse);
+
+    expect(matchSrcAttributes(extRef, gse)).to.equal(true);
+  });
+
   it("is insensitive to null inst", () => {
     ln0.setAttribute("inst", "");
     extRef.setAttribute("srcLNInst", "");

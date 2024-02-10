@@ -12,12 +12,24 @@ export function matchSrcAttributes(extRef: Element, control: Element): boolean {
   const srcLNClass = control.closest("LN0, LN")?.getAttribute("lnClass");
   const srcLNInst = control.closest("LN0, LN")?.getAttribute("inst");
 
+  const extRefSrcLNClass = extRef.getAttribute("srcLNClass");
+  const srcLnClassCheck =
+    !extRefSrcLNClass || extRefSrcLNClass === ""
+      ? "LLN0" === srcLNClass
+      : extRefSrcLNClass === srcLNClass;
+
+  const extRefSrcLDInst = extRef.getAttribute("srcLDInst");
+  const srcLdInstCheck =
+    !extRefSrcLDInst || extRefSrcLDInst === ""
+      ? extRef.getAttribute("ldInst") === srcLDInst
+      : extRefSrcLDInst === srcLDInst;
+
   return (
     extRef.getAttribute("srcCBName") === cbName &&
-    extRef.getAttribute("srcLDInst") === srcLDInst &&
+    srcLdInstCheck &&
     (extRef.getAttribute("srcPrefix") ?? "") === srcPrefix &&
     (extRef.getAttribute("srcLNInst") ?? "") === srcLNInst &&
-    extRef.getAttribute("srcLNClass") === srcLNClass &&
+    srcLnClassCheck &&
     extRef.getAttribute("serviceType") === serviceType[control.tagName]
   );
 }
