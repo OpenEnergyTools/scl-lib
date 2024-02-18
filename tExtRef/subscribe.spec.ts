@@ -152,6 +152,51 @@ describe("Function to connect source data to sink elements (subscribe)", () => {
         expect(subscribe([{ sink, source }]).length).to.equal(0);
       });
 
+      it("allows subscription with invalid pLN with option checkOnlyBType", () => {
+        const controlBlock = docEd2.querySelector("ReportControl")!;
+        const fcda = docEd2.querySelector(`DataSet[name="Meas"] > FCDA`)!;
+        const source = { fcda, controlBlock };
+
+        const sink = docEd2.querySelector(`ExtRef[intAddr="invalAnalogue1"]`)!;
+        expect(
+          subscribe([{ sink, source }], {
+            ignoreSupervision: false,
+            force: false,
+            checkOnlyBType: true,
+          }).length,
+        ).to.equal(1);
+      });
+
+      it("allows subscription with invalid pDO with option checkOnlyBType", () => {
+        const controlBlock = docEd2.querySelector("ReportControl")!;
+        const fcda = docEd2.querySelector(`DataSet[name="Meas"] > FCDA`)!;
+        const source = { fcda, controlBlock };
+
+        const sink = docEd2.querySelector(`ExtRef[intAddr="invalAnalogue1"]`)!;
+        expect(
+          subscribe([{ sink, source }], {
+            ignoreSupervision: false,
+            force: false,
+            checkOnlyBType: true,
+          }).length,
+        ).to.equal(1);
+      });
+
+      it("allows subscription with invalid pDA to daName with option checkOnlyBType", () => {
+        const controlBlock = docEd2.querySelector("ReportControl")!;
+        const fcda = docEd2.querySelector(`DataSet[name="Meas"] > FCDA`)!;
+        const source = { fcda, controlBlock };
+
+        const sink = docEd2.querySelector(`ExtRef[intAddr="invalAnalogue1"]`)!;
+        expect(
+          subscribe([{ sink, source }], {
+            ignoreSupervision: false,
+            force: false,
+            checkOnlyBType: true,
+          }).length,
+        ).to.equal(1);
+      });
+
       it("checks for invalid pServT to controlBlock.tagName", () => {
         const controlBlock = docEd2.querySelector("GSEControl")!;
         const fcda = docEd2.querySelector(`DataSet[name="Meas"] > FCDA`)!;

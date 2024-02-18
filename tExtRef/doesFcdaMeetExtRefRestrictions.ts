@@ -4,7 +4,7 @@ import { extRefTypeRestrictions } from "./extRefTypeRestrictions.js";
 export type DoesFcdaMeetExtRefRestrictionsOptions = {
   /** The control block type to check against `pServT` */
   controlBlockType?: "GOOSE" | "Report" | "SMV" | "Poll";
-  /** Whether to only check against basic type. Skips check against pDO and pLN */
+  /** Whether to check only service type (pServT) and basic type (not pDO and pLN). Default false */
   checkOnlyBType?: boolean;
 };
 

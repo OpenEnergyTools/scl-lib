@@ -15,6 +15,13 @@ export type SubscribeOptions = {
   force: boolean;
   /** Whether to ignore adding subscription supervision (LGOS / LSVS). Default false */
   ignoreSupervision: boolean;
+  /** Whether to check only service type (pServT) and basic type (not pDO and pLN). Default false */
+  checkOnlyBType: boolean;
+};
+
+export type ValidSubscribeOptions = {
+  /** Whether to check only service type (pServT) and basic type (not pDO and pLN). Default false */
+  checkOnlyBType: boolean;
 };
 
 export type Connection = {
@@ -200,7 +207,10 @@ function invalidSink(sink: Element): boolean {
   );
 }
 
-function validSubscribeConditions(connection: Connection): boolean {
+function validSubscribeConditions(
+  connection: Connection,
+  options: ValidSubscribeOptions = { checkOnlyBType: false },
+): boolean {
   if (invalidSink(connection.sink)) return false;
 
   //TODO: check connection via Communication section
@@ -214,6 +224,7 @@ function validSubscribeConditions(connection: Connection): boolean {
     connection.sink.tagName === "ExtRef" &&
     !doesFcdaMeetExtRefRestrictions(connection.sink, fcda, {
       controlBlockType: serviceType,
+      checkOnlyBType: options.checkOnlyBType,
     })
   )
     return false;
@@ -246,7 +257,11 @@ function validSubscribeConditions(connection: Connection): boolean {
  */
 export function subscribe(
   connectionOrConnections: Connection | Connection[],
-  options: SubscribeOptions = { force: false, ignoreSupervision: false },
+  options: SubscribeOptions = {
+    force: false,
+    ignoreSupervision: false,
+    checkOnlyBType: false,
+  },
 ): (Insert | Update)[] {
   const connections = Array.isArray(connectionOrConnections)
     ? connectionOrConnections
@@ -254,7 +269,11 @@ export function subscribe(
 
   const validConnections = options.force
     ? connections
-    : (connections.filter(validSubscribeConditions) as Connection[]);
+    : (connections.filter((conn) =>
+        validSubscribeConditions(conn, {
+          checkOnlyBType: options.checkOnlyBType,
+        }),
+      ) as Connection[]);
 
   const extRefEdits = createSubscribeEdits(validConnections);
 

@@ -10,14 +10,14 @@ export type removeSupervisionOptions = {
 function isControlBlockSubscribed(supervisionLn: Element): boolean {
   const controlObjRef = supervisionLn.querySelector(
     `:scope > DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val, 
-    :scope > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val`
+    :scope > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val`,
   )?.textContent;
 
   const extRefs = Array.from(
     supervisionLn.closest("IED")!.querySelectorAll(
       `:scope > AccessPoint > Server > LDevice > LN0 > Inputs > ExtRef, 
-      :scope > AccessPoint > Server > LDevice > LN0 > Inputs > ExtRef`
-    )
+      :scope > AccessPoint > Server > LDevice > LN0 > Inputs > ExtRef`,
+    ),
   );
 
   return extRefs.some((extRef) => {
@@ -33,7 +33,7 @@ function isControlBlockSubscribed(supervisionLn: Element): boolean {
 
 export function canRemoveSupervision(
   supervisionLn: Element,
-  options: removeSupervisionOptions
+  options: removeSupervisionOptions,
 ): boolean {
   if (!isSrcRefEditable(supervisionLn)) return false;
 
@@ -48,7 +48,7 @@ export function removeSupervision(
   options: removeSupervisionOptions = {
     removeSupervisionLn: false,
     checkSubscription: true,
-  }
+  },
 ): Remove | null {
   if (!canRemoveSupervision(supervisionLn, options)) return null;
 
@@ -56,12 +56,12 @@ export function removeSupervision(
 
   const val = supervisionLn.querySelector(
     `:scope > DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val, 
-    :scope > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val`
+    :scope > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val`,
   );
   if (!val) return null;
 
   const node = Array.from(val.childNodes).find(
-    (childNode) => childNode.nodeType === Node.TEXT_NODE
+    (childNode) => childNode.nodeType === Node.TEXT_NODE,
   )!;
 
   return { node };
