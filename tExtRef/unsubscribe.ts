@@ -16,7 +16,7 @@ export type UnsubscribeOptions = {
  * references - unsubscribing.
  * ```md
  * 1. Unsubscribes external references itself:
- * -Update `ExtRef` in case later binging is used (existing `intAddr` attribute)
+ * -Update `ExtRef` in case later binding is used (existing `intAddr` attribute)
  * -Remove `ExtRef` in case `intAddr` is missing
  *
  * 2. Removes leaf `Input` elements as well
