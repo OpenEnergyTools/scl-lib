@@ -10,6 +10,7 @@ export { removeProcessElement } from "./tSubstation/removeProcessElement.js";
 
 export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
 export { updateIED } from "./tIED/updateIED.js";
+export { removeIED } from "./tIED/removeIED.js";
 
 export { findControlBlockSubscription } from "./tControl/findControlSubscription.js";
 export { controlBlockObjRef } from "./tControl/controlBlockObjRef.js";
