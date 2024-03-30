@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { handleEdit } from "@openscd/open-scd-core";
+import { Update, handleEdit } from "@openscd/open-scd-core";
 
 import { Insert } from "../foundation/utils";
 import { insertIed } from "./insertIED.js";
@@ -323,5 +323,49 @@ describe("Function to an importIED and its referenced elements", () => {
       );
 
     expect(orphanTypes.length).to.equal(0);
+  });
+
+  it("Always provides unique names for LNodeTypes", async () => {
+    const multipleIedDocument = await fetch("tIED/insertIED/multipleieds.scd")
+      .then((response) => response.text())
+      .then((str) => new DOMParser().parseFromString(str, "application/xml"));
+
+    // On the second loop an incorrect datatype template name can readily be created
+    // when we prepend the IED name to the datatype template id.
+    // This regression test checks that this doesn't occur. We must remember to
+    // rename the IED otherwise with duplicates this test wouldn't pass the preconditions.
+    for (let count = 0; count < 2; count++) {
+      const newIedDocument = await fetch("tIED/insertIED/valid.iid")
+        .then((response) => response.text())
+        .then((str) => new DOMParser().parseFromString(str, "application/xml"));
+      const newIed = newIedDocument.querySelector("IED")!;
+
+      const lNode = newIedDocument.querySelector('LNodeType[id="Dummy.LLN0"]')!;
+      const differenceMaker = newIedDocument.createComment(
+        `This will make things different_${count}`,
+      );
+
+      lNode.appendChild(differenceMaker);
+
+      const imports = insertIed(multipleIedDocument.documentElement, newIed);
+      handleEdit(imports);
+
+      const importedIed = multipleIedDocument.querySelector(
+        'IED[name="TestImportIED"]',
+      )!;
+      const renameEdit: Update = {
+        element: importedIed,
+        attributes: { name: `TestImportIED_${count}` },
+      };
+      handleEdit(renameEdit);
+    }
+
+    // check for duplicates
+    const ids = Array.from(
+      multipleIedDocument.querySelectorAll("LNodeType"),
+    ).map((type) => type.getAttribute("id"));
+    const uniqueIds = [...new Set(ids)];
+
+    expect(ids.length).to.equal(uniqueIds.length);
   });
 });
