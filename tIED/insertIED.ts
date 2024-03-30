@@ -134,6 +134,37 @@ function isDataTypeConnectionToIed(
     .some((anyLn) => anyLn.getAttribute("lnType") === id);
 }
 
+/**
+ * Generates a new DTT section id in case of a collision by adding a number in hex
+ * prefixed with an underscore to the existing id.
+ *
+ * @param existingId - Existing string for id attribute.
+ * @param existingLNodeType - Existing LNodeType for which a new ID is required.
+ * @param dataTypeTemplates - Existing Element of DTTs from the SCL file.
+ * @returns New string which is unique in the DTT section.
+ */
+function generateNewId(
+  existingId: string,
+  newIed: Element,
+  existingLNodeType: Element,
+  dataTypeTemplates: Element,
+): string {
+  const iedName = newIed.getAttribute("name");
+  const tagType = existingLNodeType.tagName;
+  const duplicatesFound = function (counter: number): boolean {
+    return !!dataTypeTemplates.querySelector(
+      `${tagType}[id="${existingId}@${iedName}#${counter.toString(10)}"]`,
+    );
+  };
+
+  let counter = 1;
+  // 2,000 limit reasonable way to avoid infinite loop
+  while (duplicatesFound(counter) && counter < 2000) {
+    counter += 1;
+  }
+  return `${existingId}@${iedName}#${counter.toString(10)}`;
+}
+
 function addEnumType(
   newIed: Element,
   newEnumType: Element,
@@ -150,8 +181,14 @@ function addEnumType(
     // There is an `id` conflict in the project that must be resolved by
     // concatenating the IED name with the id
     const data: Element = newEnumType.parentElement!;
-    const idOld = newEnumType.getAttribute("id");
-    const idNew = newIed.getAttribute("name")! + idOld;
+    const idOld = newEnumType.getAttribute("id")!;
+
+    const idNew = generateNewId(
+      idOld,
+      newIed,
+      existEnumType,
+      oldDataTypeTemplates,
+    );
     newEnumType.setAttribute("id", idNew);
 
     data
@@ -184,8 +221,14 @@ function addDAType(
     // There is an `id` conflict in the project that must be resolved by
     // concatenating the IED name with the id
     const data: Element | null = newDAType.parentElement!;
-    const idOld = newDAType.getAttribute("id");
-    const idNew = newIed.getAttribute("name")! + idOld;
+    const idOld = newDAType.getAttribute("id")!;
+
+    const idNew = generateNewId(
+      idOld,
+      newIed,
+      existDAType,
+      oldDataTypeTemplates,
+    );
     newDAType.setAttribute("id", idNew);
 
     data
@@ -218,8 +261,14 @@ function addDOType(
     // There is an `id` conflict in the project that must be resolved by
     // concatenating the IED name with the id
     const data: Element = newDOType.parentElement!;
-    const idOld = newDOType.getAttribute("id");
-    const idNew = newIed.getAttribute("name")! + idOld;
+    const idOld = newDOType.getAttribute("id")!;
+
+    const idNew = generateNewId(
+      idOld,
+      newIed,
+      existDOType,
+      oldDataTypeTemplates,
+    );
     newDOType.setAttribute("id", idNew);
 
     data
@@ -252,7 +301,13 @@ function addLNodeType(
     // There is an `id` conflict in the project that must be resolved by
     // concatenating the IED name with the id
     const idOld = newLNodeType.getAttribute("id")!;
-    const idNew = newIed.getAttribute("name")!.concat(idOld);
+    const idNew = generateNewId(
+      idOld,
+      newIed,
+      existLNodeType,
+      oldDataTypeTemplates,
+    );
+
     newLNodeType.setAttribute("id", idNew);
 
     Array.from(
