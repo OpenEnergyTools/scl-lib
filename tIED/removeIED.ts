@@ -58,7 +58,7 @@ function updateIedNameToNone(ied: Element, iedName: string): Update[] {
   return Array.from(ied.ownerDocument.querySelectorAll(selector))
     .filter(isPublic)
     .map((element) => {
-      return { element, attributes: { iedName: "None", ldInst: null } };
+      return { element, attributes: { iedName: "None" } };
     });
 }
 
