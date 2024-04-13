@@ -24,6 +24,14 @@ export const publisherIED = `
                         <FCDA desc="CMVFLOAT32" ldInst="Measurement" lnClass="MMXU" lnInst="1" doName="A.phsA" daName="cVal.mag.f" fc="MX" />    
                         <FCDA desc="WYE" ldInst="Measurement" lnClass="MMXU" lnInst="1" doName="A" fc="MX" />    
                         <FCDA desc="ACTBool" ldInst="QB2_Disconnector" lnClass="PTOC" lnInst="1" doName="Op" daName="general" fc="ST" />    
+                        <!-- INS -->
+                        <FCDA ldInst="Measurement" lnClass="GGIO" lnInst="1" doName="IntIn" daName="stVal" fc="ST" />
+                        <!-- ENS -->
+                        <FCDA ldInst="QB2_Disconnector" lnClass="XSWI" lnInst="1" doName="Beh" daName="stVal" fc="ST" />
+                        <!-- INC -->
+                        <FCDA ldInst="QB2_Disconnector" lnClass="PTOC" lnInst="1" doName="OpCntRs" daName="stVal" fc="ST" />
+                        <!-- ENC -->
+                        <FCDA ldInst="QB2_Disconnector" lnClass="XSWI" lnInst="1" doName="Mod" daName="stVal" fc="ST" />
                     </DataSet>
                 </LN0>
                 <LN prefix="" lnClass="CILO" inst="1" lnType="Dummy.CILO"/>
@@ -42,6 +50,7 @@ export const publisherIED = `
                     <ReportControl name="someReport" datSet="Meas" />
                 </LN0>
                 <LN lnClass="MMXU" inst="1" lnType="Dummy.MMXU" />
+                <LN lnClass="GGIO" inst="1" lnType="Dummy.GGIO" />
             </LDevice>
         </Server>
     </AccessPoint>
@@ -102,6 +111,12 @@ export const publisherIED = `
         <DO name="Health" type="OpenSCD_ENS_Health"/>
         <DO name="NamPlt" type="OpenSCD_LPL_LD"/>
         <DO name="Op" type="someACT"/>
+        <DO name="OpCntRs" type="OpenSCD_INC_simple"/>
+    </LNodeType>
+    <LNodeType lnClass="GGIO" id="Dummy.GGIO" desc="GGIO with integer input">
+        <DO name="IntIn" type="OpenSCD_INS_simple"/>
+        <DO name="Mod" type="OpenSCD_ENC_Mod"/>
+        <DO name="Beh" type="OpenSCD_ENS_Beh"/>
     </LNodeType>
     <DOType cdc="WYE" id="someWYE">
         <SDO name="phsA" type="someMV"/>
@@ -212,6 +227,12 @@ export const publisherIED = `
         <DA name="Oper" bType="Struct" fc="CO" type="OpenSCD_OperSBOw_BehaviourModeKind"/>
         <DA name="Cancel" bType="Struct" fc="CO" type="OpenSCD_Cancel_BehaviourModeKind"/>
     </DOType>
+    <DOType cdc="INC" id="OpenSCD_INC_simple">
+        <DA name="stVal" bType="INT32" dchg="true" fc="ST"/>
+        <DA name="q" bType="Quality" qchg="true" fc="ST"/>
+        <DA name="t" bType="Timestamp" fc="ST"/>
+        <DA name="d" bType="VisString255" fc="DC"/>
+    </DOType>   
     <DAType id="someVector">
         <BDA name="mag" bType="Struct" type="someAnalogueValue"/>
         <BDA name="ang" bType="Struct" type="someAnalogueValue"/>

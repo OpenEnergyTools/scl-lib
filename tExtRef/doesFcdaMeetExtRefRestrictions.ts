@@ -1,6 +1,19 @@
 import { fcdaBaseTypes } from "../tFCDA/fcdaBaseTypes.js";
 import { extRefTypeRestrictions } from "./extRefTypeRestrictions.js";
 
+function isBasicTypeEqual(
+  bTypeFcda: string | undefined,
+  bTypeExtRef: string | undefined,
+): boolean {
+  // Basic types not the same
+  return (
+    bTypeFcda === bTypeExtRef ||
+    // Enum to INT32 mappings specifically allowed, Ed 1 to Ed 2 compatibility
+    (bTypeFcda === "INT32" && bTypeExtRef === "Enum") ||
+    (bTypeFcda === "Enum" && bTypeExtRef === "INT32")
+  );
+}
+
 export type DoesFcdaMeetExtRefRestrictionsOptions = {
   /** The control block type to check against `pServT` */
   controlBlockType?: "GOOSE" | "Report" | "SMV" | "Poll";
@@ -31,6 +44,7 @@ export function doesFcdaMeetExtRefRestrictions(
   // Check cannot be performed assume restriction check to fail
   if (!extRefSpec || !fcdaTypes) return false;
 
+  // If service type specified it must match
   if (
     extRef.getAttribute("pServT") &&
     options.controlBlockType &&
@@ -39,7 +53,8 @@ export function doesFcdaMeetExtRefRestrictions(
     return false;
 
   // Some vendors allow subscribing of e.g. ACT to SPS, both bType BOOLEAN
-  if (options.checkOnlyBType) return fcdaTypes.bType === extRefSpec.bType;
+  if (options.checkOnlyBType)
+    return isBasicTypeEqual(fcdaTypes.bType, extRefSpec.bType);
 
   if (
     extRef.getAttribute("pLN") &&
@@ -47,9 +62,21 @@ export function doesFcdaMeetExtRefRestrictions(
   )
     return false;
 
-  if (fcdaTypes.cdc !== extRefSpec.cdc) return false;
+  // Ed 1 to Ed 2 compatibility. The following are compatible:
+  // ENS <> INS, ENC <> INC
+  if (
+    fcdaTypes.cdc !== extRefSpec.cdc &&
+    !(fcdaTypes.cdc === "ENS" && extRefSpec.cdc === "INS") &&
+    !(fcdaTypes.cdc === "INS" && extRefSpec.cdc === "ENS") &&
+    !(fcdaTypes.cdc === "ENC" && extRefSpec.cdc === "INC") &&
+    !(fcdaTypes.cdc === "INC" && extRefSpec.cdc === "ENC")
+  )
+    return false;
 
-  if (extRef.getAttribute("pDA") && fcdaTypes.bType !== extRefSpec.bType)
+  if (
+    extRef.getAttribute("pDA") &&
+    !isBasicTypeEqual(fcdaTypes.bType, extRefSpec.bType)
+  )
     return false;
 
   return true;
