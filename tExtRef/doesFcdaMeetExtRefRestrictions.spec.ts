@@ -15,6 +15,10 @@ const invalidExtRef = `<ExtRef pDO="someInvalidDO" pDA="Dbpos" pServT="GOOSE" pL
 const invalidExtRef1 = `<ExtRef pDA="Dbpos" pServT="GOOSE" pLN="XSWI"/>`;
 const extRefCMVFLOAT32 = `<ExtRef pDO="A.phsA" pDA="cVal.mag.f" pServT="Report" pLN="MMXU"/>`;
 const extRefBlkOpnstVal = `<ExtRef pDO="BlkOpn" pDA="stVal" pLN="CILO" />`;
+const extRefENS = `<ExtRef pDO="Beh" pDA="stVal" />`;
+const extRefINS = `<ExtRef pDO="IntIn" pDA="stVal" />`;
+const extRefINC = `<ExtRef pDO="OpCntRs" pDA="stVal" />`;
+const extRefENC = `<ExtRef pDO="Mod" pDA="stVal" />`;
 
 describe("Function compare FCDA basic types to ExtRef restrictions", () => {
   it("is restrictive with invalid FCDA input", () => {
@@ -115,7 +119,7 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     ).to.be.false;
   });
 
-  it("returns true for matching types CMV/FLOAT32 ", () => {
+  it("returns true for matching types CMV/FLOAT32", () => {
     const fcda = findElement(
       publisherIED,
       `FCDA[desc="CMVFLOAT32"]`,
@@ -129,7 +133,7 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     ).to.be.true;
   });
 
-  it("returns true for matching types DPC/Dbpos ", () => {
+  it("returns true for matching types DPC/Dbpos", () => {
     const fcda = findElement(publisherIED, `FCDA[desc="DPCdbpos"]`) as Element;
     const extRef = findElement(extRefXSWIPosDbPos, "ExtRef") as Element;
 
@@ -140,14 +144,14 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
     ).to.be.true;
   });
 
-  it("returns true for matching types DPC/null ", () => {
+  it("returns true for matching types DPC/null", () => {
     const fcda = findElement(publisherIED, `FCDA[desc="DPCnull"]`) as Element;
     const extRef = findElement(extRefPos, "ExtRef") as Element;
 
     expect(doesFcdaMeetExtRefRestrictions(extRef, fcda)).to.be.true;
   });
 
-  it("allows to skip cdc and lnClass check ", () => {
+  it("allows to skip cdc and lnClass check", () => {
     const fcda = findElement(publisherIED, `FCDA[desc="ACTBool"]`) as Element;
     const extRef = findElement(extRefBlkOpnstVal, "ExtRef") as Element;
 
@@ -157,5 +161,79 @@ describe("Function compare FCDA basic types to ExtRef restrictions", () => {
         checkOnlyBType: true,
       }),
     ).to.be.true;
+  });
+
+  it("allows to skip cdc and lnClass check", () => {
+    const fcda = findElement(publisherIED, `FCDA[desc="ACTBool"]`) as Element;
+    const extRef = findElement(extRefBlkOpnstVal, "ExtRef") as Element;
+
+    expect(doesFcdaMeetExtRefRestrictions(extRef, fcda)).to.be.false;
+    expect(
+      doesFcdaMeetExtRefRestrictions(extRef, fcda, {
+        checkOnlyBType: true,
+      }),
+    ).to.be.true;
+  });
+
+  it("allows mapping between INT32 and Enum basic types", () => {
+    const fcda = findElement(
+      publisherIED,
+      `FCDA[ldInst="Measurement"][doName="IntIn"][daName="stVal"]`,
+    ) as Element;
+    const extRef = findElement(extRefENC, "ExtRef") as Element;
+    expect(
+      doesFcdaMeetExtRefRestrictions(extRef, fcda, {
+        checkOnlyBType: true,
+      }),
+    ).to.be.true;
+  });
+
+  it("allows mapping between Enum and INT32 basic types", () => {
+    const fcda = findElement(
+      publisherIED,
+      `FCDA[ldInst="QB2_Disconnector"][lnClass="XSWI"][lnInst="1"][doName="Mod"][daName="stVal"]`,
+    ) as Element;
+    const extRef = findElement(extRefINC, "ExtRef") as Element;
+    expect(
+      doesFcdaMeetExtRefRestrictions(extRef, fcda, {
+        checkOnlyBType: true,
+      }),
+    ).to.be.true;
+  });
+
+  it("allows mapping between ENS and INS CDCs", () => {
+    const fcda = findElement(
+      publisherIED,
+      `FCDA[ldInst="Measurement"][doName="IntIn"][daName="stVal"]`,
+    ) as Element;
+    const extRef = findElement(extRefENS, "ExtRef") as Element;
+    expect(doesFcdaMeetExtRefRestrictions(extRef, fcda)).to.be.true;
+  });
+
+  it("allows mapping between INS and ENS CDCs", () => {
+    const fcda = findElement(
+      publisherIED,
+      `FCDA[ldInst="QB2_Disconnector"][lnClass="XSWI"][lnInst="1"][doName="Beh"][daName="stVal"]`,
+    ) as Element;
+    const extRef = findElement(extRefINS, "ExtRef") as Element;
+    expect(doesFcdaMeetExtRefRestrictions(extRef, fcda)).to.be.true;
+  });
+
+  it("allows mapping between ENC and INC CDCs", () => {
+    const fcda = findElement(
+      publisherIED,
+      `FCDA[ldInst="QB2_Disconnector"][lnClass="XSWI"][lnInst="1"][doName="Mod"][daName="stVal"]`,
+    ) as Element;
+    const extRef = findElement(extRefINC, "ExtRef") as Element;
+    expect(doesFcdaMeetExtRefRestrictions(extRef, fcda)).to.be.true;
+  });
+
+  it("allows mapping between INC and ENC CDCs", () => {
+    const fcda = findElement(
+      publisherIED,
+      `FCDA[lnClass="PTOC"][lnInst="1"][doName="OpCntRs"][daName="stVal"]`,
+    ) as Element;
+    const extRef = findElement(extRefENC, "ExtRef") as Element;
+    expect(doesFcdaMeetExtRefRestrictions(extRef, fcda)).to.be.true;
   });
 });
