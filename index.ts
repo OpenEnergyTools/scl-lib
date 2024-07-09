@@ -68,6 +68,8 @@ export {
 export { sourceControlBlock } from "./tExtRef/sourceControlBlock.js";
 export { isSubscribed } from "./tExtRef/isSubscribed.js";
 
+export { importLNodeType } from "./tDataTypeTemplates/importLNodeType.js";
+
 export {
   Supervision,
   SupervisionOptions,
