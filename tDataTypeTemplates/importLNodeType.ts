@@ -1,0 +1,137 @@
+import { Insert, createElement } from "../foundation/utils.js";
+
+import { getReference } from "../tBaseElement/getReference.js";
+
+function removeDuplicates(inserts: Insert[]): Insert[] {
+  const uniqueInserts: Insert[] = [];
+  const uniqueIDs: string[] = [];
+
+  inserts.forEach((insert) => {
+    const id = (insert.node as Element).getAttribute("id");
+    if (!id) uniqueInserts.push(insert);
+    else if (!uniqueIDs.includes(id)) {
+      uniqueIDs.push(id);
+      uniqueInserts.push(insert);
+    }
+  });
+
+  return uniqueInserts;
+}
+
+function insertDataType(
+  dataType: Element,
+  oldDataTypeTemplates: Element
+): Insert | undefined {
+  const existingDataType = oldDataTypeTemplates.querySelector(
+    `${dataType.tagName}[id="${dataType.getAttribute("id")}"] `
+  );
+  if (existingDataType && dataType.isEqualNode(existingDataType)) return;
+
+  return {
+    parent: oldDataTypeTemplates,
+    node: dataType,
+    reference: getReference(oldDataTypeTemplates, dataType.tagName),
+  };
+}
+
+function insertDataTypes(dataTypes: Element[], targetScl: Element): Insert[] {
+  const dataTypeEdit: Insert[] = [];
+
+  const targetDataTypeTemplates = targetScl.querySelector(
+    ":root > DataTypeTemplates"
+  )
+    ? targetScl.querySelector(":root > DataTypeTemplates")!
+    : createElement(targetScl.ownerDocument, "DataTypeTemplates", {});
+
+  if (!targetDataTypeTemplates.parentElement) {
+    dataTypeEdit.push({
+      parent: targetScl,
+      node: targetDataTypeTemplates,
+      reference: getReference(targetScl, "DataTypeTemplates"),
+    });
+  }
+
+  dataTypeEdit.push(
+    ...dataTypes
+      .map((dataType) => insertDataType(dataType, targetDataTypeTemplates))
+      .filter((insert) => !!insert)
+  );
+
+  return removeDuplicates(dataTypeEdit);
+}
+
+function getDaTypes(parent: Element): Element[] {
+  const doc = parent.ownerDocument;
+
+  const daTypes = Array.from(
+    parent.querySelectorAll(":scope > DA, :scope > BDA")
+  )
+    .map((dAorBda) =>
+      doc.querySelector(
+        `:root > DataTypeTemplates > DAType[id="${dAorBda.getAttribute(
+          "type"
+        )}"]`
+      )
+    )
+    .filter((daType) => !!daType);
+
+  const sndLvDaTypes = daTypes.flatMap((daType) => getDaTypes(daType));
+
+  return [...daTypes, ...sndLvDaTypes];
+}
+
+function getDoTypes(parent: Element): Element[] {
+  const doc = parent.ownerDocument;
+
+  const doTypes = Array.from(
+    parent.querySelectorAll(":scope > DO, :scope > SDO")
+  )
+    .map((dOorSdo) =>
+      doc.querySelector(
+        `:root > DataTypeTemplates > DOType[id="${dOorSdo.getAttribute(
+          "type"
+        )}"]`
+      )
+    )
+    .filter((doType) => !!doType);
+
+  const sndLvDoTypes = doTypes.flatMap((doType) => getDoTypes(doType));
+
+  return [...doTypes, ...sndLvDoTypes];
+}
+
+/**
+ * Importing `LNodeType` including all its sub data structures `DOType`,
+ * `DAType` and `EnumType` including a check for duplicate data.
+ * @param lNodeType the `LNodeType` element to be imported
+ * @param targetDoc the target XML document to import to
+ * @returns an edit array inserting data type template
+ */
+export function importLNodeType(
+  lNodeType: Element,
+  targetDoc: XMLDocument
+): Insert[] {
+  const doc = lNodeType.ownerDocument;
+  const targetScl = targetDoc.querySelector("SCL");
+
+  if (!targetScl) return [];
+
+  const doTypes = getDoTypes(lNodeType);
+
+  const daTypes = doTypes.flatMap((doType) => getDaTypes(doType));
+
+  const enumTypes = [...doTypes, ...daTypes].flatMap((doOrDaType) =>
+    Array.from(
+      doOrDaType.querySelectorAll('BDA[bType="Enum"], DA[bType="Enum"]')
+    )
+      .map((dAorBda) =>
+        doc.querySelector(`EnumType[id="${dAorBda.getAttribute("type")}"]`)
+      )
+      .filter((enumType) => !!enumType)
+  );
+
+  return insertDataTypes(
+    [lNodeType, ...doTypes, ...daTypes, ...enumTypes],
+    targetScl
+  );
+}
