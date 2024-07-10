@@ -20,17 +20,20 @@ function removeDuplicates(inserts: Insert[]): Insert[] {
 
 function insertDataType(
   dataType: Element,
-  oldDataTypeTemplates: Element
+  targetDataTypeTemplate: Element
 ): Insert | undefined {
-  const existingDataType = oldDataTypeTemplates.querySelector(
+  const existingDataType = targetDataTypeTemplate.querySelector(
     `${dataType.tagName}[id="${dataType.getAttribute("id")}"] `
   );
   if (existingDataType && dataType.isEqualNode(existingDataType)) return;
 
+  const node = dataType.cloneNode(true);
+  // const node = dataType;
+
   return {
-    parent: oldDataTypeTemplates,
-    node: dataType,
-    reference: getReference(oldDataTypeTemplates, dataType.tagName),
+    parent: targetDataTypeTemplate,
+    node,
+    reference: getReference(targetDataTypeTemplate, dataType.tagName),
   };
 }
 
@@ -52,9 +55,9 @@ function insertDataTypes(dataTypes: Element[], targetScl: Element): Insert[] {
   }
 
   dataTypeEdit.push(
-    ...dataTypes
+    ...(dataTypes
       .map((dataType) => insertDataType(dataType, targetDataTypeTemplates))
-      .filter((insert) => !!insert)
+      .filter((insert) => !!insert) as Insert[])
   );
 
   return removeDuplicates(dataTypeEdit);
@@ -73,7 +76,7 @@ function getDaTypes(parent: Element): Element[] {
         )}"]`
       )
     )
-    .filter((daType) => !!daType);
+    .filter((daType) => !!daType) as Element[];
 
   const sndLvDaTypes = daTypes.flatMap((daType) => getDaTypes(daType));
 
@@ -93,7 +96,7 @@ function getDoTypes(parent: Element): Element[] {
         )}"]`
       )
     )
-    .filter((doType) => !!doType);
+    .filter((doType) => !!doType) as Element[];
 
   const sndLvDoTypes = doTypes.flatMap((doType) => getDoTypes(doType));
 
@@ -120,14 +123,15 @@ export function importLNodeType(
 
   const daTypes = doTypes.flatMap((doType) => getDaTypes(doType));
 
-  const enumTypes = [...doTypes, ...daTypes].flatMap((doOrDaType) =>
-    Array.from(
-      doOrDaType.querySelectorAll('BDA[bType="Enum"], DA[bType="Enum"]')
-    )
-      .map((dAorBda) =>
-        doc.querySelector(`EnumType[id="${dAorBda.getAttribute("type")}"]`)
+  const enumTypes = [...doTypes, ...daTypes].flatMap(
+    (doOrDaType) =>
+      Array.from(
+        doOrDaType.querySelectorAll('BDA[bType="Enum"], DA[bType="Enum"]')
       )
-      .filter((enumType) => !!enumType)
+        .map((dAorBda) =>
+          doc.querySelector(`EnumType[id="${dAorBda.getAttribute("type")}"]`)
+        )
+        .filter((enumType) => !!enumType) as Element[]
   );
 
   return insertDataTypes(

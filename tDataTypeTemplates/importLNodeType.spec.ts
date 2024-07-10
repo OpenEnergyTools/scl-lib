@@ -23,11 +23,17 @@ const mmxuLNodeType = findElement(
 ) as Element;
 
 describe("Function to import LNodeType with its sub data", () => {
-  it("is inserting the LNodeType itself element when missing", () => {
+  it("is returning an empty string on invalid SCL files", () => {
+    const edits = importLNodeType(tctrLNodeType, invalidTemplate);
+
+    expect(edits.length).to.equal(0);
+  });
+
+  it("is inserting the LNodeType element itself when missing", () => {
     const edits = importLNodeType(tctrLNodeType, emptyTemplate);
 
     expect(edits.length).to.equal(6);
-    expect(edits[1].node).to.equal(tctrLNodeType);
+    expect((edits[1].node as Element).tagName).to.equal(tctrLNodeType.tagName);
   });
 
   it("is inserting DataTypeTemplate element when missing", () => {
@@ -49,9 +55,9 @@ describe("Function to import LNodeType with its sub data", () => {
     expect(edits.length).to.equal(0);
   });
 
-  it("is returning an empty string on invalid SCL files", () => {
-    const edits = importLNodeType(tctrLNodeType, invalidTemplate);
+  it("does not cut out data type from the base project", () => {
+    const edits = importLNodeType(mmxuLNodeType, emptyTemplate);
 
-    expect(edits.length).to.equal(0);
+    edits.forEach((edit) => expect(edit.node.isConnected).to.be.false);
   });
 });
