@@ -9,11 +9,11 @@ import { updateDatSet } from "../tControl/updateDatSet.js";
 /**
  * Utility function to update SampledValueControl element attributes.
  * ```md
- * These attributes trigger addition edits
+ * These attributes trigger additional edits such as
  * - name: also updates SMV.cbName and supervision references
  * - datSet: update reference DataSet.name - when DataSet is single use
  *
- * >NOTE: confRev attribute is updated +10000 every time this function is called
+ * >NOTE: confRev attribute is updated +10000 on each data set change
  * ```
  * @param update - diff holding the `SampledValueControl` as element
  * @returns action array to update all `SampledValueControl` attributes
@@ -69,10 +69,12 @@ export function updateSampledValueControl(
     const updateDataSet = updateDatSet(update);
 
     if (updateDataSet) updates.push(updateDataSet);
-    else delete update.attributes.datSet; // remove datSet from the update to avoid schema invalidity
-  }
+    // remove datSet from the update to avoid schema invalidity
+    else delete update.attributes.datSet;
 
-  update.attributes.confRev = updatedConfRev(update.element); // +10000 for update
+    // +10000 for update
+    update.attributes.confRev = updatedConfRev(update.element);
+  }
 
   return [update, ...updates];
 }
