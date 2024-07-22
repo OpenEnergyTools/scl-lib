@@ -9,11 +9,11 @@ import { updateDatSet } from "../tControl/updateDatSet.js";
 /**
  * Utility function to update GSEControl element attributes.
  * ```md
- * These attributes trigger addition edits
+ * These attributes trigger additional edits such as
  * - name: also updates GSE.cbName and supervision references
  * - datSet: update reference DataSet.name - when DataSet is single use
  *
- * >NOTE: confRev attribute is updated +10000 every time this function is called
+ * >NOTE: confRev attribute is updated +10000 on every data set change
  * ```
  * @param gseControl - GSEControl element
  * @param attributes -
@@ -66,10 +66,12 @@ export function updateGSEControl(update: Update): (Update | Remove | Insert)[] {
     const updateDataSet = updateDatSet(update);
 
     if (updateDataSet) updates.push(updateDataSet);
-    else delete update.attributes.datSet; // remove datSet from the update to avoid schema invalidity
-  }
+    // remove datSet from the update to avoid schema invalidity
+    else delete update.attributes.datSet;
 
-  update.attributes.confRev = updatedConfRev(update.element); // +10000 for update
+    // +10000 for data set update
+    update.attributes.confRev = updatedConfRev(update.element);
+  }
 
   return [update, ...updates];
 }

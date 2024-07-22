@@ -20,7 +20,7 @@ function findElement(str: string, selector: string): Element | null {
 }
 
 function buildAttr(
-  type: "name" | "datSet" | "none" = "none",
+  type: "name" | "datSet" | "datSetOnly" | "none" = "none",
 ): Record<string, string | null> {
   if (type === "name")
     return {
@@ -42,6 +42,11 @@ function buildAttr(
       securityEnabled: "someSecEna",
     };
 
+  if (type === "datSetOnly")
+    return {
+      datSet: "someNewDatSet",
+    };
+
   return {
     desc: "someDesc",
     type: "GSSE",
@@ -60,29 +65,6 @@ describe("Utility function to update GSEControl attributes", () => {
     });
 
     expect(actions.length).to.equal(0);
-  });
-
-  it("always updates confRev attribute +10000", () => {
-    const gseControl = findElement(
-      gseControlDoc,
-      'GSEControl[name="someGse"]',
-    )!;
-    const actions = updateGSEControl({
-      element: gseControl,
-      attributes: buildAttr(),
-    });
-
-    expect(actions.length).to.equal(1);
-    expect(actions[0]).to.satisfy(isUpdate);
-    expect((actions[0] as Update).element).to.equal(gseControl);
-    expect((actions[0] as Update).attributes).to.deep.equal({
-      desc: "someDesc",
-      type: "GSSE",
-      appID: "someNewAppID",
-      fixedOffs: "true",
-      securityEnabled: "someSecEna",
-      confRev: "20001",
-    });
   });
 
   describe("with intention to change name attributes", () => {
@@ -106,7 +88,6 @@ describe("Utility function to update GSEControl attributes", () => {
         appID: "someNewAppID",
         fixedOffs: "true",
         securityEnabled: "someSecEna",
-        confRev: "30001",
       });
 
       expect(actions[1]).to.satisfy(isUpdate);
@@ -136,7 +117,6 @@ describe("Utility function to update GSEControl attributes", () => {
         appID: "someNewAppID",
         fixedOffs: "true",
         securityEnabled: "someSecEna",
-        confRev: "20001",
       });
 
       expect(actions[1]).to.satisfy(isUpdate);
@@ -185,7 +165,6 @@ describe("Utility function to update GSEControl attributes", () => {
         appID: "someNewAppID",
         fixedOffs: "true",
         securityEnabled: "someSecEna",
-        confRev: "10001",
       });
 
       expect(actions[1]).to.satisfy(isUpdate);
@@ -247,7 +226,7 @@ describe("Utility function to update GSEControl attributes", () => {
       });
     });
 
-    it("also updates DataSet.name with DataSet being single used", () => {
+    it("does not update DataSet.name nor GSEControl.datSet when DataSet not being single used", () => {
       const gseControl = findElement(
         gseControlDoc,
         'GSEControl[name="someGse2"]',
@@ -267,6 +246,25 @@ describe("Utility function to update GSEControl attributes", () => {
         fixedOffs: "true",
         securityEnabled: "someSecEna",
         confRev: "10001",
+      });
+    });
+
+    it("also updates GSEControl.confRev on datSet change", () => {
+      const gseControl = findElement(
+        gseControlDoc,
+        'GSEControl[name="someGse3"]',
+      )!;
+      const actions = updateGSEControl({
+        element: gseControl,
+        attributes: buildAttr("datSetOnly"),
+      });
+
+      expect(actions.length).to.equal(2);
+      expect(actions[0]).to.satisfy(isUpdate);
+      expect((actions[0] as Update).element).to.equal(gseControl);
+      expect((actions[0] as Update).attributes).to.deep.equal({
+        datSet: "someNewDatSet",
+        confRev: "30001",
       });
     });
   });
