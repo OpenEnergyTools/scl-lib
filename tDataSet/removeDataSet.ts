@@ -3,6 +3,7 @@ import { Remove, Update } from "../foundation/utils.js";
 import { controlBlocks } from "../tControl/controlBlocks.js";
 import { fCDAsSubscription } from "../tFCDA/removeFCDA.js";
 import { unsubscribe } from "../tExtRef/unsubscribe.js";
+import { updatedConfRev } from "../tControl/updateConfRev.js";
 
 /**
  * Utility function to remove the element `DataSet`.
@@ -26,7 +27,7 @@ export function removeDataSet(remove: Remove): (Remove | Update)[] {
   const ctrlBlockUpdates: (Remove | Update)[] = controlBlocks(dataSet).map(
     (ctrlBlock) => ({
       element: ctrlBlock,
-      attributes: { datSet: null, confRev: "0" },
+      attributes: { datSet: null, confRev: updatedConfRev(ctrlBlock) },
     }),
   );
 
