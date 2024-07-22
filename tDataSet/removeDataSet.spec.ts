@@ -34,7 +34,7 @@ describe("Utility function to remove DataSet element", () => {
   it("including the DataSet itself", () =>
     expect((edits[0] as Remove).node).to.equal(dataSet));
 
-  it("including the external references itself", () => {
+  it("including the external references", () => {
     expect((edits[1] as Remove).node).to.equal(extRefs[0]);
     expect((edits[2] as Remove).node).to.equal(extRefs[1]);
     expect((edits[3] as Remove).node).to.equal(extRefs[3]);
@@ -49,15 +49,15 @@ describe("Utility function to remove DataSet element", () => {
   it("including control Block updates", () => {
     expect((edits[7] as Update).attributes).to.deep.equal({
       datSet: null,
-      confRev: "0",
+      confRev: "10340",
     });
     expect((edits[8] as Update).attributes).to.deep.equal({
       datSet: null,
-      confRev: "0",
+      confRev: "10342",
     });
     expect((edits[9] as Update).attributes).to.deep.equal({
       datSet: null,
-      confRev: "0",
+      confRev: "10344",
     });
   });
 });

@@ -168,9 +168,9 @@ export const withSubscriptionSupervision = `
                             daName="VolSv.instMag.i" 
                             fc="MX" />
                     </DataSet>
-                    <GSEControl name="someGse" datSet="gseDatSet"/>
-                    <GSEControl name="someGse2" datSet="gseDatSet"/>
-                    <GSEControl name="someGse3" datSet="gseDatSet"/>
+                    <GSEControl name="someGse" datSet="gseDatSet" confRev="340" />
+                    <GSEControl name="someGse2" datSet="gseDatSet" confRev="342" />
+                    <GSEControl name="someGse3" datSet="gseDatSet" confRev="344" />
                     <SampledValueControl name="someSmv" datSet="smvDataSet"/>
                 </LN0>
             </LDevice>
