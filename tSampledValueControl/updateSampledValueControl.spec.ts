@@ -20,7 +20,7 @@ function findElement(str: string, selector: string): Element | null {
 }
 
 function buildAttr(
-  type: "name" | "datSet" | "none" = "none",
+  type: "name" | "datSet" | "datSetOnly" | "none" = "none",
 ): Record<string, string | null> {
   if (type === "name")
     return {
@@ -42,6 +42,11 @@ function buildAttr(
       nofASDU: "3",
     };
 
+  if (type === "datSetOnly")
+    return {
+      datSet: "someNewDatSet",
+    };
+
   return {
     desc: "someDesc",
     smpMod: "SmpPerSec",
@@ -59,27 +64,6 @@ describe("Utility function to update SampledValueControl attributes", () => {
     });
 
     expect(actions.length).to.equal(0);
-  });
-
-  it("always updates confRev attribute +10000", () => {
-    const smvControl = findElement(
-      smvControlDoc,
-      'SampledValueControl[name="someSmv"]',
-    )!;
-    const actions = updateSampledValueControl({
-      element: smvControl,
-      attributes: buildAttr(),
-    });
-
-    expect(actions.length).to.equal(1);
-    expect(actions[0]).to.satisfy(isUpdate);
-    expect((actions[0] as Update).element).to.equal(smvControl);
-    expect((actions[0] as Update).attributes).to.deep.equal({
-      desc: "someDesc",
-      confRev: "20001",
-      smpMod: "SmpPerSec",
-      securityEnabled: "SignatureAndEncryption",
-    });
   });
 
   describe("with intention to change name attributes", () => {
@@ -101,7 +85,6 @@ describe("Utility function to update SampledValueControl attributes", () => {
         desc: "someDesc",
         multicast: "true",
         smvID: "someSmvID",
-        confRev: "30001",
         smpRate: "90",
         nofASDU: "2",
       });
@@ -129,7 +112,6 @@ describe("Utility function to update SampledValueControl attributes", () => {
       expect((actions[0] as Update).attributes).to.deep.equal({
         name: "someNewSmvName",
         desc: "someDesc",
-        confRev: "20001",
         multicast: "true",
         smpRate: "90",
         nofASDU: "2",
@@ -173,7 +155,6 @@ describe("Utility function to update SampledValueControl attributes", () => {
       expect((actions[0] as Update).attributes).to.deep.equal({
         name: "someNewSmvName",
         desc: "someDesc",
-        confRev: "10001",
         multicast: "true",
         smpRate: "90",
         nofASDU: "2",
@@ -239,6 +220,31 @@ describe("Utility function to update SampledValueControl attributes", () => {
         nofASDU: "3",
         multicast: "false",
         smvID: "someSmvID",
+      });
+    });
+
+    it("also updates SampledValueControl.confRev on datSet change", () => {
+      const smvControl = findElement(
+        smvControlDoc,
+        'SampledValueControl[name="someSmv3"]',
+      )!;
+      const actions = updateSampledValueControl({
+        element: smvControl,
+        attributes: buildAttr("datSetOnly"),
+      });
+
+      expect(actions.length).to.equal(2);
+      expect(actions[0]).to.satisfy(isUpdate);
+      expect((actions[0] as Update).element).to.equal(smvControl);
+      expect((actions[0] as Update).attributes).to.deep.equal({
+        datSet: "someNewDatSet",
+        confRev: "30001",
+      });
+
+      expect(actions[1]).to.satisfy(isUpdate);
+      expect((actions[1] as Update).element.tagName).to.equal("DataSet");
+      expect((actions[1] as Update).attributes).to.deep.equal({
+        name: "someNewDatSet",
       });
     });
   });
