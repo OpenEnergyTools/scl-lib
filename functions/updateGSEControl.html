@@ -20,7 +20,7 @@
 <li class="tsd-signature tsd-anchor-link" id="updateGSEControl"><span class="tsd-kind-call-signature">updateGSEControl</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">update</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="../types/Update.html" class="tsd-signature-type tsd-kind-type-alias">Update</a><span class="tsd-signature-symbol"> | </span><a href="../types/Remove.html" class="tsd-signature-type tsd-kind-type-alias">Remove</a><span class="tsd-signature-symbol"> | </span><a href="../types/Insert.html" class="tsd-signature-type tsd-kind-type-alias">Insert</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><a href="#updateGSEControl" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Utility function to update GSEControl element attributes.</p>
-<pre><code class="language-md"><span class="hl-0">These attributes trigger addition edits</span><br/><span class="hl-7">-</span><span class="hl-0"> name: also updates GSE.cbName and supervision references</span><br/><span class="hl-7">-</span><span class="hl-0"> datSet: update reference DataSet.name - when DataSet is single use</span><br/><br/><span class="hl-9">&gt;</span><span class="hl-0">NOTE: confRev attribute is updated +10000 every time this function is called</span>
+<pre><code class="language-md"><span class="hl-0">These attributes trigger additional edits such as</span><br/><span class="hl-7">-</span><span class="hl-0"> name: also updates GSE.cbName and supervision references</span><br/><span class="hl-7">-</span><span class="hl-0"> datSet: update reference DataSet.name - when DataSet is single use</span><br/><br/><span class="hl-9">&gt;</span><span class="hl-0">NOTE: confRev attribute is updated +10000 on every data set change</span>
 </code><button>Copy</button></pre>
 </div>
 <div class="tsd-parameters">
@@ -32,7 +32,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/OpenEnergyTools/scl-lib/blob/7549b6f/tGSEControl/updateGSEControl.ts#L22">tGSEControl/updateGSEControl.ts:22</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/OpenEnergyTools/scl-lib/blob/aa6ae48/tGSEControl/updateGSEControl.ts#L22">tGSEControl/updateGSEControl.ts:22</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
