@@ -18,6 +18,8 @@ export const validScl = `<?xml version="1.0" encoding="UTF-8"?>
         		<Private type="dummyType" />
 				<LNode iedName="IED2" ldInst="CBSW" lnClass="LPHD" lnInst="1"/>
 				<LNode iedName="None" lnClass="LLN0" lnType="Dummy.LLN0"/>
+				<LNode iedName="None" lnClass="XCBR" lnInst="1" lnType="Dummy.XCBR"/>
+				<LNode iedName="None" lnClass="XCBR" lnInst="2" lnType="Dummy.XCBR"/>
 				<LNode iedName="IED2" prefix="DC" lnClass="XSWI" lnInst="3"/>
 				<ConductingEquipment type="CBR" name="QA1" desc="coupling field ciscuit breaker"/>
 				<ConductingEquipment type="DIS" name="QB1" desc="busbar disconnector QB1">

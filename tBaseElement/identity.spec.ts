@@ -117,8 +117,12 @@ describe("utility function returning identity for SCL elements", () => {
     });
 
     expect(identity(scl.querySelector('LNode[iedName="None"]'))).to.equal(
-      "AA1>E1>COUPLING_BAY>(LLN0 Dummy.LLN0)",
+      "AA1>E1>COUPLING_BAY>(LLN0  Dummy.LLN0)",
     );
+
+    expect(
+      identity(scl.querySelector('LNode[iedName="None"][lnInst="2"]')),
+    ).to.equal("AA1>E1>COUPLING_BAY>(XCBR 2 Dummy.XCBR)");
   });
 
   it("returns valid identity for naming identities", () => {

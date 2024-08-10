@@ -19,7 +19,9 @@ function lNodeIdentity(e: Element): string {
     "lnType",
   ].map((name) => e.getAttribute(name));
   if (iedName === "None")
-    return `${identity(e.parentElement)}>(${lnClass} ${lnType})`;
+    return `${identity(e.parentElement)}>(${lnClass} ${
+      lnInst ?? ""
+    } ${lnType})`;
   return `${iedName} ${ldInst || "(Client)"}/${prefix ?? ""} ${lnClass} ${
     lnInst ?? ""
   }`;

@@ -48,7 +48,7 @@ function terminalSelector(tagName: SCLTag, identity: string): string {
 function lNodeSelector(tagName: SCLTag, identity: string): string {
   if (identity.endsWith(")")) {
     const [parentIdentity, childIdentity] = pathParts(identity);
-    const [lnClass, lnType] = childIdentity
+    const [lnClass, lnInst, lnType] = childIdentity
       .substring(1, childIdentity.length - 1)
       .split(" ");
 
@@ -62,6 +62,7 @@ function lNodeSelector(tagName: SCLTag, identity: string): string {
       parentSelectors,
       [">"],
       [`${tagName}[iedName="None"][lnClass="${lnClass}"][lnType="${lnType}"]`],
+      lnInst ? [`[lnInst="${lnInst}"]`] : [":not([lnInst])", '[lnInst=""]'],
     )
       .map((strings) => strings.join(""))
       .join(",");
