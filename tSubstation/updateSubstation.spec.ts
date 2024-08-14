@@ -7,6 +7,7 @@ import { updateSubstation } from "./updateSubstation.js";
 
 const aa1 = findElement(substation, 'Substation[name="AA1"]') as Element;
 const aa2 = findElement(substation, 'Substation[name="AA2"]') as Element;
+const aa3 = findElement(substation, 'Substation[name="AA3"]') as Element;
 
 const e1 = new DOMParser()
   .parseFromString('<VoltageLevel name="e1" />', "application/xml")
@@ -162,6 +163,27 @@ describe("update Substation element", () => {
             connectivityNode === "AA2/J1/Q01/L2" && substationName === "AA2",
         ),
       ).to.exist;
+    });
+
+    it("updates SourceRef source attribute", () => {
+      const edits = updateSubstation({
+        element: aa3,
+        attributes: { name: "AA9" },
+      });
+
+      expect(edits.length).to.equal(5);
+      expect(edits[1].attributes.source).to.equal(
+        "AA9/J1/Q01/QA2/CBR/CSWI1/OpCls.general",
+      );
+      expect(edits[2].attributes.source).to.equal(
+        "AA9/J1/Q01/QA2/CBR/CSWI1/OpCls.q",
+      );
+      expect(edits[3].attributes.source).to.equal(
+        "AA9/J1/Q01/QA2/CBR/CSWI1/OpOpn.general",
+      );
+      expect(edits[4].attributes.source).to.equal(
+        "AA9/J1/Q01/QA2/CBR/CSWI1/OpOpn.q",
+      );
     });
   });
 });

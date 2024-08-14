@@ -1,5 +1,41 @@
 import { Update } from "../foundation/utils.js";
 
+function updateSourceRef(
+  element: Element,
+  {
+    oldSubstation,
+    newSubstation,
+  }: {
+    oldSubstation: string;
+    newSubstation: string;
+  },
+): Update[] {
+  const sourceRefs = Array.from(
+    element.ownerDocument.querySelectorAll(
+      'Private[type="eIEC61850-6-100"]>LNodeInputs>SourceRef',
+    ),
+  );
+
+  const updates: Update[] = [];
+
+  sourceRefs.forEach((srcRef) => {
+    const source = srcRef.getAttribute("source");
+    if (!source) return;
+
+    const oldPath = `${oldSubstation}`;
+
+    if (!source.startsWith(oldPath)) return;
+
+    const newPath = `${newSubstation}`;
+    updates.push({
+      element: srcRef,
+      attributes: { source: source.replace(oldPath, newPath) },
+    });
+  });
+
+  return updates.filter((update) => update) as Update[];
+}
+
 function updateConnectivityNodes(
   substation: Element,
   substationName: string,
@@ -83,5 +119,11 @@ export function updateSubstation(update: Update): Update[] {
   const newName = attributes.name;
   if (!oldName || oldName === newName) return [update];
 
-  return [update].concat(...updateConnectivityNodes(substation, newName));
+  return [update].concat(
+    ...updateConnectivityNodes(substation, newName),
+    ...updateSourceRef(substation, {
+      oldSubstation: oldName,
+      newSubstation: newName,
+    }),
+  );
 }
