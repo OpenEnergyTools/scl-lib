@@ -15,6 +15,10 @@ const aa2d1 = findElement(
   substation,
   'Substation[name="AA2"]>VoltageLevel[name="D1"]',
 ) as Element;
+const aa3j1 = findElement(
+  substation,
+  'Substation[name="AA3"]>VoltageLevel[name="J1"]',
+) as Element;
 
 const orphanVoltageLevel = new DOMParser()
   .parseFromString('<VoltageLevel name="E2" />', "application/xml")
@@ -159,6 +163,27 @@ describe("update VoltageLevel element", () => {
             voltageLevelName === "E2" && connectivityNode === "AA1/E2/Q01/L1",
         ),
       ).to.have.lengthOf(2);
+    });
+
+    it("updates SourceRef source attribute", () => {
+      const edits = updateVoltageLevel({
+        element: aa3j1,
+        attributes: { name: "F1" },
+      });
+
+      expect(edits.length).to.equal(5);
+      expect(edits[1].attributes.source).to.equal(
+        "AA3/F1/Q01/QA2/CBR/CSWI1/OpCls.general",
+      );
+      expect(edits[2].attributes.source).to.equal(
+        "AA3/F1/Q01/QA2/CBR/CSWI1/OpCls.q",
+      );
+      expect(edits[3].attributes.source).to.equal(
+        "AA3/F1/Q01/QA2/CBR/CSWI1/OpOpn.general",
+      );
+      expect(edits[4].attributes.source).to.equal(
+        "AA3/F1/Q01/QA2/CBR/CSWI1/OpOpn.q",
+      );
     });
   });
 });
