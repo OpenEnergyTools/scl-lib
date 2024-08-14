@@ -1,5 +1,6 @@
 export const substation = `<SCL
   xmlns="http://www.iec.ch/61850/2003/SCL"
+  xmlns:eTr_6-100="http://www.iec.ch/61850/2019/SCL/6-100"
   version="2007"
   revision="B"
   release="4"
@@ -58,6 +59,9 @@ export const substation = `<SCL
             bayName="Q01"
             cNodeName="L1"
           ></Terminal>
+          <EqFunction name="CBR">
+            <LNode iedName="None" lnClass="CSWI" lnInst="1" lnType="someCSWI" />
+          </EqFunction>
         </ConductingEquipment>
         <ConductingEquipment name="QB1" type="DIS">
           <Terminal
@@ -171,11 +175,68 @@ export const substation = `<SCL
     <VoltageLevel name="D1">
       <Bay name="Q01">
         <ConductingEquipment name="QA1" >
-            <Terminal name="T1" connectivityNode="" substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
-            <Terminal substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <Terminal name="T1" connectivityNode="" substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <Terminal substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <EqFunction name="CBR">
+            <LNode iedName="None" lnClass="CSWI" lnInst="1" lnType="someCSWI" />
+          </EqFunction>
         </ConductingEquipment>
         <ConnectivityNode name="L1" />
         <ConnectivityNode />
+      </Bay>
+    </VoltageLevel>
+  </Substation>
+  <Substation name="AA3">
+    <VoltageLevel name="J1">
+      <Bay name="Q01">
+        <ConductingEquipment name="QA1" >
+          <Terminal name="T1" connectivityNode="" substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <Terminal substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <EqFunction name="CBR">
+            <LNode iedName="None" lnClass="CSWI" lnInst="1" lnType="someCSWI" />
+          </EqFunction>
+        </ConductingEquipment>
+      </Bay>
+    </VoltageLevel>
+  </Substation>
+  <Substation name="AA4">
+    <VoltageLevel name="D1">
+      <Bay name="Q01">
+        <ConductingEquipment name="QA1" >
+          <Terminal name="T1" connectivityNode="" substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <Terminal substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <EqFunction name="CBR">
+            <LNode iedName="None" lnClass="CSWI" lnInst="1" lnType="someCSWI" />
+          </EqFunction>
+        </ConductingEquipment>
+      </Bay>
+    </VoltageLevel>
+  </Substation>
+  <Substation name="AA5">
+    <VoltageLevel name="D1">
+      <Bay name="Q01">
+        <ConductingEquipment name="QA1" >
+          <Terminal name="T1" connectivityNode="" substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <Terminal substationName="AA2" voltageLevelName="D1" bayName="Q01" cNodeName="L1" />
+          <EqFunction name="CBR">
+            <LNode iedName="None" lnClass="XCBR" lnInst="1" lnType="someXCBR" >
+              <Private type="eIEC61850-6-100">
+								<eTr_6-100:LNodeSpecNaming sIedName="None" sLnClass="XCBR" sLnInst="1"/>
+								<eTr_6-100:LNodeInputs>
+									<eTr_6-100:SourceRef source="AA3/J1/Q01/QA2/CBR/CSWI1/OpCls.general" input="CSWI1" inputInst="1" service="GOOSE"/>
+									<eTr_6-100:SourceRef source="AA3/J1/Q01/QA2/CBR/CSWI1/OpCls.q" input="CSWI1" inputInst="2" service="GOOSE"/>
+									<eTr_6-100:SourceRef source="AA3/J1/Q01/QA2/CBR/CSWI1/OpOpn.general" input="CSWI1" inputInst="3" service="GOOSE"/>
+									<eTr_6-100:SourceRef source="AA3/J1/Q01/QA2/CBR/CSWI1/OpOpn.q" input="CSWI1" inputInst="4" service="GOOSE"/>
+                  <eTr_6-100:SourceRef source="AA4/D1/Q01/QA1/CBR/CSWI1/OpCls.general" input="CSWI1" inputInst="5" service="GOOSE"/>
+									<eTr_6-100:SourceRef source="AA4/D1/Q01/QA1/CBR/CSWI1/OpCls.q" input="CSWI1" inputInst="6" service="GOOSE"/>
+									<eTr_6-100:SourceRef source="AA4/D1/Q01/QA1/CBR/CSWI1/OpOpn.general" input="CSWI1" inputInst="7" service="GOOSE"/>
+									<eTr_6-100:SourceRef source="AA4/D1/Q01/QA1/CBR/CSWI1/OpOpn.q" input="CSWI1" inputInst="8" service="GOOSE"/>
+									<eTr_6-100:SourceRef input="CSWI1" inputInst="9" service="GOOSE" resourceName="outsideThisFile"/>
+								</eTr_6-100:LNodeInputs>
+							</Private>
+            <LNode>
+          </EqFunction>
+        </ConductingEquipment>
       </Bay>
     </VoltageLevel>
   </Substation>

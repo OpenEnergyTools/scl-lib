@@ -18,6 +18,10 @@ const aa2d1q01 = findElement(
   substation,
   'Substation[name="AA2"]>VoltageLevel[name="D1"]>Bay[name="Q01"]',
 ) as Element;
+const aa3j1q01 = findElement(
+  substation,
+  'Substation[name="AA3"]>VoltageLevel[name="J1"]>Bay[name="Q01"]',
+) as Element;
 
 const orphanBay = new DOMParser()
   .parseFromString('<Bay name="Q01" />', "application/xml")
@@ -40,7 +44,7 @@ describe("update Bay element", () => {
   });
 
   describe("when no name attribute is changed", () => {
-    it("updates ReportControl attributes", () => {
+    it("updates desc attributes", () => {
       const edits = updateBay({
         element: aa1e1q01,
         attributes: { desc: "newDesc" },
@@ -143,6 +147,27 @@ describe("update Bay element", () => {
           ),
       ).to.exist;
       expect(edits.length).to.equal(6);
+    });
+
+    it("updates SourceRef source attribute", () => {
+      const edits = updateBay({
+        element: aa3j1q01,
+        attributes: { name: "Q02" },
+      });
+
+      expect(edits.length).to.equal(5);
+      expect(edits[1].attributes.source).to.equal(
+        "AA3/J1/Q02/QA2/CBR/CSWI1/OpCls.general",
+      );
+      expect(edits[2].attributes.source).to.equal(
+        "AA3/J1/Q02/QA2/CBR/CSWI1/OpCls.q",
+      );
+      expect(edits[3].attributes.source).to.equal(
+        "AA3/J1/Q02/QA2/CBR/CSWI1/OpOpn.general",
+      );
+      expect(edits[4].attributes.source).to.equal(
+        "AA3/J1/Q02/QA2/CBR/CSWI1/OpOpn.q",
+      );
     });
   });
 });

@@ -1,5 +1,45 @@
 import { Update } from "../foundation/utils.js";
 
+function updateSourceRef(
+  element: Element,
+  {
+    oldSubstation,
+    oldVoltageLevel,
+    oldBay,
+    newBay,
+  }: {
+    oldSubstation: string;
+    oldVoltageLevel: string;
+    oldBay: string;
+    newBay: string;
+  },
+): Update[] {
+  const sourceRefs = Array.from(
+    element.ownerDocument.querySelectorAll(
+      'Private[type="eIEC61850-6-100"]>LNodeInputs>SourceRef',
+    ),
+  );
+
+  const updates: Update[] = [];
+
+  sourceRefs.forEach((srcRef) => {
+    const source = srcRef.getAttribute("source");
+    if (!source) return;
+
+    const oldPath = `${oldSubstation}/${oldVoltageLevel}/${oldBay}`;
+
+    if (!source.startsWith(oldPath)) return;
+
+    const newPath = `${oldSubstation}/${oldVoltageLevel}/${newBay}`;
+    updates.push({
+      element: srcRef,
+      attributes: { source: source.replace(oldPath, newPath) },
+    });
+  });
+
+  return updates.filter((update) => update) as Update[];
+}
+
 function updateConnectivityNodes(
   element: Element,
   {
@@ -95,6 +135,12 @@ export function updateBay(update: Update): Update[] {
       substation: substationName,
       voltageLevel: voltageLevelName,
       bayName: newName,
+    }),
+    ...updateSourceRef(bay, {
+      oldSubstation: substationName,
+      oldVoltageLevel: voltageLevelName,
+      oldBay: oldName,
+      newBay: newName,
     }),
   );
 }
