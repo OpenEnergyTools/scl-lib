@@ -1,7 +1,14 @@
 export { Edit } from "./foundation/utils.js";
 export { Update } from "./foundation/utils.js";
-export { Insert } from "./foundation/utils.js";
-export { Remove } from "./foundation/utils.js";
+
+export {
+  Remove,
+  Insert,
+  SetTextContent,
+  SetAttributes,
+  EditV2,
+  handleEdit,
+} from "./tBaseElement/handleEdit.js";
 
 export { updateBay } from "./tBay/updateBay.js";
 export { updateVoltageLevel } from "./tVoltageLevel/updateVoltageLevel.js";
