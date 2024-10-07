@@ -69,6 +69,10 @@ export { sourceControlBlock } from "./tExtRef/sourceControlBlock.js";
 export { isSubscribed } from "./tExtRef/isSubscribed.js";
 
 export { importLNodeType } from "./tDataTypeTemplates/importLNodeType.js";
+export {
+  lNodeTypeToSelection,
+  TreeSelection,
+} from "./tDataTypeTemplates/lNodeTypeToSelection.js";
 
 export {
   Supervision,
