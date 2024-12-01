@@ -75,6 +75,12 @@ export {
 } from "./tDataTypeTemplates/lNodeTypeToSelection.js";
 
 export {
+  LNodeDescription,
+  NameSpaceDescription,
+  nsdToJson,
+} from "./tDataTypeTemplates/nsdToJson.js";
+
+export {
   Supervision,
   SupervisionOptions,
 } from "./tLN/supervision/foundation.js";
