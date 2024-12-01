@@ -1,0 +1,43 @@
+export const vsgChildren = {
+  setVal: {
+    tagName: "DataAttribute",
+    name: "setVal",
+    fc: "SE",
+    type: "VisString255",
+    descID: "IEC61850_7_3.VSG::VSG_SE.setVal.desc",
+    mandatory: true,
+    presCond: "M",
+  },
+  d: {
+    tagName: "DataAttribute",
+    name: "d",
+    fc: "DC",
+    type: "VisString255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BasePrimitiveCDC.d.desc",
+    presCond: "O",
+  },
+  dU: {
+    tagName: "DataAttribute",
+    name: "dU",
+    fc: "DC",
+    type: "Unicode255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BasePrimitiveCDC.dU.desc",
+    presCond: "O",
+  },
+  cdcName: {
+    tagName: "DataAttribute",
+    name: "cdcName",
+    fc: "EX",
+    type: "VisString255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BasePrimitiveCDC.cdcName.desc",
+    presCond: "O",
+  },
+  dataNs: {
+    tagName: "DataAttribute",
+    name: "dataNs",
+    fc: "EX",
+    type: "VisString255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BasePrimitiveCDC.dataNs.desc",
+    presCond: "MOdataNs",
+  },
+};

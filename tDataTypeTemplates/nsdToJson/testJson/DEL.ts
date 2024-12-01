@@ -1,0 +1,137 @@
+import { cmvChildren } from "./CMV.js";
+
+export const delChildren = {
+  phsAB: {
+    tagName: "SubDataObject",
+    name: "phsAB",
+    type: "CMV",
+    descID: "IEC61850_7_3.CDCAnalogueInfo::DEL.phsAB.desc",
+    presCond: "AtLeastOne",
+    presCondArgs: "1",
+    children: cmvChildren,
+  },
+  phsBC: {
+    tagName: "SubDataObject",
+    name: "phsBC",
+    type: "CMV",
+    descID: "IEC61850_7_3.CDCAnalogueInfo::DEL.phsBC.desc",
+    presCond: "AtLeastOne",
+    presCondArgs: "1",
+    children: cmvChildren,
+  },
+  phsCA: {
+    tagName: "SubDataObject",
+    name: "phsCA",
+    type: "CMV",
+    descID: "IEC61850_7_3.CDCAnalogueInfo::DEL.phsCA.desc",
+    presCond: "AtLeastOne",
+    presCondArgs: "1",
+    children: cmvChildren,
+  },
+  angRef: {
+    tagName: "DataAttribute",
+    name: "angRef",
+    fc: "CF",
+    type: "PhaseAngleReferenceKind",
+    typeKind: "ENUMERATED",
+    dchg: "true",
+    descID: "IEC61850_7_3.CDCAnalogueInfo::DEL.angRef.desc",
+    presCond: "O",
+    children: {
+      Va: {
+        tagName: "Literal",
+        name: "Va",
+        literalVal: "0",
+      },
+      Vb: {
+        tagName: "Literal",
+        name: "Vb",
+        literalVal: "1",
+      },
+      Vc: {
+        tagName: "Literal",
+        name: "Vc",
+        literalVal: "2",
+      },
+      Aa: {
+        tagName: "Literal",
+        name: "Aa",
+        literalVal: "3",
+      },
+      Ab: {
+        tagName: "Literal",
+        name: "Ab",
+        literalVal: "4",
+      },
+      Ac: {
+        tagName: "Literal",
+        name: "Ac",
+        literalVal: "5",
+      },
+      Vab: {
+        tagName: "Literal",
+        name: "Vab",
+        literalVal: "6",
+      },
+      Vbc: {
+        tagName: "Literal",
+        name: "Vbc",
+        literalVal: "7",
+      },
+      Vca: {
+        tagName: "Literal",
+        name: "Vca",
+        literalVal: "8",
+      },
+      Vother: {
+        tagName: "Literal",
+        name: "Vother",
+        literalVal: "9",
+      },
+      Aother: {
+        tagName: "Literal",
+        name: "Aother",
+        literalVal: "10",
+      },
+      Synchrophasor: {
+        tagName: "Literal",
+        name: "Synchrophasor",
+        literalVal: "11",
+        descID:
+          "IEC61850_7_3.DAEnums::PhaseAngleReferenceKind.Synchrophasor.desc",
+      },
+    },
+  },
+  d: {
+    tagName: "DataAttribute",
+    name: "d",
+    fc: "DC",
+    type: "VisString255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BaseComposedCDC.d.desc",
+    presCond: "O",
+  },
+  dU: {
+    tagName: "DataAttribute",
+    name: "dU",
+    fc: "DC",
+    type: "Unicode255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BaseComposedCDC.dU.desc",
+    presCond: "O",
+  },
+  cdcName: {
+    tagName: "DataAttribute",
+    name: "cdcName",
+    fc: "EX",
+    type: "VisString255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BaseComposedCDC.cdcName.desc",
+    presCond: "O",
+  },
+  dataNs: {
+    tagName: "DataAttribute",
+    name: "dataNs",
+    fc: "EX",
+    type: "VisString255",
+    descID: "IEC61850_7_3.CoreAbstractCDCs::BaseComposedCDC.dataNs.desc",
+    presCond: "MOdataNs",
+  },
+};
