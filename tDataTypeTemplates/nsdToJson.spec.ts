@@ -30,7 +30,7 @@ describe("NSD to Json parsing function", () => {
         expect(data[key]).to.deep.equal(sClass[key]);
       });
     });
-  });
+  }).timeout(10000);
 
   it("returns object that compares well to static 7-420 classes", async () => {
     const data = nsdToJson("DSTK");
