@@ -28,9 +28,9 @@ type SubDaDescription = {
   defaultValue?: string;
   isArray?: string;
   sizeAttribute?: string;
-  typeKind?:string;
-  minValue?:string;
-  maxValue?:string;
+  typeKind?: string;
+  minValue?: string;
+  maxValue?: string;
   children?: DaChildren;
 };
 
@@ -73,11 +73,14 @@ type DaDescription = {
   isArray?: string;
   sizeAttribute?: string;
   defaultValue?: string;
-  presCondArgs?:string
+  presCondArgs?: string;
   children?: DaChildren;
 };
 
-type CdcChildren = Record<string, DaDescription | ServiceDaDescription | CdcDescription>;
+type CdcChildren = Record<
+  string,
+  DaDescription | ServiceDaDescription | CdcDescription
+>;
 type CdcDescription = {
   tagName: string;
   name: string;
@@ -90,12 +93,12 @@ type CdcDescription = {
   dsPresCondArgs?: string;
   presCondArgs?: string;
   underlyingType?: string;
-  underlyingTypeKind?:string;
-  transient?:string;
-  mandatory?:boolean;
-  deprecated?:string;
+  underlyingTypeKind?: string;
+  transient?: string;
+  mandatory?: boolean;
+  deprecated?: string;
   isArray?: string;
-  sizeAttribute?:string;
+  sizeAttribute?: string;
   children: CdcChildren;
 };
 
@@ -118,8 +121,8 @@ const defaultDoc7420 = new DOMParser().parseFromString(
 );
 const defaultDoc81 = new DOMParser().parseFromString(nsd81, "application/xml");
 
-/** A utility function that returns a JSON containing the structure of a logical node class 
- * as described in the IEC 61850-7-4 and IEC 61850-7-420 as JSON 
+/** A utility function that returns a JSON containing the structure of a logical node class
+ * as described in the IEC 61850-7-4 and IEC 61850-7-420 as JSON
  * @param lnClass the logical node class to be constructed
  * @param nsds user defined NSD files defaulting to
  *             8-1:   2003A2
@@ -269,7 +272,11 @@ export function nsdToJson(
       const descID = literal.getAttribute("descID")!;
       const deprecated = literal.getAttribute("deprecated")!;
 
-      const data: EnumValDescription = { tagName: literal.tagName, name, literalVal };
+      const data: EnumValDescription = {
+        tagName: literal.tagName,
+        name,
+        literalVal,
+      };
       if (descID) data["descID"] = descID;
       if (deprecated) data["deprecated"] = deprecated;
 
@@ -291,7 +298,13 @@ export function nsdToJson(
       "typeKind",
     ].map((attr) => serviceConstructedAttribute.getAttribute(attr)!);
 
-    const data: ServiceConstructedAttribute = { tagName, name, presCond, descID, typeKind };
+    const data: ServiceConstructedAttribute = {
+      tagName,
+      name,
+      presCond,
+      descID,
+      typeKind,
+    };
 
     if (type) data["type"] = type;
 
