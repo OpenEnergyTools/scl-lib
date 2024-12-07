@@ -23,14 +23,14 @@ function updateIEDNameTextContent(
   return Array.from(ied.ownerDocument.getElementsByTagName("IEDName"))
     .filter(isPublic)
     .filter((iedName) => iedName.textContent === oldIedName)
-    .map((iedName) => {
+    .flatMap((iedName) => {
       const node = Array.from(iedName.childNodes).find(
         (node) => node.nodeType === Node.TEXT_NODE,
       )!;
 
       return [
         { node },
-        { parent: iedName, node: document.createTextNode(newIedName) },
+        { parent: iedName, node: document.createTextNode(newIedName), reference: null },
       ];
     });
 }
@@ -114,7 +114,7 @@ function updateSubscriptionSupervision(
       (childNode) => childNode.nodeType === Node.TEXT_NODE,
     )!;
 
-    return [{ node }, { parent: val, node: newTextNode }];
+    return [{ node }, { parent: val, node: newTextNode, reference: null }];
   });
 }
 
