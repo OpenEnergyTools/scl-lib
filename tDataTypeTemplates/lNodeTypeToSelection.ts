@@ -1,13 +1,10 @@
-/** A object to store a tree structure in */
-export type TreeSelection = {
-  [name: string]: TreeSelection;
-};
+import { TreeSelection } from "../foundation/utils.js";
 
 function enumeration(daOrBda: Element): TreeSelection {
   const selection: TreeSelection = {};
 
   const enumType = daOrBda.ownerDocument.querySelector(
-    `EnumType[id="${daOrBda.getAttribute("type")}"]`
+    `EnumType[id="${daOrBda.getAttribute("type")}"]`,
   );
   if (!enumType) return selection;
 
@@ -15,7 +12,7 @@ function enumeration(daOrBda: Element): TreeSelection {
     (enumVal) => {
       const val = enumVal.textContent?.trim();
       if (val) selection[val] = {};
-    }
+    },
   );
 
   return selection;
@@ -25,7 +22,7 @@ function dataAttribute(daOrBda: Element): TreeSelection {
   const selection: TreeSelection = {};
 
   const doType = daOrBda.ownerDocument.querySelector(
-    `DAType[id="${daOrBda.getAttribute("type")}"]`
+    `DAType[id="${daOrBda.getAttribute("type")}"]`,
   );
   if (!doType) return selection;
 
@@ -47,7 +44,7 @@ function dataObject(dOorSdo: Element): TreeSelection {
   const selection: TreeSelection = {};
 
   const doType = dOorSdo.ownerDocument.querySelector(
-    `:scope > DataTypeTemplates > DOType[id="${dOorSdo.getAttribute("type")}"]`
+    `:scope > DataTypeTemplates > DOType[id="${dOorSdo.getAttribute("type")}"]`,
   );
   if (!doType) return selection;
 
@@ -64,7 +61,7 @@ function dataObject(dOorSdo: Element): TreeSelection {
           selection[name] = enumeration(sDOorDA);
         else selection[name] = {};
       }
-    }
+    },
   );
 
   return selection;

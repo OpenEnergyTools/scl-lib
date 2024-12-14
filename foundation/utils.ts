@@ -1,3 +1,20 @@
+/** User selection of a data structure
+ * @example
+ * user selects data object `Beh` to be enum `on` and `test`
+ * ```ts
+ * {
+ *   Beh: {
+ *      stVal: {on: {}, test: {}}
+ *      q: {}
+ *      t: {}
+ *   }
+ * }
+ * ```
+ */
+export type TreeSelection = {
+  [name: string]: TreeSelection;
+};
+
 /** Intent to `parent.insertBefore(node, reference)` */
 export type Insert = {
   parent: Node;
@@ -35,12 +52,12 @@ export function isInsert(edit: Edit): edit is Insert {
 export function createElement(
   doc: XMLDocument,
   tag: string,
-  attrs: Record<string, string | null>,
+  attrs: Record<string, string | null | undefined>,
 ): Element {
   const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
   Object.entries(attrs)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .filter(([_, value]) => value !== null)
+    .filter(([_, value]) => typeof value === "string")
     .forEach(([name, value]) => element.setAttribute(name, value!));
 
   return element;
