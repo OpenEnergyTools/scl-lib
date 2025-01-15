@@ -82,6 +82,8 @@ export {
 
 export { insertSelectedLNodeType } from "./tDataTypeTemplates/insertSelectedLNodeType.js";
 
+export {removeDataType, RemoveDataTypeOptions} from "./tDataTypeTemplates/removeDataType.js"
+
 export {
   Supervision,
   SupervisionOptions,
