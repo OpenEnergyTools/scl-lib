@@ -214,7 +214,10 @@ export function insertSelectedLNodeType(
     const vals: Element[] = [];
 
     for (const content of Object.keys(sel)) {
-      const ord = enumData[content].literalVal;
+      const enumVal = enumData[content];  
+      if(!enumVal) continue; // check for invalid selection
+      
+      const ord = enumVal.literalVal;
       const val = createElement(doc, "EnumVal", { ord });
       val.textContent = content;
       vals.push(val);

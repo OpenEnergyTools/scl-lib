@@ -353,3 +353,78 @@ export const atccSelection = {
     },
   },
 };
+
+
+export const invalidSelection = {
+  "Mod": {
+    "Oper": {
+      "ctlVal": {
+        "on": {},
+        "blocked": {},
+        "test": {},
+        "test/blocked": {}
+      },
+      "origin": {
+        "orCat": {
+          "not-supported": {},
+          "bay-control": {},
+          "station-control": {},
+          "remote-control": {},
+          "automatic-bay": {},
+          "automatic-station": {},
+          "automatic-remote": {},
+          "maintenance": {},
+          "process": {}
+        },
+        "orIdent": {}
+      },
+      "ctlNum": {},
+      "T": {},
+      "Test": {},
+      "Check": {}
+    },
+    "stVal": {
+      "on": {},
+      "blocked": {},
+      "test": {},
+      "test/blocked": {}
+    },
+    "q": {},
+    "t": {},
+    "ctlModel": {
+      "status-only": {},
+      "direct-with-normal-security": {}
+    }
+  },
+  "Beh": {
+    "stVal": {
+      "on": {},
+      "blocked": {},
+      "test": {},
+      "test/blocked": {},
+      "off": {}
+    },
+    "q": {},
+    "t": {}
+  },
+  "Health": {
+    "stVal": {
+      "Waiting": {},
+      "Test": {},
+      "Ok": {},
+      "Warning": {},
+      "Alarm": {}
+    },
+    "q": {},
+    "t": {}
+  },
+  "NamPlt": {
+    "vendor": {},
+    "swRev": {},
+    "d": {},
+    "configRev": {},
+    "paramRev": {},
+    "valRev": {},
+    "ldNs": {}
+  }
+};

@@ -4,6 +4,7 @@ import { findElement } from "../foundation/helpers.test.js";
 
 import {
   atccSelection,
+  invalidSelection,
   ltrkSelection,
   mmxuSelection,
 } from "./insertSelectedLNodeType.testdata.js";
@@ -28,6 +29,9 @@ describe("insertLNodeTypeSelection", () => {
       insertSelectedLNodeType(incompleteMmxu, mmxuSelection, "ERRO").length,
     ).to.equal(0);
   });
+
+  it('is insensitive for invalid EnumTypes',()=>
+    insertSelectedLNodeType(incompleteMmxu, invalidSelection, "LLN0"))
 
   it("insert MMXU LNodeType including missing sub data", () => {
     const edits = insertSelectedLNodeType(
