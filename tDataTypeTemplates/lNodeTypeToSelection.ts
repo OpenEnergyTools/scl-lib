@@ -10,8 +10,8 @@ function enumeration(daOrBda: Element): TreeSelection {
 
   Array.from(enumType.querySelectorAll(":scope > EnumVal")).forEach(
     (enumVal) => {
-      const val = enumVal.textContent?.trim();
-      if (val) selection[val] = {};
+      const val = enumVal.textContent!.trim(); //textContent null only for doctype or document
+      selection[val] = {};
     },
   );
 
