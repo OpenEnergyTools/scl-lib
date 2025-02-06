@@ -20,21 +20,44 @@ function removeOrphans(orphans: Element[]): void {
   orphans.forEach((orphan) => orphan.remove());
 }
 
-function isLinked(dataType: Element): boolean {
+function isLNodeTypeReferenced(lNodeType:Element):boolean {
+  const dtt = lNodeType.closest("DataTypeTemplates");
+
+  const id = lNodeType.getAttribute("id");
+
+  const linkedAnyLn = dtt?.ownerDocument.querySelector(
+    `:root > IED *[lnType="${id}"]`
+  );
+  return !!linkedAnyLn;
+}
+
+function isDataTypeReferenced(dataType: Element): boolean {
   const dtt = dataType.closest("DataTypeTemplates");
 
   const id = dataType.getAttribute("id");
 
-  const linkedData = dtt?.ownerDocument.querySelector(
-    `:root > DataTypeTemplates *[type="${id}"], :root > IED *[lnType="${id}"]`
+  const linkedData = dtt?.querySelector(
+    `:scope *[type="${id}"]`
   );
   return !!linkedData;
 }
 
 function getOrphans(ddt: Element, saveOrphans: Element[] = []): Element[] {
   return Array.from(ddt.querySelectorAll(":scope > *"))
-    .filter((dataType) => !isLinked(dataType))
+    .filter((dataType) => !isDataTypeReferenced(dataType))
     .filter((orphan) => !saveOrphans.includes(orphan));
+}
+
+function clonedDataType(dtt:Element,dataType:Element):Element {
+
+  return dtt.querySelector(`:scope > *[id="${dataType.getAttribute('id')}"]`)!;
+
+}
+
+function isDataTypeLinked(dataType:Element): boolean {
+  if (dataType.tagName === 'LNodeType') return isLNodeTypeReferenced(dataType);
+
+  return isDataTypeReferenced(dataType);
 }
 
 /**
@@ -50,19 +73,19 @@ export function removeDataType(
   const dataType = dtRemove.node as Element;
 
   const dtt = dataType.closest("DataTypeTemplates");
-  const dttClone = dataType.closest("DataTypeTemplates")?.cloneNode(true);
+  const dttClone = dataType.closest("DataTypeTemplates")?.cloneNode(true) as Element;
   if (!dttClone) return [];
 
-  if (isLinked(dataType) && !options.force) return [];
+  if (isDataTypeLinked(dataType) && !options.force) return [];
 
-  const saveOrphans = getOrphans(dtt!);
+  const saveOrphans = getOrphans(dttClone);
 
   const removes: Remove[] = [];
-  let orphans = [dataType];
+  let orphans = [clonedDataType(dttClone,dataType)];
   while (orphans.length > 0) {
     removes.push(...orphanRemoves(dtt!, orphans));
     removeOrphans(orphans);
-    orphans = getOrphans(dtt!, saveOrphans);
+    orphans = getOrphans(dttClone!, saveOrphans);
   }
 
   return removes;
