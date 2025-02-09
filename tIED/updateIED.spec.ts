@@ -132,4 +132,47 @@ describe("Function to an update the IED name attributes and its referenced eleme
     ).filter((iedName) => iedName.textContent?.startsWith("newIedName"));
     expect(after.length).to.equal(4);
   });
+
+  it("updates object references without checking permissions", () => {
+    const sclDom = new DOMParser().parseFromString(scl, "application/xml");
+    const sub2 = sclDom.querySelector('IED[name="Subscriber2"]')!;
+
+    const edits = updateIED({
+      element: sub2,
+      attributes: { name: "newIedName" },
+    });
+
+    handleEdit(edits);
+
+    const after = Array.from(
+      sclDom.querySelectorAll(
+        'DOI[name^="InRef"] > DAI[name="setSrcRef"] > Val',
+      ),
+    ).filter((val) => val.textContent?.startsWith("newIedName"));
+
+    expect(after.length).to.equal(5);
+  });
+
+  it("updates object references and checks permissions", () => {
+    const sclDom = new DOMParser().parseFromString(scl, "application/xml");
+    const sub2 = sclDom.querySelector('IED[name="Subscriber2"]')!;
+
+    const edits = updateIED(
+      {
+        element: sub2,
+        attributes: { name: "newIedName" },
+      },
+      true,
+    );
+
+    handleEdit(edits);
+
+    const after = Array.from(
+      sclDom.querySelectorAll(
+        'DOI[name^="InRef"] > DAI[name="setSrcRef"] > Val',
+      ),
+    ).filter((val) => val.textContent?.startsWith("newIedName"));
+
+    expect(after.length).to.equal(4);
+  });
 });

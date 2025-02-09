@@ -1,4 +1,4 @@
-import { Edit, Update } from "../foundation/utils.js";
+import { createElement, Edit, Update } from "../foundation/utils.js";
 
 import { controlBlockObjRef } from "../tControl/controlBlockObjRef.js";
 
@@ -30,7 +30,11 @@ function updateIEDNameTextContent(
 
       return [
         { node },
-        { parent: iedName, node: document.createTextNode(newIedName), reference: null },
+        {
+          parent: iedName,
+          node: document.createTextNode(newIedName),
+          reference: null,
+        },
       ];
     });
 }
@@ -134,6 +138,114 @@ function updateIedNameAttributes(
     });
 }
 
+function objectReferenceToIed(dai: Element, oldIedName: string): boolean {
+  const val = dai.querySelector(":scope > Val")!;
+  const valContent = val.textContent;
+
+  if (!valContent || !valContent?.startsWith(oldIedName)) return false;
+
+  const lDeviceName = valContent.slice(oldIedName.length).split("/")[0];
+  const ied = dai.closest("IED");
+
+  const hasLDevice = ied?.querySelector(
+    `:scope > AccessPoint > Server > LDevice[inst="${lDeviceName}"]`,
+  );
+  if (!hasLDevice) return false;
+
+  return true;
+}
+
+function canModifyDA(daiOrdaType: Element): boolean {
+  const valImport = daiOrdaType.getAttribute("valImport");
+  const valKind = daiOrdaType.getAttribute("valKind");
+  return (
+    valImport === "true" && valKind !== null && ["Conf", "RO"].includes(valKind)
+  );
+}
+
+function objRefDetails(
+  anyLn: Element,
+  doName: string,
+  daName: string,
+): { bType?: string | null; canModify?: boolean } | undefined {
+  const doc = anyLn.ownerDocument;
+  const lNodeType = doc.querySelector(
+    `:root > DataTypeTemplates > LNodeType[id="${anyLn.getAttribute(
+      "lnType",
+    )}"]`,
+  );
+
+  let leaf: Element | null | undefined = lNodeType;
+
+  const dO: Element | null | undefined = leaf?.querySelector(
+    `DO[name="${doName}"], SDO[name="${doName}"]`,
+  );
+  leaf = doc.querySelector(
+    `:root > DataTypeTemplates > DOType[id="${dO?.getAttribute("type")}"]`,
+  );
+
+  const dA: Element | null | undefined = leaf?.querySelector(
+    `DA[name="${daName}"]`,
+  );
+  if (!dA) return undefined;
+
+  const bType = dA.getAttribute("bType");
+  const canModify = canModifyDA(dA);
+
+  return { bType, canModify };
+}
+
+/** Find references used by the IED with the basic type of object reference.
+ *  Then check if they require replacement.
+ *  This function does not process LGOS and LSVS GoCBRef as these are
+ *  handled separately.
+ */
+function updateObjectReferences(
+  ied: Element,
+  oldIedName: string,
+  newIedName: string,
+  checkPermission = false,
+): Edit[] {
+  const objRefCandidates = Array.from(
+    ied.querySelectorAll("LN DAI > Val, LN0 DAI > Val"),
+  ).filter((val) => {
+    const dai = val.parentElement!;
+    const ln = dai.closest("LN, LN0");
+    const lnClass = ln?.getAttribute("lnClass");
+    const doiName = dai.closest("DOI, SDI")?.getAttribute("name");
+    const daiName = dai.getAttribute("name");
+    const isSupervision =
+      lnClass &&
+      doiName &&
+      ["LGOS", "LSVS"].includes(lnClass) &&
+      ["GoCBRef", "SvCBRef"].includes(doiName);
+    if (!ln || !doiName || !daiName || isSupervision) return false;
+
+    const objRefInfo = objRefDetails(ln, doiName, daiName);
+
+    return (
+      objRefInfo?.bType === "ObjRef" &&
+      (checkPermission === false ||
+        objRefInfo?.canModify ||
+        canModifyDA(dai)) &&
+      objectReferenceToIed(dai, oldIedName)
+    );
+  });
+
+  return objRefCandidates.flatMap((val) => {
+    const objRef = val.textContent!;
+    const textContent = `${newIedName}${objRef.slice(oldIedName.length)}`;
+
+    const newVal = createElement(val.ownerDocument, "Val", {});
+    newVal.textContent = textContent;
+
+    return [
+      { node: val },
+      { parent: val.parentElement!, node: newVal, reference: null },
+    ];
+  });
+}
+
 /**
  * Function to schema valid update name and other attribute(s) in IED element
  * (rename IED)
@@ -145,9 +257,11 @@ function updateIedNameAttributes(
  * 3. Updates IEDName elements text content
  * ```
  * @param update - IED element and attributes to be changed in the IED element
+ * @param checkPermission - Check permission before changing object references
+ * (other than supervision node GoCBRef values).
  * @returns - Set of addition edits updating all references SCL elements
  */
-export function updateIED(update: Update): Edit[] {
+export function updateIED(update: Update, checkPermission = false): Edit[] {
   if (update.element.tagName !== "IED") return [];
   if (!update.attributes.name) return [update];
 
@@ -161,5 +275,6 @@ export function updateIED(update: Update): Edit[] {
     ...updateIedNameAttributes(ied, oldIedName, newIedName),
     ...updateSubscriptionSupervision(ied, oldIedName, newIedName),
     ...updateIEDNameTextContent(ied, oldIedName, newIedName),
+    ...updateObjectReferences(ied, oldIedName, newIedName, checkPermission),
   ];
 }
