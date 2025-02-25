@@ -92,8 +92,8 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       'ExtRef[srcCBName="someGse"], ExtRef[srcCBName="someGse2"]',
     );
     const edits = unsubscribe(extRefs);
-    const doi = extRefs[0].ownerDocument.querySelector(
-      'LN[lnClass="LGOS"][inst="1"] > DOI',
+    const val = extRefs[0].ownerDocument.querySelector(
+      'LN[lnClass="LGOS"][inst="1"] > DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val',
     );
     const ln = extRefs[0].ownerDocument.querySelector(
       'LN[lnClass="LGOS"][inst="2"]',
@@ -107,7 +107,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect(edits[2]).to.satisfies(isUpdate);
     expect((edits[2] as Update).element).to.equal(extRefs[2]);
     expect(edits[3]).to.satisfies(isRemove);
-    expect((edits[3] as Remove).node).to.equal(doi);
+    expect((edits[3] as Remove).node).to.equal(val.firstChild);
     expect(edits[4]).to.satisfies(isRemove);
     expect((edits[4] as Remove).node).to.equal(ln);
   });
@@ -157,8 +157,8 @@ describe("Function allowing to unsubscribe multiple external references", () => 
       withSubscriptionSupervision,
       'ExtRef[srcCBName="someSmv"]',
     );
-    const doi = extRefs[0].ownerDocument.querySelector(
-      'LN[lnClass="LSVS"][inst="1"] > DOI',
+    const val = extRefs[0].ownerDocument.querySelector(
+      'LN[lnClass="LSVS"][inst="1"] > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val',
     );
     const edits = unsubscribe(extRefs);
 
@@ -170,7 +170,7 @@ describe("Function allowing to unsubscribe multiple external references", () => 
     expect(edits[2]).to.satisfies(isRemove);
     expect((edits[2] as Remove).node).to.equal(extRefs[1].parentElement);
     expect(edits[3]).to.satisfies(isRemove);
-    expect((edits[3] as Remove).node).to.equal(doi);
+    expect((edits[3] as Remove).node).to.equal(val!.firstChild);
   });
 
   it("with ignoreSupervision do not remove subscription LGOS supervision", () => {

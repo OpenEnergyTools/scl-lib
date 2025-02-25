@@ -14,25 +14,29 @@ type GroupedExtRefs = {
 function removableSupervisionElement(
   ctrlBlock: Element,
   subscriberIed: Element,
-): Element | null {
+): Node | Element | null {
   const supervisionType = ctrlBlock.tagName === "GSEControl" ? "LGOS" : "LSVS";
+  const doiName = ctrlBlock.tagName === "GSEControl" ? "GoCBRef" : "SvCBRef";
 
   const valElement = Array.from(
     subscriberIed.querySelectorAll(
-      `LN[lnClass="${supervisionType}"] > DOI > DAI > Val`,
+      `LN[lnClass="${supervisionType}"] > DOI[name="${doiName}"] > DAI[name="setSrcRef"] > Val`,
     ),
   ).find((val) => val.textContent === controlBlockObjRef(ctrlBlock));
   if (!valElement) return null;
 
   const ln = valElement.closest("LN")!;
-  const doi = valElement.closest("DOI")!;
-
   // do not remove logical nodes `LGOS`, `LSVS` unless privately tagged
   const canRemoveLn = ln.querySelector(
     ':scope > Private[type="OpenSCD.create"]',
   );
+  if (canRemoveLn) return ln;
 
-  return canRemoveLn ? ln : doi;
+  return (
+    Array.from(valElement.childNodes).find(
+      (child: Node) => child.nodeType === Node.TEXT_NODE,
+    ) ?? null
+  );
 }
 
 /** @returns Whether `DA` with name `setSrcRef` can edited by SCL editor */
@@ -44,7 +48,15 @@ function isSupervisionEditable(
     ctrlBlock,
     subscriberIed,
   );
-  const supervisionLn = supervisionElement?.closest("LN") ?? null;
+  if (!supervisionElement) return false;
+
+  let supervisionLn: Element | null = null;
+
+  if (supervisionElement.nodeType === Node.TEXT_NODE) {
+    supervisionLn = supervisionElement.parentElement?.closest("LN") ?? null;
+  } else {
+    supervisionLn = (supervisionElement as Element).closest("LN") ?? null;
+  }
   if (!supervisionLn) return false;
 
   return isSrcRefEditable(supervisionLn);
