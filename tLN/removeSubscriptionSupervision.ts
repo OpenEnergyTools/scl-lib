@@ -10,7 +10,7 @@ type GroupedExtRefs = {
   subscriberIed: Element;
 };
 
-/** @returns Element to remove the subscription supervision */
+/** @returns Element to remove the subscription supervision control block reference */
 function removableSupervisionElement(
   ctrlBlock: Element,
   subscriberIed: Element,
@@ -24,15 +24,11 @@ function removableSupervisionElement(
   ).find((val) => val.textContent === controlBlockObjRef(ctrlBlock));
   if (!valElement) return null;
 
-  const ln = valElement.closest("LN")!;
-  const doi = valElement.closest("DOI")!;
+  const textContentNode = Array.from(valElement.childNodes).find(
+    (child) => child.nodeType === Node.TEXT_NODE,
+  ) as Element;
 
-  // do not remove logical nodes `LGOS`, `LSVS` unless privately tagged
-  const canRemoveLn = ln.querySelector(
-    ':scope > Private[type="OpenSCD.create"]',
-  );
-
-  return canRemoveLn ? ln : doi;
+  return textContentNode ?? null;
 }
 
 /** @returns Whether `DA` with name `setSrcRef` can edited by SCL editor */
@@ -44,7 +40,9 @@ function isSupervisionEditable(
     ctrlBlock,
     subscriberIed,
   );
-  const supervisionLn = supervisionElement?.closest("LN") ?? null;
+  if (!supervisionElement) return false;
+
+  const supervisionLn = supervisionElement.parentElement?.closest("LN") ?? null;
   if (!supervisionLn) return false;
 
   return isSrcRefEditable(supervisionLn);
