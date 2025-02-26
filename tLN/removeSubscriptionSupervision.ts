@@ -10,24 +10,30 @@ type GroupedExtRefs = {
   subscriberIed: Element;
 };
 
-/** @returns Element to remove the subscription supervision control block reference */
+/** @returns Element to remove the subscription supervision */
 function removableSupervisionElement(
   ctrlBlock: Element,
   subscriberIed: Element,
 ): Element | null {
   const supervisionType = ctrlBlock.tagName === "GSEControl" ? "LGOS" : "LSVS";
+  const doiName = ctrlBlock.tagName === "GSEControl" ? 'GoCBRef' : 'SvCBRef';
 
   const valElement = Array.from(
     subscriberIed.querySelectorAll(
-      `LN[lnClass="${supervisionType}"] > DOI > DAI > Val`,
+      `LN[lnClass="${supervisionType}"] > DOI[name="${doiName}"] > DAI[name="setSrcRef"] > Val`,
     ),
   ).find((val) => val.textContent === controlBlockObjRef(ctrlBlock));
   if (!valElement) return null;
 
+  const ln = valElement.closest("LN")!;
+  const canRemoveLn = ln.querySelector(
+    ':scope > Private[type="OpenSCD.create"]',
+  );
+  if (canRemoveLn) return ln;
+
   const textContentNode = Array.from(valElement.childNodes).find(
     (child) => child.nodeType === Node.TEXT_NODE,
   ) as Element;
-
   return textContentNode ?? null;
 }
 

@@ -21,14 +21,12 @@ describe("Utility function to remove DataSet element", () => {
   const val = extRefs[0].ownerDocument.querySelector(
     'LN[lnClass="LGOS"][inst="1"] > DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val',
   )!;
-  const val2 = extRefs[0].ownerDocument.querySelector(
-    'LN[lnClass="LGOS"][inst="2"] > DOI[name="GoCBRef"] > DAI[name="setSrcRef"] > Val',
-  );
+  const ln = extRefs[0].ownerDocument.querySelector('LN[lnClass="LGOS"][inst="2"]')
 
   it("returns empty string when remove.node is not DataSet", () =>
     expect(removeDataSet({ node: val })).to.be.empty);
 
-  it("removes DataSet also removes/updates dependant data", () =>
+  it("removes DataSet also removes/updates dependent data", () =>
     expect(edits.length).to.equal(10));
 
   it("including the DataSet itself", () =>
@@ -43,7 +41,7 @@ describe("Utility function to remove DataSet element", () => {
 
   it("including the subscriber supervision", () => {
     expect((edits[5] as Remove).node).to.equal(val!.firstChild);
-    expect((edits[6] as Remove).node).to.equal(val2!.firstChild);
+    expect((edits[6] as Remove).node).to.equal(ln);
   });
 
   it("including control Block updates", () => {
