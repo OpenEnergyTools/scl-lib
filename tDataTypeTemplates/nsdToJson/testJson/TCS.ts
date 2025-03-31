@@ -1,4 +1,4 @@
-export const tscChildren = {
+export const tcsChildren = {
   stVal: {
     tagName: "DataAttribute",
     name: "stVal",

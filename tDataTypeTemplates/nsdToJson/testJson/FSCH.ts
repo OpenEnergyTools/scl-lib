@@ -7,7 +7,7 @@ import { orgChildren } from "./ORG.js";
 import { spcChildren } from "./SPC.js";
 import { spsChildren } from "./SPS.js";
 import { spgChildren } from "./SPG.js";
-import { tscChildren } from "./TSC.js";
+import { tcsChildren } from "./TCS.js";
 import { tsgChildren } from "./TSG.js";
 
 export const fsch = {
@@ -1551,7 +1551,7 @@ export const fsch = {
     descID: "IEC61850_7_4.LNGroupF::FSCH.ActStrTm.desc",
     presCond: "O",
     dsPresCond: "na",
-    children: tscChildren,
+    children: tcsChildren,
   },
   NxtStrTm: {
     tagName: "DataObject",
@@ -1561,7 +1561,7 @@ export const fsch = {
     mandatory: true,
     presCond: "M",
     dsPresCond: "na",
-    children: tscChildren,
+    children: tcsChildren,
   },
   SchdEnaErr: {
     tagName: "DataObject",

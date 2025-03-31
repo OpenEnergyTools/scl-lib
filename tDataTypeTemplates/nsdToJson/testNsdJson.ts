@@ -178,6 +178,39 @@ import { zsmc } from "./testJson/ZSMC.js";
 import { zscr } from "./testJson/ZSCR.js";
 import { ztcf } from "./testJson/ZTCF.js";
 import { ztcr } from "./testJson/ZTCR.js";
+import { acdChildren } from "./testJson/ACD.js";
+import { actChildren } from "./testJson/ACT.js";
+import { apcChildren } from "./testJson/APC.js";
+import { asgChildren } from "./testJson/ASG.js";
+import { bacChildren } from "./testJson/BAC.js";
+import { bcrChildren } from "./testJson/BCR.js";
+import { bscChildren } from "./testJson/BSC.js";
+import { cmvChildren } from "./testJson/CMV.js";
+import { delChildren } from "./testJson/DEL.js";
+import { dpcChildren } from "./testJson/DPC.js";
+import { dplChildren } from "./testJson/DPL.js";
+import { hdelChildren } from "./testJson/HDEL.js";
+import { hmvChildren } from "./testJson/HMV.js";
+import { hstChildren } from "./testJson/HST.js";
+import { hwyeChildren } from "./testJson/HWYE.js";
+import { incChildren } from "./testJson/INC.js";
+import { iscChildren } from "./testJson/ISC.js";
+import { insChildren } from "./testJson/INS.js";
+import { lplChildren } from "./testJson/LPL.js";
+import { mvChildren } from "./testJson/MV.js";
+import { orgChildren } from "./testJson/ORG.js";
+import { orsChildren } from "./testJson/ORS.js";
+import { savChildren } from "./testJson/SAV.js";
+import { secChildren } from "./testJson/SEC.js";
+import { seqChildren } from "./testJson/SEQ.js";
+import { spcChildren } from "./testJson/SPC.js";
+import { spgChildren } from "./testJson/SPG.js";
+import { spsChildren } from "./testJson/SPS.js";
+import { tcsChildren } from "./testJson/TCS.js";
+import { tsgChildren } from "./testJson/TSG.js";
+import { vsgChildren } from "./testJson/VSG.js";
+import { vssChildren } from "./testJson/VSS.js";
+import { wyeChildren } from "./testJson/WYE.js";
 
 export const lnClass74 = [
   "ANCR",
@@ -513,4 +546,40 @@ export const lnClassData: Record<string, any> = {
   ZSMC: zsmc,
   ZTCF: ztcf,
   ZTCR: ztcr,
+};
+
+export const cdcData: Record<string, any> = {
+  "ACD":acdChildren,
+  "ACT":actChildren,
+  "APC":apcChildren,
+  "ASG":asgChildren,
+  "BAC":bacChildren,
+  "BCR":bcrChildren,
+  "BSC":bscChildren,
+  "CMV":cmvChildren,
+  "DEL":delChildren,
+  "DPC":dpcChildren,
+  "DPL":dplChildren,
+  "HDEL":hdelChildren,
+  "HMV":hmvChildren,
+  "HST":hstChildren,
+  "HWYE":hwyeChildren,
+  "INC":incChildren,
+  "INS":insChildren,
+  "ISC":iscChildren,
+  "LPL":lplChildren,
+  "MV":mvChildren,
+  "ORG":orgChildren,
+  "ORS":orsChildren,
+  "SAV":savChildren,
+  "SEC":secChildren,
+  "SEQ":seqChildren,
+  "SPC":spcChildren,
+  "SPG":spgChildren,
+  "SPS":spsChildren,
+  "TCS":tcsChildren,
+  "TSG":tsgChildren,
+  "VSG":vsgChildren,
+  "VSS":vssChildren,
+  "WYE":wyeChildren
 };
