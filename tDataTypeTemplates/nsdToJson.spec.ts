@@ -7,9 +7,9 @@ import {
   nsd7420,
   nsd81,
 } from "../foundation/codecomponents/nsds.js";
-import { lnClass74, lnClassData } from "./nsdToJson/testNsdJson.js";
+import { cdcData, lnClass74, lnClassData } from "./nsdToJson/testNsdJson.js";
 
-import { nsdToJson } from "./nsdToJson.js";
+import { nsdToJson, supportedCdc } from "./nsdToJson.js";
 
 const doc72 = new DOMParser().parseFromString(nsd72, "application/xml");
 const doc73 = new DOMParser().parseFromString(nsd73, "application/xml");
@@ -21,6 +21,9 @@ describe("NSD to Json parsing function", () => {
   it("return undefined for invalid ln class", () =>
     expect(nsdToJson("invalid")).to.be.undefined);
 
+  it("return undefined for unsupported CDC", () =>
+    expect(nsdToJson("ENS")).to.be.undefined);
+
   it("returns object that compares well to static 7-4 ln classes", async () => {
     lnClass74.forEach((lnClass) => {
       const data = nsdToJson(lnClass)!;
@@ -28,6 +31,17 @@ describe("NSD to Json parsing function", () => {
 
       Object.keys(sClass).forEach((key) => {
         expect(data[key]).to.deep.equal(sClass[key]);
+      });
+    });
+  }).timeout(10000);
+
+  it("returns object that compares well to static 7-3 ln classes", async () => {
+    supportedCdc.forEach((cdc) => {
+      const data = nsdToJson(cdc)!;
+      const commonDataClass = cdcData[cdc];
+
+      Object.keys(commonDataClass).forEach((key) => {
+        expect(data[key]).to.deep.equal(commonDataClass[key]);
       });
     });
   }).timeout(10000);

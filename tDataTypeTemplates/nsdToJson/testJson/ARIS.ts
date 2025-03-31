@@ -1,35 +1,13 @@
-import { acdChildren } from "./ACD.js";
-import { actChildren } from "./ACT.js";
-import { apcChildren } from "./APC.js";
-import { asgChildren } from "./ASG.js";
-import { bacChildren } from "./BAC.js";
-import { bcrChildren } from "./BCR.js";
-import { bscChildren } from "./BSC.js";
 import { cmvChildren } from "./CMV.js";
-import { delChildren } from "./DEL.js";
-import { dpcChildren } from "./DPC.js";
-import { dplChildren } from "./DPL.js";
-import { hdelChildren } from "./HDEL.js";
-import { hmvChildren } from "./HMV.js";
-import { hstChildren } from "./HST.js";
-import { hwyeChildren } from "./HWYE.js";
 import { incChildren } from "./INC.js";
 import { ingChildren } from "./ING.js";
 import { insChildren } from "./INS.js";
 import { lplChildren } from "./LPL.js";
 import { mvChildren } from "./MV.js";
 import { orgChildren } from "./ORG.js";
-import { orsChildren } from "./ORS.js";
-import { savChildren } from "./SAV.js";
-import { secChildren } from "./SEC.js";
-import { seqChildren } from "./SEQ.js";
 import { spcChildren } from "./SPC.js";
 import { spsChildren } from "./SPS.js";
-import { tscChildren } from "./TSC.js";
-import { tsgChildren } from "./TSG.js";
-import { vsgChildren } from "./VSG.js";
-import { vssChildren } from "./VSS.js";
-import { wyeChildren } from "./WYE.js";
+
 export const aris = {
   Auto: {
     tagName: "DataObject",

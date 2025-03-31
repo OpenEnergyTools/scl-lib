@@ -104,6 +104,48 @@ type CdcDescription = {
 
 export type LNodeDescription = Record<string, CdcDescription>;
 
+export const supportedCdc = [
+  "ACD",
+  "ACT",
+  "APC",
+  "ASG",
+  "BAC",
+  "BCR",
+  "BSC",
+  "CMV",
+  "DEL",
+  "DPC",
+  "DPL",
+  "HDEL",
+  "HMV",
+  "HST",
+  "HWYE",
+  "INC",
+  "INS",
+  "ISC",
+  "LPL",
+  "MV",
+  "ORG",
+  "ORS",
+  "SAV",
+  "SEC",
+  "SEQ",
+  "SPC",
+  "SPG",
+  "SPS",
+  "TCS",
+  "TSG",
+  "VSG",
+  "VSS",
+  "WYE",
+] as const;
+const cdcTag = new Set<string>(supportedCdc);
+export type SCLTag = (typeof supportedCdc)[number];
+
+export function isSupportedCdc(cdc: string): cdc is SCLTag {
+  return cdcTag.has(cdc);
+}
+
 export type NameSpaceDescription = {
   "72"?: XMLDocument;
   "73"?: XMLDocument;
@@ -123,7 +165,7 @@ const defaultDoc81 = new DOMParser().parseFromString(nsd81, "application/xml");
 
 /** A utility function that returns a JSON containing the structure of a logical node class
  * as described in the IEC 61850-7-4 and IEC 61850-7-420 as JSON
- * @param lnClass the logical node class to be constructed
+ * @param lnClassOrCdc the logical node class to be constructed
  * @param nsds user defined NSD files defaulting to
  *             8-1:   2003A2
  *             7-4:   2007B3
@@ -133,19 +175,13 @@ const defaultDoc81 = new DOMParser().parseFromString(nsd81, "application/xml");
  * @returns A JSON object represeting NSD information of a logical node
  */
 export function nsdToJson(
-  lnClass: string,
+  lnClassOrCdc: string,
   nsds?: NameSpaceDescription,
-): LNodeDescription | undefined {
+): LNodeDescription | CdcChildren | undefined {
+
   const doc74 = nsds && nsds["74"] ? nsds["74"] : defaultDoc74;
   const doc7420 = nsds && nsds["7420"] ? nsds["7420"] : defaultDoc7420;
-  const nsdLnClass74 = doc74.querySelector(`LNClass[name="${lnClass}"]`);
-  const nsdLnClass7420 = doc7420.querySelector(`LNClass[name="${lnClass}"]`);
-
-  const nsdLnClass = nsdLnClass74 || nsdLnClass7420;
-  if (!nsdLnClass) return undefined;
-
-  const lnClassJson: LNodeDescription = {};
-
+  
   function getServiceConstructedAttributes(
     serviceDataAttribute: Element,
   ): Element[] {
@@ -161,10 +197,9 @@ export function nsdToJson(
     );
   }
 
-  function getServiceDataAttributes(dataObject: Element): Element[] {
+  function getServiceDataAttributesType(type : string | null): Element[] {
     const doc81 = nsds && nsds["81"] ? nsds["81"] : defaultDoc81;
 
-    const type = dataObject.getAttribute("type");
     return Array.from(
       doc81
         .querySelector(`ServiceCDCs > ServiceCDC[cdc="${type}"]`)
@@ -172,7 +207,13 @@ export function nsdToJson(
     );
   }
 
-  function getSubDataAttributesType(type: string): Element[] {
+  function getServiceDataAttributes(dataObject: Element): Element[] {
+    const type = dataObject.getAttribute("type");
+    
+    return getServiceDataAttributesType(type);
+  }
+
+  function getSubDataAttributesType(type: string | null): Element[] {
     const doc73 = nsds && nsds["73"] ? nsds["73"] : defaultDoc73;
     const doc72 = nsds && nsds["72"] ? nsds["72"] : defaultDoc72;
 
@@ -190,27 +231,14 @@ export function nsdToJson(
   }
 
   function getSubDataAttributes(dataAttribute: Element): Element[] {
-    const doc73 = nsds && nsds["73"] ? nsds["73"] : defaultDoc73;
-    const doc72 = nsds && nsds["72"] ? nsds["72"] : defaultDoc72;
-
     const type = dataAttribute.getAttribute("type");
-    return Array.from(
-      doc73
-        .querySelector(`ConstructedAttribute[name="${type}"]`)
-        ?.querySelectorAll(":scope > SubDataAttribute") ?? [],
-    ).concat(
-      Array.from(
-        doc72
-          .querySelector(`ConstructedAttribute[name="${type}"]`)
-          ?.querySelectorAll(":scope > SubDataAttribute") ?? [],
-      ),
-    );
+
+    return getSubDataAttributesType(type)
   }
 
-  function getDataAttributes(dataObject: Element): Element[] {
+  function getDataAttributesType(type:string|null): Element[] {
     const doc73 = nsds && nsds["73"] ? nsds["73"] : defaultDoc73;
 
-    const type = dataObject.getAttribute("type");
     if (
       ["CSG", "CURVE", "ENG", "ING", "ASG", "SPG", "TSG", "VSG"].includes(
         `${type}`,
@@ -228,14 +256,26 @@ export function nsdToJson(
     );
   }
 
-  function getSubDataObjects(dataObject: Element): Element[] {
-    const doc73 = nsds && nsds["73"] ? nsds["73"] : defaultDoc73;
+  function getDataAttributes(dataObject: Element): Element[] {
     const type = dataObject.getAttribute("type");
+
+    return getDataAttributesType(type);
+  }
+
+  function getSubDataObjectsType(type: string | null): Element[] {
+    const doc73 = nsds && nsds["73"] ? nsds["73"] : defaultDoc73;
+
     return Array.from(
       doc73
         .querySelector(`CDC[name="${type}"]`)
         ?.querySelectorAll("SubDataObject") ?? [],
     );
+  }
+
+  function getSubDataObjects(dataObject: Element): Element[] {
+    const type = dataObject.getAttribute("type");
+
+    return getSubDataObjectsType(type)
   }
 
   function getDataObjects(lnClass: Element): Element[] {
@@ -579,11 +619,51 @@ export function nsdToJson(
     return data;
   }
 
-  getDataObjects(nsdLnClass).forEach((dataObject) => {
-    const name = dataObject.getAttribute("name")!;
+  function CdcChildren(type: string): CdcChildren {
 
-    lnClassJson[name] = nsdDataObject(dataObject);
-  });
+    const children: CdcChildren = {};
+    getSubDataObjectsType(type).forEach((dataObject) => {
+      const name = dataObject.getAttribute("name")!;
 
-  return lnClassJson;
+      children[name] = nsdDataObject(dataObject);
+    });
+
+    getDataAttributesType(type).forEach((dataAttribute) => {
+      const name = dataAttribute.getAttribute("name")!;
+
+      children[name] = nsdDataAttribute(
+        dataAttribute,
+        undefined,
+        undefined,
+      );
+    });
+
+    getServiceDataAttributesType(type).forEach((serviceDataAttribute) => {
+      const name = serviceDataAttribute.getAttribute("name")!;
+
+      children[name] = nsdServiceDataAttribute(serviceDataAttribute);
+    });
+
+    return children;
+  }
+
+  if (lnClassOrCdc === undefined) return;
+  else if (isSupportedCdc(lnClassOrCdc)) 
+    return CdcChildren(lnClassOrCdc);
+  else {
+    const nsdLnClass74 = doc74.querySelector(`LNClass[name="${lnClassOrCdc}"]`);
+    const nsdLnClass7420 = doc7420.querySelector(`LNClass[name="${lnClassOrCdc}"]`);
+
+    const nsdLnClass = nsdLnClass74 || nsdLnClass7420;
+    if (!nsdLnClass) return undefined;
+
+    const lnClassJson: LNodeDescription = {};
+    getDataObjects(nsdLnClass).forEach((dataObject) => {
+      const name = dataObject.getAttribute("name")!;
+  
+      lnClassJson[name] = nsdDataObject(dataObject);
+    });
+
+    return lnClassJson
+  } 
 }
