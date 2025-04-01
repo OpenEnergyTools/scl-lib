@@ -17,6 +17,7 @@ import {
 } from "./insertSelectedDataType.testfiles.js";
 
 import { insertSelectedLNodeType } from "./insertSelectedLNodeType.js";
+import { LNodeDescription, nsdToJson } from "./nsdToJson.js";
 
 const incompleteMmxu = findElement(missingMmxuTypes) as XMLDocument;
 const imcompleteLtrk = findElement(incompleteLtrkTypes) as XMLDocument;
@@ -24,20 +25,16 @@ const incompleteAtcc = findElement(incompleteAtccTypes) as XMLDocument;
 const missingDataTypes = findElement(emptySSD) as XMLDocument;
 
 describe("insertLNodeTypeSelection", () => {
-  it("return empty array with invlaid lnClass", () => {
-    expect(
-      insertSelectedLNodeType(incompleteMmxu, mmxuSelection, "ERRO").length,
-    ).to.equal(0);
-  });
-
-  it('is insensitive for invalid EnumTypes',()=>
-    insertSelectedLNodeType(incompleteMmxu, invalidSelection, "LLN0"))
+  it('is insensitive for invalid EnumTypes',()=> {
+    const data = nsdToJson("LLN0") as LNodeDescription;
+    insertSelectedLNodeType(incompleteMmxu, invalidSelection, {class:"LLN0", data});
+  })
 
   it("insert MMXU LNodeType including missing sub data", () => {
     const edits = insertSelectedLNodeType(
       incompleteMmxu,
       mmxuSelection,
-      "MMXU",
+      {class:"MMXU"},
     );
 
     expect(edits.length).to.equal(6);
@@ -81,10 +78,11 @@ describe("insertLNodeTypeSelection", () => {
   });
 
   it("insert LTRK LNodeType including missing sub data", () => {
+    const data = nsdToJson("LTRK") as LNodeDescription;
     const edits = insertSelectedLNodeType(
       imcompleteLtrk,
       ltrkSelection,
-      "LTRK",
+      {class:"LTRK", data},
     );
 
     expect(edits.length).to.equal(7);
@@ -136,10 +134,11 @@ describe("insertLNodeTypeSelection", () => {
   });
 
   it("insert ATCC LNodeType including missing sub data", () => {
+    const data = nsdToJson("ATCC") as LNodeDescription;
     const edits = insertSelectedLNodeType(
       incompleteAtcc,
       atccSelection,
-      "ATCC",
+      {class: "ATCC", data},
     );
 
     expect(edits.length).to.equal(5);
@@ -178,10 +177,11 @@ describe("insertLNodeTypeSelection", () => {
   });
 
   it("insert DataTypeTemplates when missing", () => {
+    const data = nsdToJson("ATCC") as LNodeDescription;
     const edits = insertSelectedLNodeType(
       missingDataTypes,
       atccSelection,
-      "ATCC",
+      {class:"ATCC", data},
     );
 
     expect(edits.length).to.equal(19);

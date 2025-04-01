@@ -2,7 +2,7 @@
  * Basis is a copy from www.github.com/openenergytools/oscd-template-generator
  * originally written by ca-d, thx Chris. Code has been modified!
  */
-import { nsdToJson } from "./nsdToJson.js";
+import { LNodeDescription, nsdToJson } from "./nsdToJson.js";
 
 import { createElement, Insert, TreeSelection } from "../foundation/utils.js";
 
@@ -163,13 +163,13 @@ function data(lnData: any, path: string[]): any {
  * Creates a new data type `LNodeType` based on a user selection.
  * @param doc - the XML document to add the `LNodeType` to
  * @param selection - The user selection as a tree object
- * @param lnClass - the logical node class of the `LNodeType`
+ * @param logicalnode - the logical node class and its JSON data structure of the `LNodeType`
  * @returns an array of inserts for the `LNodeType` and the missing subs data
  */
 export function insertSelectedLNodeType(
   doc: XMLDocument,
   selection: TreeSelection,
-  lnClass: string,
+  logicalnode: {class: string, data?: LNodeDescription},
 ): Insert[] {
   const types = new Set<string>();
   const elements: Templates = {
@@ -179,8 +179,8 @@ export function insertSelectedLNodeType(
     EnumType: [],
   };
 
-  const lnData = nsdToJson(lnClass);
-  if (!lnData) return [];
+  const lnData = logicalnode.data ?? nsdToJson(logicalnode.class);
+  const lnClass = logicalnode.class;
 
   function isUnknownId(id: string): boolean {
     const alreadyCreate = types.has(id);
@@ -375,7 +375,7 @@ export function insertSelectedLNodeType(
   Object.keys(selection).forEach((name) => {
     const type = createDOType([name], selection[name]);
 
-    const { transient } = lnData[name];
+    const { transient } = (lnData as LNodeDescription)[name];
 
     const doElement = createElement(doc, "DO", { name, type, transient });
 
