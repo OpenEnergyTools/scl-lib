@@ -36,11 +36,11 @@ this function the SCL is up to date.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><a href="../types/Insert.html" class="tsd-signature-type tsd-kind-type-alias">Insert</a><span class="tsd-signature-symbol"> | </span><a href="../types/Update.html" class="tsd-signature-type tsd-kind-type-alias">Update</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h4><p>An array of edits to do a valid subscription</p>
 
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">// do not do this</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">diff1</span><span class="hl-0"> = </span><span class="hl-3">subscribe</span><span class="hl-0">(</span><span class="hl-4">conn1</span><span class="hl-0">);</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">diff2</span><span class="hl-0"> = </span><span class="hl-3">subscribe</span><span class="hl-0">(</span><span class="hl-4">conn2</span><span class="hl-0">);</span><br/><span class="hl-0">.</span><span class="hl-3">dispatch</span><span class="hl-0">(</span><span class="hl-3">editEvent</span><span class="hl-0">([</span><span class="hl-4">diff1</span><span class="hl-0">, </span><span class="hl-4">diff2</span><span class="hl-0">]));</span><br/><br/><span class="hl-6">// better do this</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">diff</span><span class="hl-0"> = </span><span class="hl-3">subscribe</span><span class="hl-0">([</span><span class="hl-4">conn1</span><span class="hl-0">, </span><span class="hl-4">conn2</span><span class="hl-0">]);</span><br/><span class="hl-0">.</span><span class="hl-3">dispatch</span><span class="hl-0">(</span><span class="hl-3">editEvent</span><span class="hl-0">(</span><span class="hl-4">diff</span><span class="hl-0">))</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-7">// do not do this</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">diff1</span><span class="hl-0"> = </span><span class="hl-4">subscribe</span><span class="hl-0">(</span><span class="hl-5">conn1</span><span class="hl-0">);</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">diff2</span><span class="hl-0"> = </span><span class="hl-4">subscribe</span><span class="hl-0">(</span><span class="hl-5">conn2</span><span class="hl-0">);</span><br/><span class="hl-0">.</span><span class="hl-4">dispatch</span><span class="hl-0">(</span><span class="hl-4">editEvent</span><span class="hl-0">([</span><span class="hl-5">diff1</span><span class="hl-0">, </span><span class="hl-5">diff2</span><span class="hl-0">]));</span><br/><br/><span class="hl-7">// better do this</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">diff</span><span class="hl-0"> = </span><span class="hl-4">subscribe</span><span class="hl-0">([</span><span class="hl-5">conn1</span><span class="hl-0">, </span><span class="hl-5">conn2</span><span class="hl-0">]);</span><br/><span class="hl-0">.</span><span class="hl-4">dispatch</span><span class="hl-0">(</span><span class="hl-4">editEvent</span><span class="hl-0">(</span><span class="hl-5">diff</span><span class="hl-0">))</span>
 </code><button>Copy</button></pre>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/OpenEnergyTools/scl-lib/blob/aa6ae48/tExtRef/subscribe.ts#L258">tExtRef/subscribe.ts:258</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/OpenEnergyTools/scl-lib/blob/122963d/tExtRef/subscribe.ts#L258">tExtRef/subscribe.ts:258</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -69,10 +69,14 @@ this function the SCL is up to date.</p>
 <li><a href="../types/Edit.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Edit</span></a></li>
 <li><a href="../types/Insert.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Insert</span></a></li>
 <li><a href="../types/InsertIedOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Insert<wbr/>Ied<wbr/>Options</span></a></li>
+<li><a href="../types/LNodeDescription.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>LNode<wbr/>Description</span></a></li>
+<li><a href="../types/NameSpaceDescription.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Name<wbr/>Space<wbr/>Description</span></a></li>
 <li><a href="../types/Remove.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Remove</span></a></li>
+<li><a href="../types/RemoveDataTypeOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Remove<wbr/>Data<wbr/>Type<wbr/>Options</span></a></li>
 <li><a href="../types/SubscribeOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Subscribe<wbr/>Options</span></a></li>
 <li><a href="../types/Supervision.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Supervision</span></a></li>
 <li><a href="../types/SupervisionOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Supervision<wbr/>Options</span></a></li>
+<li><a href="../types/TreeSelection.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Tree<wbr/>Selection</span></a></li>
 <li><a href="../types/UnsubscribeOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Unsubscribe<wbr/>Options</span></a></li>
 <li><a href="../types/Update.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Update</span></a></li>
 <li><a href="../types/removeSupervisionOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>remove<wbr/>Supervision<wbr/>Options</span></a></li>
@@ -99,17 +103,21 @@ this function the SCL is up to date.</p>
 <li><a href="identity.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>identity</span></a></li>
 <li><a href="importLNodeType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>importLNode<wbr/>Type</span></a></li>
 <li><a href="insertIed.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>insert<wbr/>Ied</span></a></li>
+<li><a href="insertSelectedLNodeType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>insert<wbr/>SelectedLNode<wbr/>Type</span></a></li>
 <li><a href="insertSubscriptionSupervisions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>insert<wbr/>Subscription<wbr/>Supervisions</span></a></li>
 <li><a href="instantiateSubscriptionSupervision.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>instantiate<wbr/>Subscription<wbr/>Supervision</span></a></li>
 <li><a href="isPublic.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Public</span></a></li>
 <li><a href="isSubscribed.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Subscribed</span></a></li>
+<li><a href="lNodeTypeToSelection.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>l<wbr/>Node<wbr/>Type<wbr/>To<wbr/>Selection</span></a></li>
 <li><a href="lnInstGenerator.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ln<wbr/>Inst<wbr/>Generator</span></a></li>
 <li><a href="macAddressGenerator.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>mac<wbr/>Address<wbr/>Generator</span></a></li>
 <li><a href="matchDataAttributes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>match<wbr/>Data<wbr/>Attributes</span></a></li>
 <li><a href="matchSrcAttributes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>match<wbr/>Src<wbr/>Attributes</span></a></li>
 <li><a href="maxAttributes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>max<wbr/>Attributes</span></a></li>
+<li><a href="nsdToJson.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>nsd<wbr/>To<wbr/>Json</span></a></li>
 <li><a href="removeControlBlock.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove<wbr/>Control<wbr/>Block</span></a></li>
 <li><a href="removeDataSet.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove<wbr/>Data<wbr/>Set</span></a></li>
+<li><a href="removeDataType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove<wbr/>Data<wbr/>Type</span></a></li>
 <li><a href="removeFCDA.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>removeFCDA</span></a></li>
 <li><a href="removeIED.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>removeIED</span></a></li>
 <li><a href="removeProcessElement.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove<wbr/>Process<wbr/>Element</span></a></li>
