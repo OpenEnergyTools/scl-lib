@@ -1875,9 +1875,9 @@ export const iarc = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -1912,18 +1912,18 @@ export const iarc = {
     dsPresCond: "O",
     children: insChildren,
   },
-  InTrg: {
+  InTrg1: {
     tagName: "DataObject",
-    name: "InTrg",
+    name: "InTrg1",
     type: "ORG",
     descID: "IEC61850_7_4.LNGroupI::IARC.InTrg.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: orgChildren,
   },
-  InLog: {
+  InLog1: {
     tagName: "DataObject",
-    name: "InLog",
+    name: "InLog1",
     type: "ORG",
     descID: "IEC61850_7_4.LNGroupI::IARC.InLog.desc",
     presCond: "Omulti",

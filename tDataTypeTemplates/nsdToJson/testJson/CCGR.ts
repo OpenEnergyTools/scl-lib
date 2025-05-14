@@ -74,9 +74,9 @@ export const ccgr = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -1777,9 +1777,9 @@ export const ccgr = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -2823,9 +2823,9 @@ export const ccgr = {
       },
     },
   },
-  PmpCtl: {
+  PmpCtl1: {
     tagName: "DataObject",
-    name: "PmpCtl",
+    name: "PmpCtl1",
     type: "ENC",
     underlyingType: "StageControlKind",
     descID: "IEC61850_7_4.LNGroupC::CCGR.PmpCtl.desc",
@@ -4541,9 +4541,9 @@ export const ccgr = {
       },
     },
   },
-  FanCtl: {
+  FanCtl1: {
     tagName: "DataObject",
-    name: "FanCtl",
+    name: "FanCtl1",
     type: "ENC",
     underlyingType: "StageControlKind",
     descID: "IEC61850_7_4.LNGroupC::CCGR.FanCtl.desc",

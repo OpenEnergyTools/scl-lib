@@ -1263,9 +1263,9 @@ export const lln0 = {
     dsPresCond: "na",
     children: spcChildren,
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.LNGroupL::LLN0.InRef.desc",
     presCond: "Omulti",

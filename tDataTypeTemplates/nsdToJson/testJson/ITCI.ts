@@ -1906,18 +1906,18 @@ export const itci = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
     dsPresCond: "Omulti",
     children: orgChildren,
   },
-  Alm: {
+  Alm1: {
     tagName: "DataObject",
-    name: "Alm",
+    name: "Alm1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupI::ITCI.Alm.desc",
     presCond: "Omulti",

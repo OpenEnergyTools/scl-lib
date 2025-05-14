@@ -454,9 +454,9 @@ export const psch = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -2157,9 +2157,9 @@ export const psch = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -2195,9 +2195,9 @@ export const psch = {
     dsPresCond: "F",
     children: actChildren,
   },
-  RxPrm: {
+  RxPrm1: {
     tagName: "DataObject",
-    name: "RxPrm",
+    name: "RxPrm1",
     type: "ACT",
     transient: "true",
     descID: "IEC61850_7_4.LNGroupP::PSCH.RxPrm.desc",
@@ -2205,9 +2205,9 @@ export const psch = {
     dsPresCond: "F",
     children: actChildren,
   },
-  RxBlk: {
+  RxBlk1: {
     tagName: "DataObject",
-    name: "RxBlk",
+    name: "RxBlk1",
     type: "ACT",
     transient: "true",
     descID: "IEC61850_7_4.LNGroupP::PSCH.RxBlk.desc",
@@ -2215,9 +2215,9 @@ export const psch = {
     dsPresCond: "F",
     children: actChildren,
   },
-  RxTr: {
+  RxTr1: {
     tagName: "DataObject",
-    name: "RxTr",
+    name: "RxTr1",
     type: "ACT",
     descID: "IEC61850_7_4.LNGroupP::PSCH.RxTr.desc",
     presCond: "Omulti",
@@ -2255,18 +2255,18 @@ export const psch = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  RxSrc: {
+  RxSrc1: {
     tagName: "DataObject",
-    name: "RxSrc",
+    name: "RxSrc1",
     type: "ORG",
     descID: "IEC61850_7_4.LNGroupP::PSCH.RxSrc.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: orgChildren,
   },
-  RxSrcTr: {
+  RxSrcTr1: {
     tagName: "DataObject",
-    name: "RxSrcTr",
+    name: "RxSrcTr1",
     type: "ORG",
     descID: "IEC61850_7_4.LNGroupP::PSCH.RxSrcTr.desc",
     presCond: "Omulti",

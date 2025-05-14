@@ -1876,9 +1876,9 @@ export const itpc = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -1903,18 +1903,18 @@ export const itpc = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  TxCmdCnt: {
+  TxCmdCnt1: {
     tagName: "DataObject",
-    name: "TxCmdCnt",
+    name: "TxCmdCnt1",
     type: "INS",
     descID: "IEC61850_7_4.LNGroupI::ITPC.TxCmdCnt.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: insChildren,
   },
-  RxCmdCnt: {
+  RxCmdCnt1: {
     tagName: "DataObject",
-    name: "RxCmdCnt",
+    name: "RxCmdCnt1",
     type: "INS",
     descID: "IEC61850_7_4.LNGroupI::ITPC.RxCmdCnt.desc",
     presCond: "Omulti",
@@ -1993,9 +1993,9 @@ export const itpc = {
     dsPresCond: "F",
     children: ingChildren,
   },
-  TpcTxMod: {
+  TpcTxMod1: {
     tagName: "DataObject",
-    name: "TpcTxMod",
+    name: "TpcTxMod1",
     type: "ENG",
     underlyingType: "TpcAppModeKind",
     descID: "IEC61850_7_4.LNGroupI::ITPC.TpcTxMod.desc",
@@ -2078,9 +2078,9 @@ export const itpc = {
       },
     },
   },
-  TpcRxMod: {
+  TpcRxMod1: {
     tagName: "DataObject",
-    name: "TpcRxMod",
+    name: "TpcRxMod1",
     type: "ENG",
     underlyingType: "TpcAppModeKind",
     descID: "IEC61850_7_4.LNGroupI::ITPC.TpcRxMod.desc",

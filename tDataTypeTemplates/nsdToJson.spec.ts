@@ -29,6 +29,8 @@ describe("NSD to Json parsing function", () => {
       const data = nsdToJson(lnClass)!;
       const sClass = lnClassData[lnClass];
 
+      console.log(lnClass);
+
       Object.keys(sClass).forEach((key) => {
         expect(data[key]).to.deep.equal(sClass[key]);
       });

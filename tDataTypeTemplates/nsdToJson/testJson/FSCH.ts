@@ -1233,9 +1233,9 @@ export const fsch = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -1905,9 +1905,9 @@ export const fsch = {
       },
     },
   },
-  StrTm: {
+  StrTm1: {
     tagName: "DataObject",
-    name: "StrTm",
+    name: "StrTm1",
     type: "TSG",
     descID: "IEC61850_7_4.LNGroupF::FSCH.StrTm.desc",
     presCond: "Omulti",
