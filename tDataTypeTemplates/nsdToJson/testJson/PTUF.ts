@@ -524,9 +524,9 @@ export const ptuf = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -2227,9 +2227,9 @@ export const ptuf = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",

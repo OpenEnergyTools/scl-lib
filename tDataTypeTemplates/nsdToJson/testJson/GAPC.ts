@@ -76,9 +76,9 @@ export const gapc = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -1779,9 +1779,9 @@ export const gapc = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -1807,54 +1807,54 @@ export const gapc = {
     dsPresCond: "F",
     children: actChildren,
   },
-  Alm: {
+  Alm1: {
     tagName: "DataObject",
-    name: "Alm",
+    name: "Alm1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupG::GAPC.Alm.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spsChildren,
   },
-  Wrn: {
+  Wrn1: {
     tagName: "DataObject",
-    name: "Wrn",
+    name: "Wrn1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupG::GAPC.Wrn.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spsChildren,
   },
-  Ind: {
+  Ind1: {
     tagName: "DataObject",
-    name: "Ind",
+    name: "Ind1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupG::GAPC.Ind.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spsChildren,
   },
-  SPCSO: {
+  SPCSO1: {
     tagName: "DataObject",
-    name: "SPCSO",
+    name: "SPCSO1",
     type: "SPC",
     descID: "IEC61850_7_4.LNGroupG::GAPC.SPCSO.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spcChildren,
   },
-  DPCSO: {
+  DPCSO1: {
     tagName: "DataObject",
-    name: "DPCSO",
+    name: "DPCSO1",
     type: "DPC",
     descID: "IEC61850_7_4.LNGroupG::GAPC.DPCSO.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: dpcChildren,
   },
-  ISCSO: {
+  ISCSO1: {
     tagName: "DataObject",
-    name: "ISCSO",
+    name: "ISCSO1",
     type: "INC",
     descID: "IEC61850_7_4.LNGroupG::GAPC.ISCSO.desc",
     presCond: "Omulti",

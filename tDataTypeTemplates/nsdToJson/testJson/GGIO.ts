@@ -243,9 +243,9 @@ export const ggio = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -1946,99 +1946,99 @@ export const ggio = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
     dsPresCond: "Omulti",
     children: orgChildren,
   },
-  IntIn: {
+  IntIn1: {
     tagName: "DataObject",
-    name: "IntIn",
+    name: "IntIn1",
     type: "INS",
     descID: "IEC61850_7_4.LNGroupG::GGIO.IntIn.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: insChildren,
   },
-  Alm: {
+  Alm1: {
     tagName: "DataObject",
-    name: "Alm",
+    name: "Alm1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupG::GGIO.Alm.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spsChildren,
   },
-  Wrn: {
+  Wrn1: {
     tagName: "DataObject",
-    name: "Wrn",
+    name: "Wrn1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupG::GGIO.Wrn.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spsChildren,
   },
-  Ind: {
+  Ind1: {
     tagName: "DataObject",
-    name: "Ind",
+    name: "Ind1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupG::GGIO.Ind.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spsChildren,
   },
-  CntVal: {
+  CntVal1: {
     tagName: "DataObject",
-    name: "CntVal",
+    name: "CntVal1",
     type: "BCR",
     descID: "IEC61850_7_4.LNGroupG::GGIO.CntVal.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: bcrChildren,
   },
-  AnIn: {
+  AnIn1: {
     tagName: "DataObject",
-    name: "AnIn",
+    name: "AnIn1",
     type: "MV",
     descID: "IEC61850_7_4.LNGroupG::GGIO.AnIn.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: mvChildren,
   },
-  AnOut: {
+  AnOut1: {
     tagName: "DataObject",
-    name: "AnOut",
+    name: "AnOut1",
     type: "APC",
     descID: "IEC61850_7_4.LNGroupG::GGIO.AnOut.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: apcChildren,
   },
-  SPCSO: {
+  SPCSO1: {
     tagName: "DataObject",
-    name: "SPCSO",
+    name: "SPCSO1",
     type: "SPC",
     descID: "IEC61850_7_4.LNGroupG::GGIO.SPCSO.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: spcChildren,
   },
-  DPCSO: {
+  DPCSO1: {
     tagName: "DataObject",
-    name: "DPCSO",
+    name: "DPCSO1",
     type: "DPC",
     descID: "IEC61850_7_4.LNGroupG::GGIO.DPCSO.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: dpcChildren,
   },
-  ISCSO: {
+  ISCSO1: {
     tagName: "DataObject",
-    name: "ISCSO",
+    name: "ISCSO1",
     type: "INC",
     descID: "IEC61850_7_4.LNGroupG::GGIO.ISCSO.desc",
     presCond: "Omulti",

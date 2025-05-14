@@ -15,9 +15,9 @@ export const rrec = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -1718,9 +1718,9 @@ export const rrec = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -2138,27 +2138,27 @@ export const rrec = {
       },
     },
   },
-  Rec1PhCnt: {
+  Rec1PhCnt1: {
     tagName: "DataObject",
-    name: "Rec1PhCnt",
+    name: "Rec1PhCnt1",
     type: "INS",
     descID: "IEC61850_7_4.LNGroupR::RREC.Rec1PhCnt.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: insChildren,
   },
-  Rec3PhCnt: {
+  Rec3PhCnt1: {
     tagName: "DataObject",
-    name: "Rec3PhCnt",
+    name: "Rec3PhCnt1",
     type: "INS",
     descID: "IEC61850_7_4.LNGroupR::RREC.Rec3PhCnt.desc",
     presCond: "Omulti",
     dsPresCond: "O",
     children: insChildren,
   },
-  CycTrMod: {
+  CycTrMod1: {
     tagName: "DataObject",
-    name: "CycTrMod",
+    name: "CycTrMod1",
     type: "ENG",
     underlyingType: "TripModeKind",
     descID: "IEC61850_7_4.LNGroupR::RREC.CycTrMod.desc",
@@ -2263,27 +2263,27 @@ export const rrec = {
     dsPresCond: "F",
     children: ingChildren,
   },
-  Rec1Tmms: {
+  Rec1Tmms1: {
     tagName: "DataObject",
-    name: "Rec1Tmms",
+    name: "Rec1Tmms1",
     type: "ING",
     descID: "IEC61850_7_4.LNGroupR::RREC.Rec1Tmms.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: ingChildren,
   },
-  Rec13Tmms: {
+  Rec13Tmms1: {
     tagName: "DataObject",
-    name: "Rec13Tmms",
+    name: "Rec13Tmms1",
     type: "ING",
     descID: "IEC61850_7_4.LNGroupR::RREC.Rec13Tmms.desc",
     presCond: "Omulti",
     dsPresCond: "F",
     children: ingChildren,
   },
-  Rec3Tmms: {
+  Rec3Tmms1: {
     tagName: "DataObject",
-    name: "Rec3Tmms",
+    name: "Rec3Tmms1",
     type: "ING",
     descID: "IEC61850_7_4.LNGroupR::RREC.Rec3Tmms.desc",
     presCond: "Omulti",

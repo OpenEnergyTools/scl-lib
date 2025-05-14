@@ -79,9 +79,9 @@ export const atcc = {
     dsPresCond: "F",
     children: spsChildren,
   },
-  BlkRef: {
+  BlkRef1: {
     tagName: "DataObject",
-    name: "BlkRef",
+    name: "BlkRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::FunctionLN.BlkRef.desc",
     presCond: "Omulti",
@@ -1782,9 +1782,9 @@ export const atcc = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -2033,9 +2033,9 @@ export const atcc = {
     dsPresCond: "F",
     children: spcChildren,
   },
-  VRed: {
+  VRed1: {
     tagName: "DataObject",
-    name: "VRed",
+    name: "VRed1",
     type: "SPC",
     descID: "IEC61850_7_4.LNGroupA::ATCC.VRed.desc",
     deprecated: "true",

@@ -181,7 +181,7 @@ export function nsdToJson(
 
   const doc74 = nsds && nsds["74"] ? nsds["74"] : defaultDoc74;
   const doc7420 = nsds && nsds["7420"] ? nsds["7420"] : defaultDoc7420;
-  
+
   function getServiceConstructedAttributes(
     serviceDataAttribute: Element,
   ): Element[] {
@@ -197,7 +197,7 @@ export function nsdToJson(
     );
   }
 
-  function getServiceDataAttributesType(type : string | null): Element[] {
+  function getServiceDataAttributesType(type: string | null): Element[] {
     const doc81 = nsds && nsds["81"] ? nsds["81"] : defaultDoc81;
 
     return Array.from(
@@ -209,7 +209,7 @@ export function nsdToJson(
 
   function getServiceDataAttributes(dataObject: Element): Element[] {
     const type = dataObject.getAttribute("type");
-    
+
     return getServiceDataAttributesType(type);
   }
 
@@ -236,7 +236,7 @@ export function nsdToJson(
     return getSubDataAttributesType(type)
   }
 
-  function getDataAttributesType(type:string|null): Element[] {
+  function getDataAttributesType(type: string | null): Element[] {
     const doc73 = nsds && nsds["73"] ? nsds["73"] : defaultDoc73;
 
     if (
@@ -535,15 +535,23 @@ export function nsdToJson(
     return data;
   }
 
+  function dataObjectName(dataObject: Element): string {
+    const multiInstances = ['Omulti', 'Mmulti']
+    const instance = multiInstances.includes(dataObject.getAttribute("presCond")!) ? '1' : '';
+    const name = dataObject.getAttribute("name")!;
+    return `${name}${instance}`;
+  }
+
   function nsdDataObject(dataObject: Element): CdcDescription {
-    const [name, type, descID, presCond, dsPresCond, transient] = [
-      "name",
+    const [type, descID, presCond, dsPresCond, transient] = [
       "type",
       "descID",
       "presCond",
       "dsPresCond",
       "transient",
     ].map((attr) => dataObject.getAttribute(attr)!);
+
+    const name = dataObjectName(dataObject);   // adopt when presCond is Omulti
 
     const tagName = dataObject.tagName;
 
@@ -648,7 +656,7 @@ export function nsdToJson(
   }
 
   if (lnClassOrCdc === undefined) return;
-  else if (isSupportedCdc(lnClassOrCdc)) 
+  else if (isSupportedCdc(lnClassOrCdc))
     return CdcChildren(lnClassOrCdc);
   else {
     const nsdLnClass74 = doc74.querySelector(`LNClass[name="${lnClassOrCdc}"]`);
@@ -659,11 +667,11 @@ export function nsdToJson(
 
     const lnClassJson: LNodeDescription = {};
     getDataObjects(nsdLnClass).forEach((dataObject) => {
-      const name = dataObject.getAttribute("name")!;
-  
+      const name = dataObjectName(dataObject);
+
       lnClassJson[name] = nsdDataObject(dataObject);
     });
 
     return lnClassJson
-  } 
+  }
 }

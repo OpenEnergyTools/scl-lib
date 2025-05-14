@@ -1225,9 +1225,9 @@ export const ltrk = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -3688,9 +3688,9 @@ export const ltrk = {
       },
     },
   },
-  EncTrk: {
+  EncTrk1: {
     tagName: "DataObject",
-    name: "EncTrk",
+    name: "EncTrk1",
     type: "CTS",
     underlyingTypeKind: "ENUMERATED",
     descID: "IEC61850_7_4.LNGroupL::LTRK.EncTrk.desc",

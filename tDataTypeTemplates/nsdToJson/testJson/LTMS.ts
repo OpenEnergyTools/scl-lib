@@ -1229,9 +1229,9 @@ export const ltms = {
       },
     },
   },
-  InRef: {
+  InRef1: {
     tagName: "DataObject",
-    name: "InRef",
+    name: "InRef1",
     type: "ORG",
     descID: "IEC61850_7_4.AbstractLNsCommon::DomainLN.InRef.desc",
     presCond: "Omulti",
@@ -1578,9 +1578,9 @@ export const ltms = {
       },
     },
   },
-  TmChSt: {
+  TmChSt1: {
     tagName: "DataObject",
-    name: "TmChSt",
+    name: "TmChSt1",
     type: "SPS",
     descID: "IEC61850_7_4.LNGroupL::LTMS.TmChSt.desc",
     presCond: "Omulti",
@@ -1774,9 +1774,9 @@ export const ltms = {
       },
     },
   },
-  TmSrcSet: {
+  TmSrcSet1: {
     tagName: "DataObject",
-    name: "TmSrcSet",
+    name: "TmSrcSet1",
     type: "VSG",
     descID: "IEC61850_7_4.LNGroupL::LTMS.TmSrcSet.desc",
     presCond: "Omulti",
