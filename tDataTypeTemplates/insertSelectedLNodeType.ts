@@ -169,7 +169,7 @@ function data(lnData: any, path: string[]): any {
 export function insertSelectedLNodeType(
   doc: XMLDocument,
   selection: TreeSelection,
-  logicalnode: {class: string, data?: LNodeDescription},
+  logicalnode: { class: string, desc?: string, data?: LNodeDescription },
 ): Insert[] {
   const types = new Set<string>();
   const elements: Templates = {
@@ -181,6 +181,7 @@ export function insertSelectedLNodeType(
 
   const lnData = logicalnode.data ?? nsdToJson(logicalnode.class);
   const lnClass = logicalnode.class;
+  const desc = logicalnode.desc ?? null
 
   function isUnknownId(id: string): boolean {
     const alreadyCreate = types.has(id);
@@ -206,7 +207,7 @@ export function insertSelectedLNodeType(
     return id;
   }
 
-  const lnType = createElement(doc, "LNodeType", { lnClass });
+  const lnType = createElement(doc, "LNodeType", { lnClass, desc });
 
   function createEnumType(path: string[], sel: TreeSelection): string {
     const enumData = data(lnData, path).children;
@@ -214,9 +215,9 @@ export function insertSelectedLNodeType(
     const vals: Element[] = [];
 
     for (const content of Object.keys(sel)) {
-      const enumVal = enumData[content];  
-      if(!enumVal) continue; // check for invalid selection
-      
+      const enumVal = enumData[content];
+      if (!enumVal) continue; // check for invalid selection
+
       const ord = enumVal.literalVal;
       const val = createElement(doc, "EnumVal", { ord });
       val.textContent = content;
