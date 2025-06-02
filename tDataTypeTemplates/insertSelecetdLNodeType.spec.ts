@@ -25,16 +25,16 @@ const incompleteAtcc = findElement(incompleteAtccTypes) as XMLDocument;
 const missingDataTypes = findElement(emptySSD) as XMLDocument;
 
 describe("insertLNodeTypeSelection", () => {
-  it('is insensitive for invalid EnumTypes',()=> {
+  it('is insensitive for invalid EnumTypes', () => {
     const data = nsdToJson("LLN0") as LNodeDescription;
-    insertSelectedLNodeType(incompleteMmxu, invalidSelection, {class:"LLN0", data});
+    insertSelectedLNodeType(incompleteMmxu, invalidSelection, { class: "LLN0", data });
   })
 
   it("insert MMXU LNodeType including missing sub data", () => {
     const edits = insertSelectedLNodeType(
       incompleteMmxu,
       mmxuSelection,
-      {class:"MMXU"},
+      { class: "MMXU" },
     );
 
     expect(edits.length).to.equal(6);
@@ -82,7 +82,7 @@ describe("insertLNodeTypeSelection", () => {
     const edits = insertSelectedLNodeType(
       imcompleteLtrk,
       ltrkSelection,
-      {class:"LTRK", data},
+      { class: "LTRK", data },
     );
 
     expect(edits.length).to.equal(7);
@@ -138,7 +138,7 @@ describe("insertLNodeTypeSelection", () => {
     const edits = insertSelectedLNodeType(
       incompleteAtcc,
       atccSelection,
-      {class: "ATCC", data},
+      { class: "ATCC", data },
     );
 
     expect(edits.length).to.equal(5);
@@ -181,7 +181,7 @@ describe("insertLNodeTypeSelection", () => {
     const edits = insertSelectedLNodeType(
       missingDataTypes,
       atccSelection,
-      {class:"ATCC", data},
+      { class: "ATCC", desc: 'SomeDesc', data },
     );
 
     expect(edits.length).to.equal(19);
