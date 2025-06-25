@@ -152,6 +152,7 @@ function hashElement(element: Element): string {
   return cyrb64(JSON.stringify(describeElement(element)));
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function data(lnData: any, path: string[]): any {
   let d = lnData;
   for (const slug of path.slice(0, -1)) d = d[slug].children;
@@ -329,6 +330,8 @@ export function insertSelectedLNodeType(
         qchg?: string;
         typeKind?: "BASIC" | "ENUMERATED" | "CONSTRUCTED" | "undefined";
         type?: string;
+        isArray?: string;
+        sizeAttribute?: string;
       },
     ][] = Object.entries(dO.children);
 
@@ -340,10 +343,20 @@ export function insertSelectedLNodeType(
         const type = createDOType(path.concat([name]), selection[name]);
         const sdo = createElement(doc, "SDO", { name, transient, type });
         doType.prepend(sdo);
+
+        // For arrays set count attribute
+        if (dep.isArray === "true" && dep.sizeAttribute) {
+          sdo.setAttribute("count", dep.sizeAttribute);
+        }
       } else {
         const { fc, dchg, dupd, qchg } = dep;
 
         const da = createElement(doc, "DA", { name, fc, dchg, dupd, qchg });
+
+        // For arrays set count attribute
+        if (dep.isArray === "true" && dep.sizeAttribute) {
+          da.setAttribute("count", dep.sizeAttribute);
+        }
 
         if (dep.typeKind === "BASIC" || !dep.typeKind) {
           da.setAttribute("bType", dep.type!);

@@ -6,7 +6,9 @@ import {
   atccSelection,
   invalidSelection,
   ltrkSelection,
+  mhaiSelection,
   mmxuSelection,
+  ptocSelection,
 } from "./insertSelectedLNodeType.testdata.js";
 
 import {
@@ -188,5 +190,29 @@ describe("insertLNodeTypeSelection", () => {
 
     const lNodeType = edits[0].node as Element;
     expect(lNodeType.tagName).to.equal("DataTypeTemplates");
+  });
+
+  it("add count attribute to data attribute in case is an array", () => {
+    const data = nsdToJson("PTOC") as LNodeDescription;
+    const edits = insertSelectedLNodeType(
+      missingDataTypes,
+      ptocSelection,
+      { class: "PTOC", data },
+    );
+
+    const doTypeEdit = edits[5].node as Element;
+    expect(doTypeEdit.querySelector('DA[name="crvPts"]')?.getAttribute('count')).to.equal("maxPts");
+  });
+
+  it("add count attribute to sub data object in case is an array", () => {
+    const data = nsdToJson("MHAI") as LNodeDescription;
+    const edits = insertSelectedLNodeType(
+      missingDataTypes,
+      mhaiSelection,
+      { class: "MHAI", data },
+    );
+
+    const doTypeEdit = edits[4].node as Element;
+    expect(doTypeEdit.querySelector('SDO[name="phsAHar"]')?.getAttribute('count')).to.equal("maxPts");
   });
 });
