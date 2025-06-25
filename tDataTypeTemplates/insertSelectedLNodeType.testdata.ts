@@ -428,3 +428,88 @@ export const invalidSelection = {
     "ldNs": {}
   }
 };
+
+export const ptocSelection = {
+  "Beh": {
+    "q": {},
+    "stVal": {
+      "blocked": {},
+      "off": {},
+      "on": {},
+      "test": {},
+      "test/blocked": {}
+    },
+    "t": {}
+  },
+  "Op": {
+    "general": {},
+    "q": {},
+    "t": {}
+  },
+  "Str": {
+    "dirGeneral": {
+      "backward": {},
+      "both": {},
+      "forward": {},
+      "unknown": {}
+    },
+    "general": {},
+    "q": {},
+    "t": {}
+  },
+  "TmAChr": {
+    "crvPts": {
+      "xVal": {},
+      "yVal": {}
+    },
+    "maxPts": {},
+    "numPts": {},
+    "xD": {},
+    "yD": {},
+    "yUnits": {
+      "SIUnit": {
+        "°C": {},
+        "1/s": {}
+      }
+    },
+    "xUnits": {
+      "SIUnit": {
+        "°C": {},
+        "1/s": {}
+      }
+    }
+  }
+}
+
+export const mhaiSelection = {
+  "Beh": {
+    "q": {},
+    "stVal": {
+      "blocked": {},
+      "off": {},
+      "on": {},
+      "test": {},
+      "test/blocked": {}
+    },
+    "t": {}
+  },
+  "HA": {
+    "evalTm": {},
+    "frequency": {},
+    "maxPts": {},
+    "numCyc": {},
+    "numHar": {},
+    "phsAHar": {
+      "cVal": {
+        "mag": {
+          "f": {}
+        },
+        "ang": {
+          "f": {}
+        }
+      },
+      "q": {},
+      "t": {}
+    }
+  }
+}
