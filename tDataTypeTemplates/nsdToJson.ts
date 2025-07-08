@@ -58,7 +58,7 @@ type ServiceDaDescription = {
   children?: DaChildren;
 };
 
-type DaDescription = {
+export type DaDescription = {
   tagName: string;
   name: string;
   type?: string;
@@ -75,9 +75,10 @@ type DaDescription = {
   defaultValue?: string;
   presCondArgs?: string;
   children?: DaChildren;
+  val?: string
 };
 
-type CdcChildren = Record<
+export type CdcChildren = Record<
   string,
   DaDescription | ServiceDaDescription | CdcDescription
 >;
