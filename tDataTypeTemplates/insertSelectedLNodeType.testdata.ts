@@ -513,3 +513,23 @@ export const mhaiSelection = {
     }
   }
 }
+
+export const lln0Selection = {
+  "Beh": {
+    "q": {},
+    "stVal": {
+      "blocked": {},
+      "off": {},
+      "on": {},
+      "test": {},
+      "test/blocked": {}
+    },
+    "t": {}
+  },
+  "TestDo": {
+    "stVal": {},
+    "q": {},
+    "t": {},
+    "dataNs": {}
+  },
+}

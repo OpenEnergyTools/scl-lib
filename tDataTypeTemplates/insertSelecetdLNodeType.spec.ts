@@ -9,6 +9,7 @@ import {
   mhaiSelection,
   mmxuSelection,
   ptocSelection,
+  lln0Selection
 } from "./insertSelectedLNodeType.testdata.js";
 
 import {
@@ -19,7 +20,7 @@ import {
 } from "./insertSelectedDataType.testfiles.js";
 
 import { insertSelectedLNodeType } from "./insertSelectedLNodeType.js";
-import { LNodeDescription, nsdToJson } from "./nsdToJson.js";
+import { CdcChildren, DaDescription, LNodeDescription, nsdToJson } from "./nsdToJson.js";
 
 const incompleteMmxu = findElement(missingMmxuTypes) as XMLDocument;
 const imcompleteLtrk = findElement(incompleteLtrkTypes) as XMLDocument;
@@ -215,4 +216,28 @@ describe("insertLNodeTypeSelection", () => {
     const doTypeEdit = edits[4].node as Element;
     expect(doTypeEdit.querySelector('SDO[name="phsAHar"]')?.getAttribute('count')).to.equal("maxPts");
   });
+
+  it('add user defined data object', () => {
+    const lnData = nsdToJson("LLN0") as LNodeDescription;
+    const userData = nsdToJson("SPS") as CdcChildren;
+    (userData["dataNs"] as DaDescription).mandatory = true;
+    (userData["dataNs"] as DaDescription).val = "TestNameSpace-1-d-1234567890";
+
+    const cdcDescription = {
+      tagName: 'DataObject',
+      type: 'SPS',
+      descID: '',
+      presCond: 'O',
+      children: userData,
+    };
+
+    Object.assign(lnData, {
+      ['TestDo']: cdcDescription,
+    });
+
+    const edits = insertSelectedLNodeType(missingDataTypes, lln0Selection, { class: "LLN0", data: lnData });
+
+    expect(edits.length).to.equal(5);
+    expect((edits[3].node as Element).querySelector('DA[name="dataNs"] > Val')?.textContent).to.equal("TestNameSpace-1-d-1234567890");
+  })
 });

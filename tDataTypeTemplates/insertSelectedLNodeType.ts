@@ -332,6 +332,7 @@ export function insertSelectedLNodeType(
         type?: string;
         isArray?: string;
         sizeAttribute?: string;
+        val?: string;
       },
     ][] = Object.entries(dO.children);
 
@@ -360,6 +361,15 @@ export function insertSelectedLNodeType(
 
         if (dep.typeKind === "BASIC" || !dep.typeKind) {
           da.setAttribute("bType", dep.type!);
+
+
+          // One can include a value for any data attribute
+          if (dep.val) {
+            const value = createElement(doc, "Val", {});
+            value.textContent = dep.val;
+            (da as Node).insertBefore(value, null);
+          }
+
         }
 
         if (dep.typeKind === "ENUMERATED") {
