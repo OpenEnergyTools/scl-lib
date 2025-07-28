@@ -14,7 +14,7 @@ export const csyn = {
     tagName: "DataObject",
     name: "Rel",
     type: "SPS",
-    descID: "IEC61850_7_4.AbstractLNsCommon::SynchronisationLN.Rel.desc",
+    descID: "IEC61850_7_4.LNGroupC::CSYN.Rel.desc",
     presCond: "AtLeastOne",
     presCondArgs: "1",
     dsPresCond: "F",

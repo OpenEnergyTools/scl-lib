@@ -12,10 +12,10 @@ export const rsyn = {
     tagName: "DataObject",
     name: "Rel",
     type: "SPS",
-    descID: "IEC61850_7_4.AbstractLNsCommon::SynchronisationLN.Rel.desc",
-    presCond: "AtLeastOne",
-    presCondArgs: "1",
+    descID: "IEC61850_7_4.LNGroupR::RSYN.Rel.desc",
+    presCond: "M",
     dsPresCond: "F",
+    mandatory: true,
     children: spsChildren,
   },
   VInd: {

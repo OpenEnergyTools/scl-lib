@@ -424,7 +424,7 @@ export const apcChildren = {
             tagName: "Literal",
             name: "°C",
             literalVal: "23",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind._deg_C.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.°C.desc",
           },
           Sv: {
             tagName: "Literal",
@@ -526,13 +526,13 @@ export const apcChildren = {
             tagName: "Literal",
             name: "m²",
             literalVal: "41",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m².desc",
           },
           "m³": {
             tagName: "Literal",
             name: "m³",
             literalVal: "42",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_cube_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m³.desc",
           },
           "m/s": {
             tagName: "Literal",
@@ -544,19 +544,19 @@ export const apcChildren = {
             tagName: "Literal",
             name: "m/s²",
             literalVal: "44",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_per_s_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_per_s².desc",
           },
           "m³/s": {
             tagName: "Literal",
             name: "m³/s",
             literalVal: "45",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_cube__per_s.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m³_per_s.desc",
           },
           "m/m³": {
             tagName: "Literal",
             name: "m/m³",
             literalVal: "46",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_per_m_cube_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_per_m³.desc",
           },
           M: {
             tagName: "Literal",
@@ -568,13 +568,13 @@ export const apcChildren = {
             tagName: "Literal",
             name: "kg/m³",
             literalVal: "48",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.kg_per_m_cube_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.kg_per_m³.desc",
           },
           "m²/s": {
             tagName: "Literal",
             name: "m²/s",
             literalVal: "49",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m_sq__per_s.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.m²_per_s.desc",
           },
           "W/m K": {
             tagName: "Literal",
@@ -610,13 +610,13 @@ export const apcChildren = {
             tagName: "Literal",
             name: "W/m²",
             literalVal: "55",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.W_per_m_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.W_per_m².desc",
           },
           "J/m²": {
             tagName: "Literal",
             name: "J/m²",
             literalVal: "56",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.J_per_m_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.J_per_m².desc",
           },
           "S/m": {
             tagName: "Literal",
@@ -684,7 +684,7 @@ export const apcChildren = {
             tagName: "Literal",
             name: "V²",
             literalVal: "67",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.V_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.V².desc",
           },
           As: {
             tagName: "Literal",
@@ -696,13 +696,13 @@ export const apcChildren = {
             tagName: "Literal",
             name: "A²",
             literalVal: "69",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.A_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.A².desc",
           },
           "A²t": {
             tagName: "Literal",
             name: "A²t",
             literalVal: "70",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.A_sq_t.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.A²t.desc",
           },
           VAh: {
             tagName: "Literal",
@@ -750,7 +750,7 @@ export const apcChildren = {
             tagName: "Literal",
             name: "kgm²",
             literalVal: "78",
-            descID: "IEC61850_7_3.DAEnums::SIUnitKind.kgm_sq_.desc",
+            descID: "IEC61850_7_3.DAEnums::SIUnitKind.kgm².desc",
           },
           dB: {
             tagName: "Literal",
@@ -869,7 +869,7 @@ export const apcChildren = {
             tagName: "Literal",
             name: "µ",
             literalVal: "-6",
-            descID: "IEC61850_7_3.DAEnums::MultiplierKind._micro.desc",
+            descID: "IEC61850_7_3.DAEnums::MultiplierKind.µ.desc",
           },
           m: {
             tagName: "Literal",
@@ -1097,8 +1097,8 @@ export const apcChildren = {
     type: "FLOAT32",
     dchg: "true",
     descID: "IEC61850_7_3.CDCControl::APC.dbRef.desc",
-    mandatory: true,
-    presCond: "M",
+    presCond: "MO",
+    presCondArgs: "db"
   },
   d: {
     tagName: "DataAttribute",

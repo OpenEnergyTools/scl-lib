@@ -10782,6 +10782,8 @@ export const ltrk = {
     descID: "IEC61850_7_4.LNGroupL::LTRK.GocbTrk.desc",
     presCond: "O",
     dsPresCond: "na",
+    underlyingType: "PhyComAddrL2",
+    underlyingTypeKind: "SCSM",
     children: {
       objRef: {
         tagName: "DataAttribute",
@@ -11250,7 +11252,8 @@ export const ltrk = {
         tagName: "DataAttribute",
         name: "dstAddress",
         fc: "SR",
-        type: "PhyComAddr",
+        type: "PhyComAddrL2",
+        typeKind: "SCSM",
         descID: "IEC61850_7_3.CDCServiceTracking::GTS.dstAddress.desc",
         mandatory: true,
         presCond: "M",
@@ -11296,6 +11299,8 @@ export const ltrk = {
     descID: "IEC61850_7_4.LNGroupL::LTRK.MsvcbTrk.desc",
     presCond: "O",
     dsPresCond: "na",
+    underlyingType: "PhyComAddrL2",
+    underlyingTypeKind: "SCSM",
     children: {
       objRef: {
         tagName: "DataAttribute",
@@ -11800,7 +11805,8 @@ export const ltrk = {
         tagName: "DataAttribute",
         name: "dstAddress",
         fc: "SR",
-        type: "PhyComAddr",
+        type: "PhyComAddrL2",
+        typeKind: "SCSM",
         descID: "IEC61850_7_3.CDCServiceTracking::MTS.dstAddress.desc",
         mandatory: true,
         presCond: "M",
