@@ -5,10 +5,15 @@ export const nsd72 = `<?xml version="1.0" encoding="UTF-8"?>
     id="IEC 61850-7-2"
     version="2007"
     revision="B"
-    release="3"
-    umlVersion="WG10built4"
-    umlDate="2019-10-02T00:00:00Z"
-    publicationStage="IS">
+    release="5"
+    umlVersion="WG10built12"
+    umlDate="2024-01-15"
+    publicationStage="IS"
+    appVersion="j61850DocBuilder 02.03 based on jCleanCim noNS beta9.3 (derived from jCleanCim 02-02)"
+    namespaceType="basic"
+    nsdVersion="2017"
+    nsdRevision="B"
+    nsdRelease="5">
    <Copyright>
          <Notice>
 			COPYRIGHT (c) IEC, www.iec.ch/tc57/supportdocuments. This version of this NSD is part of IEC_61850-7-2:2010 Edition 2.1; see the IEC_61850-7-2:2010 Edition 2.1 for full legal notices. In case of any differences between the here-below code and the IEC published content, the here-below definition supersedes the IEC publication; it may contain updates. See history files. The whole document has to be taken into account to have a full description of this code component.
@@ -17,8 +22,8 @@ export const nsd72 = `<?xml version="1.0" encoding="UTF-8"?>
          <License uri="www.iec.ch/CCv1" kind="Standard"/>
       </Copyright>
    <Changes version="2007"
-            revision="A"
-            tissues="728, 730, 778, 780, 783, 786, 813, 820, 850, 852, 858, 860, 861, 869, 875, 876, 943, 970, 1038, 1050, 1061, 1062, 1071, 1091, 1092, 1116, 1122, 1127, 1145, 1154, 1194, 1202, 1232, 1242, 1252, 1276, 1283, 1307, 1308, 1319, 1338, 1341, 1356, 1377, 1386, 1428, 1432, 1433, 1435, 1439, 1455, 1569,  1589, 1622, 1630, 1650, 1652"/>
+            revision="B"
+            tissues="1781, 1782, 1801, 1841, 1847, 1822"/>
    <BasicTypes>
          <BasicType name="BOOLEAN" descID="IEC61850_7_2.BasicTypes::P_BOOLEAN.cl.desc"/>
          <BasicType name="INT8" descID="IEC61850_7_2.BasicTypes::P_INT8.cl.desc"/>
@@ -531,7 +536,8 @@ export const nsd72 = `<?xml version="1.0" encoding="UTF-8"?>
                            presCond="M"/>
          </ConstructedAttribute>
       </ConstructedAttributes>
-</NS>`;
+</NS>
+`;
 
 export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
 <NS xmlns="http://www.iec.ch/61850/2016/NSD"
@@ -540,10 +546,15 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
     id="IEC 61850-7-3"
     version="2007"
     revision="B"
-    release="3"
-    umlVersion="WG10built3"
-    umlDate="2019-10-02T00:00:00Z"
-    publicationStage="IS">
+    release="5"
+    umlVersion="WG10built12"
+    umlDate="2024-02-12"
+    publicationStage="IS"
+    appVersion="j61850DocBuilder 02.03 based on jCleanCim noNS beta9.3 (derived from jCleanCim 02-02)"
+    namespaceType="basic"
+    nsdVersion="2017"
+    nsdRevision="B"
+    nsdRelease="5">
    <Copyright>
          <Notice>
 			COPYRIGHT (c) IEC, www.iec.ch/tc57/supportdocuments. This version of this NSD is part of IEC_61850-7-3:2010 Edition 2.1; see the IEC_61850-7-3:2010 Edition 2.1 for full legal notices. In case of any differences between the here-below code and the IEC published content, the here-below definition supersedes the IEC publication; it may contain updates. See history files. The whole document has to be taken into account to have a full description of this code component.
@@ -552,9 +563,12 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
          <License uri="www.iec.ch/CCv1" kind="Standard"/>
       </Copyright>
    <Changes version="2007"
-            revision="A"
-            tissues="690, 691, 692, 697, 698, 707, 709, 711, 722, 814, 816, 819, 832, 839, 846, 868, 887, 919, 924, 925, 926, 929, 953, 954, 962, 968, 996, 1078, 1079, 1122, 1127, 1184, 1187, 1189, 1220, 1233, 1240, 1242, 1247, 1253, 1265, 1270, 1311, 1372, 1387, 1388, 1403, 1430, 1438, 1578, 1581, 1598, 1602, 1623"/>
-   <DependsOn id="IEC 61850-7-2" version="2007" revision="B"/>
+            revision="B"
+            tissues="1716, 1730, 1783, 1785, 1807, 1829, 1840, 1851, 1852, 1889, 1900"/>
+   <DependsOn id="IEC 61850-7-2"
+              version="2007"
+              revision="B"
+              dependencyType="dependsOn"/>
    <Enumerations>
          <Enumeration name="AngleReferenceKind"
                    titleID="IEC61850_7_3.DAEnums::AngleReferenceKind.cl.title">
@@ -767,7 +781,7 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                   descID="IEC61850_7_3.DAEnums::MultiplierKind.n.desc"/>
             <Literal name="µ"
                   literalVal="-6"
-                  descID="IEC61850_7_3.DAEnums::MultiplierKind._micro.desc"/>
+                  descID="IEC61850_7_3.DAEnums::MultiplierKind.µ.desc"/>
             <Literal name="m"
                   literalVal="-3"
                   descID="IEC61850_7_3.DAEnums::MultiplierKind.m.desc"/>
@@ -920,7 +934,7 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.Bq.desc"/>
             <Literal name="°C"
                   literalVal="23"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind._deg_C.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.°C.desc"/>
             <Literal name="Sv"
                   literalVal="24"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.Sv.desc"/>
@@ -971,31 +985,31 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.Pa.desc"/>
             <Literal name="m²"
                   literalVal="41"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m².desc"/>
             <Literal name="m³"
                   literalVal="42"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_cube_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m³.desc"/>
             <Literal name="m/s"
                   literalVal="43"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.m_per_s.desc"/>
             <Literal name="m/s²"
                   literalVal="44"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_per_s_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_per_s².desc"/>
             <Literal name="m³/s"
                   literalVal="45"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_cube__per_s.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m³_per_s.desc"/>
             <Literal name="m/m³"
                   literalVal="46"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_per_m_cube_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_per_m³.desc"/>
             <Literal name="M"
                   literalVal="47"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.M.desc"/>
             <Literal name="kg/m³"
                   literalVal="48"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.kg_per_m_cube_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.kg_per_m³.desc"/>
             <Literal name="m²/s"
                   literalVal="49"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m_sq__per_s.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.m²_per_s.desc"/>
             <Literal name="W/m K"
                   literalVal="50"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.W_per_m_K.desc"/>
@@ -1013,10 +1027,10 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.rad_per_s.desc"/>
             <Literal name="W/m²"
                   literalVal="55"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.W_per_m_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.W_per_m².desc"/>
             <Literal name="J/m²"
                   literalVal="56"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.J_per_m_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.J_per_m².desc"/>
             <Literal name="S/m"
                   literalVal="57"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.S_per_m.desc"/>
@@ -1051,16 +1065,16 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.Vs.desc"/>
             <Literal name="V²"
                   literalVal="67"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.V_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.V².desc"/>
             <Literal name="As"
                   literalVal="68"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.As.desc"/>
             <Literal name="A²"
                   literalVal="69"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.A_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.A².desc"/>
             <Literal name="A²t"
                   literalVal="70"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.A_sq_t.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.A²t.desc"/>
             <Literal name="VAh"
                   literalVal="71"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.VAh.desc"/>
@@ -1084,7 +1098,7 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.char_per_s.desc"/>
             <Literal name="kgm²"
                   literalVal="78"
-                  descID="IEC61850_7_3.DAEnums::SIUnitKind.kgm_sq_.desc"/>
+                  descID="IEC61850_7_3.DAEnums::SIUnitKind.kgm².desc"/>
             <Literal name="dB"
                   literalVal="79"
                   descID="IEC61850_7_3.DAEnums::SIUnitKind.dB.desc"/>
@@ -1964,7 +1978,8 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         type="Timestamp"
                         dchg="true"
                         descID="IEC61850_7_3.CDCStatusInfo::BCR.strTm.desc"
-                        presCond="O"/>
+                        presCond="OF"
+                        presCondArgs="frVal"/>
             <DataAttribute name="frPd"
                         fc="CF"
                         type="INT32"
@@ -4076,7 +4091,8 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         type="FLOAT32"
                         dchg="true"
                         descID="IEC61850_7_3.CDCControl::APC.dbRef.desc"
-                        presCond="M"/>
+                        presCond="MO"
+                        presCondArgs="db"/>
             <DataAttribute name="d"
                         fc="DC"
                         type="VisString255"
@@ -4265,7 +4281,8 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         type="FLOAT32"
                         dchg="true"
                         descID="IEC61850_7_3.CDCControl::BAC.dbRef.desc"
-                        presCond="M"/>
+                        presCond="MO"
+                        presCondArgs="db"/>
             <DataAttribute name="d"
                         fc="DC"
                         type="VisString255"
@@ -6300,7 +6317,9 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         descID="IEC61850_7_3.CoreAbstractCDCs::BasePrimitiveCDC.dataNs.desc"
                         presCond="MOdataNs"/>
          </CDC>
-         <CDC name="GTS" titleID="IEC61850_7_3.CDCServiceTracking::GTS.cl.title">
+         <CDC name="GTS"
+           titleID="IEC61850_7_3.CDCServiceTracking::GTS.cl.title"
+           typeKindParameterized="true">
             <DataAttribute name="objRef"
                         fc="SR"
                         type="ObjRef"
@@ -6361,7 +6380,7 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         presCond="M"/>
             <DataAttribute name="dstAddress"
                         fc="SR"
-                        type="PhyComAddr"
+                        typeKind="SCSM"
                         descID="IEC61850_7_3.CDCServiceTracking::GTS.dstAddress.desc"
                         presCond="M"/>
             <DataAttribute name="d"
@@ -6385,7 +6404,9 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         descID="IEC61850_7_3.CoreAbstractCDCs::BasePrimitiveCDC.dataNs.desc"
                         presCond="MOdataNs"/>
          </CDC>
-         <CDC name="MTS" titleID="IEC61850_7_3.CDCServiceTracking::MTS.cl.title">
+         <CDC name="MTS"
+           titleID="IEC61850_7_3.CDCServiceTracking::MTS.cl.title"
+           typeKindParameterized="true">
             <DataAttribute name="objRef"
                         fc="SR"
                         type="ObjRef"
@@ -6457,7 +6478,7 @@ export const nsd73 = `<?xml version="1.0" encoding="UTF-8"?>
                         presCond="M"/>
             <DataAttribute name="dstAddress"
                         fc="SR"
-                        type="PhyComAddr"
+                        typeKind="SCSM"
                         descID="IEC61850_7_3.CDCServiceTracking::MTS.dstAddress.desc"
                         presCond="M"/>
             <DataAttribute name="d"
@@ -6770,20 +6791,29 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
     id="IEC 61850-7-4"
     version="2007"
     revision="B"
-    release="3"
-    umlVersion="WG10UML02v20draft25"
-    umlDate="2019-10-31T00:00:00Z"
-    publicationStage="IS">
+    release="5"
+    umlVersion="WG10built12"
+    umlDate="2024-02-14"
+    publicationStage="IS"
+    appVersion="j61850DocBuilder 02.03 based on jCleanCim noNS beta9.3 (derived from jCleanCim 02-02)"
+    namespaceType="basic"
+    nsdVersion="2017"
+    nsdRevision="B"
+    nsdRelease="5">
    <Copyright>
          <Notice>
-			COPYRIGHT (c) IEC, www.iec.ch/tc57/supportdocuments. This version of this NSD is part of IEC_61850-7-4:2007; see the IEC_61850-7-4:2007 for full legal notices. In case of any differences between the here-below code and the IEC published content, the here-below definition supersedes the IEC publication; it may contain updates. See history files. The whole document has to be taken into account to have a full description of this code component.
+			COPYRIGHT (c) IEC, www.iec.ch/tc57/supportdocuments. This version of this NSD is part of IEC_61850-7-4:2020 Edition 2.1; see the IEC_61850-7-4:2020 Edition 2.1 for full legal notices. In case of any differences between the here-below code and the IEC published content, the here-below definition supersedes the IEC publication; it may contain updates. See history files. The whole document has to be taken into account to have a full description of this code component.
 			See www.iec.ch/CCv1 for copyright details.
 			</Notice>
          <License uri="www.iec.ch/CCv1" kind="Standard"/>
       </Copyright>
-   <Changes version=""
-            revision=""
-            tissues="671, 672, 674, 675, 676, 677, 679, 680, 682, 683, 685, 686, 689, 693, 694, 695, 696, 712, 713, 714, 715, 716, 724, 725, 732, 734, 735, 736, 742, 743, 744, 748, 749, 772, 773, 774, 775, 776, 800, 802, 808, 819, 830, 831, 835, 838, 842, 843, 844, 849, 871, 877, 878, 879, 881, 882, 902, 908, 909, 910, 911, 912, 913, 920, 928, 932, 933, 937, 939, 940, 952, 967, 991, 1007, 1029, 1044, 1046, 1071, 1075, 1076, 1077, 1081, 1086, 1117, 1119, 1128, 1137, 1139, 1176, 1177, 1190, 1191, 1203, 1205, 1229, 1235, 1236, 1244, 1250, 1256, 1258, 1259, 1261, 1269, 1273, 1278, 1282, 1292, 1294, 1310, 1316, 1330, 1331, 1333, 1339, 1347, 1348, 1364, 1368, 1375, 1380, 1390, 1404, 1411, 1420, 1423, 1425, 1426, 1436, 1456, 1568"/>
+   <Changes version="2007"
+            revision="B"
+            tissues="1701, 1766, 1775, 1819, 1821, 1836, 1846, 1856, 1859, 1866, 1883"/>
+   <DependsOn id="IEC 61850-7-3"
+              version="2007"
+              revision="B"
+              dependencyType="dependsOn"/>
    <Abbreviations>
          <Abbreviation name="A" descID="IEC61850_7_4.Abbreviations::AbbrTermA.A.desc"/>
          <Abbreviation name="AC" descID="IEC61850_7_4.Abbreviations::AbbrTermA.AC.desc"/>
@@ -7718,6 +7748,7 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
          <Abbreviation name="Typ" descID="IEC61850_7_4.Abbreviations::AbbrTermT.Typ.desc"/>
          <Abbreviation name="UPS" descID="IEC61850_7_4.Abbreviations::AbbrTermU.UPS.desc"/>
          <Abbreviation name="UTC" descID="IEC61850_7_4.Abbreviations::AbbrTermU.UTC.desc"/>
+         <Abbreviation name="Udp" descID="IEC61850_7_4.Abbreviations::AbbrTermU.Udp.desc"/>
          <Abbreviation name="Uhf" descID="IEC61850_7_4.Abbreviations::AbbrTermU.Uhf.desc"/>
          <Abbreviation name="Un" descID="IEC61850_7_4.Abbreviations::AbbrTermU.Un.desc"/>
          <Abbreviation name="Unav" descID="IEC61850_7_4.Abbreviations::AbbrTermU.Unav.desc"/>
@@ -7929,11 +7960,9 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
          </Enumeration>
          <Enumeration name="ClockSyncKind"
                    titleID="IEC61850_7_4.DOEnums::ClockSyncKind.cl.title">
-            <Literal name="InternalClock" literalVal="1"/>
-            <Literal name="LocalAreaClock" literalVal="2"/>
-            <Literal name="GlobalAreaClock"
-                  literalVal="3"
-                  descID="IEC61850_7_4.DOEnums::ClockSyncKind.GlobalAreaClock.desc"/>
+            <Literal name="InternalClock" literalVal="0"/>
+            <Literal name="LocalAreaClock" literalVal="1"/>
+            <Literal name="GlobalAreaClock" literalVal="2"/>
          </Enumeration>
          <Enumeration name="ClockSyncLockingKind"
                    titleID="IEC61850_7_4.DOEnums::ClockSyncLockingKind.cl.title">
@@ -8376,7 +8405,8 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
             <Literal name="TPY" literalVal="7"/>
             <Literal name="TPZ" literalVal="8"/>
             <Literal name="TPE" literalVal="9"/>
-            <Literal name="TPS" literalVal="10"/>
+            <Literal name="TPS" literalVal="10" deprecated="true"/>
+            <Literal name="TPM" literalVal="11"/>
          </Enumeration>
          <Enumeration name="TpcAppModeKind"
                    titleID="IEC61850_7_4.DOEnums::TpcAppModeKind.cl.title">
@@ -8722,12 +8752,6 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
          <AbstractLNClass name="SynchronisationLN"
                        titleID="IEC61850_7_4.AbstractLNsCommon::SynchronisationLN.cl.title"
                        base="ControlledLN">
-            <DataObject name="Rel"
-                     type="SPS"
-                     descID="IEC61850_7_4.AbstractLNsCommon::SynchronisationLN.Rel.desc"
-                     presCond="AtLeastOne"
-                     presCondArgs="1"
-                     dsPresCond="F"/>
             <DataObject name="VInd"
                      type="SPS"
                      descID="IEC61850_7_4.AbstractLNsCommon::SynchronisationLN.VInd.desc"
@@ -10294,11 +10318,15 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
                      dsPresCond="na"/>
             <DataObject name="GocbTrk"
                      type="GTS"
+                     underlyingTypeKind="SCSM"
+                     underlyingType="PhyComAddrL2"
                      descID="IEC61850_7_4.LNGroupL::LTRK.GocbTrk.desc"
                      presCond="O"
                      dsPresCond="na"/>
             <DataObject name="MsvcbTrk"
                      type="MTS"
+                     underlyingTypeKind="SCSM"
+                     underlyingType="PhyComAddrL2"
                      descID="IEC61850_7_4.LNGroupL::LTRK.MsvcbTrk.desc"
                      presCond="O"
                      dsPresCond="na"/>
@@ -10310,6 +10338,20 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
             <DataObject name="SgcbTrk"
                      type="STS"
                      descID="IEC61850_7_4.LNGroupL::LTRK.SgcbTrk.desc"
+                     presCond="O"
+                     dsPresCond="na"/>
+            <DataObject name="GocbUdpTrk"
+                     type="GTS"
+                     underlyingTypeKind="SCSM"
+                     underlyingType="PhyComAddrUDP"
+                     descID="IEC61850_7_4.LNGroupL::LTRK.GocbUdpTrk.desc"
+                     presCond="O"
+                     dsPresCond="na"/>
+            <DataObject name="MsvcbUdpTrk"
+                     type="MTS"
+                     underlyingTypeKind="SCSM"
+                     underlyingType="PhyComAddrUDP"
+                     descID="IEC61850_7_4.LNGroupL::LTRK.MsvcbUdpTrk.desc"
                      presCond="O"
                      dsPresCond="na"/>
          </LNClass>
@@ -11102,9 +11144,9 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
                      presCond="AtLeastOne"
                      presCondArgs="1"
                      dsPresCond="F"/>
-            <DataObject name="RV"
+            <DataObject name="LHz"
                      type="SPS"
-                     descID="IEC61850_7_4.LNGroupC::CSYN.RV.desc"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.LHz.desc"
                      presCond="O"
                      dsPresCond="F"/>
             <DataObject name="LV"
@@ -11112,20 +11154,26 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
                      descID="IEC61850_7_4.LNGroupC::CSYN.LV.desc"
                      presCond="O"
                      dsPresCond="F"/>
+            <DataObject name="Rel"
+                     type="SPS"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.Rel.desc"
+                     presCond="AtLeastOne"
+                     presCondArgs="1"
+                     dsPresCond="F"/>
             <DataObject name="RHz"
                      type="SPS"
                      descID="IEC61850_7_4.LNGroupC::CSYN.RHz.desc"
-                     presCond="O"
-                     dsPresCond="F"/>
-            <DataObject name="LHz"
-                     type="SPS"
-                     descID="IEC61850_7_4.LNGroupC::CSYN.LHz.desc"
                      presCond="O"
                      dsPresCond="F"/>
             <DataObject name="RotDir"
                      type="ENS"
                      underlyingType="RotationalDirectionKind"
                      descID="IEC61850_7_4.LNGroupC::CSYN.RotDir.desc"
+                     presCond="O"
+                     dsPresCond="F"/>
+            <DataObject name="RV"
+                     type="SPS"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.RV.desc"
                      presCond="O"
                      dsPresCond="F"/>
             <DataObject name="AccClc"
@@ -11138,30 +11186,30 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
                      descID="IEC61850_7_4.LNGroupC::CSYN.AccClcDev.desc"
                      presCond="O"
                      dsPresCond="O"/>
-            <DataObject name="RelDeaBus"
-                     type="SPC"
-                     descID="IEC61850_7_4.LNGroupC::CSYN.RelDeaBus.desc"
-                     presCond="O"
-                     dsPresCond="F"/>
             <DataObject name="OpModSyn"
                      type="ENC"
                      underlyingType="SynchOperationModeKind"
                      descID="IEC61850_7_4.LNGroupC::CSYN.OpModSyn.desc"
                      presCond="O"
                      dsPresCond="F"/>
-            <DataObject name="VNom"
-                     type="ASG"
-                     descID="IEC61850_7_4.LNGroupC::CSYN.VNom.desc"
+            <DataObject name="RelDeaBus"
+                     type="SPC"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.RelDeaBus.desc"
                      presCond="O"
                      dsPresCond="F"/>
-            <DataObject name="HzNom"
-                     type="ASG"
-                     descID="IEC61850_7_4.LNGroupC::CSYN.HzNom.desc"
+            <DataObject name="DlSynTmms"
+                     type="ING"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.DlSynTmms.desc"
                      presCond="O"
                      dsPresCond="F"/>
             <DataObject name="DlTmms"
                      type="ING"
                      descID="IEC61850_7_4.LNGroupC::CSYN.DlTmms.desc"
+                     presCond="O"
+                     dsPresCond="F"/>
+            <DataObject name="HzNom"
+                     type="ASG"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.HzNom.desc"
                      presCond="O"
                      dsPresCond="F"/>
             <DataObject name="MltCmd"
@@ -11182,6 +11230,11 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
             <DataObject name="VIntvTmms"
                      type="ING"
                      descID="IEC61850_7_4.LNGroupC::CSYN.VIntvTmms.desc"
+                     presCond="O"
+                     dsPresCond="F"/>
+            <DataObject name="VNom"
+                     type="ASG"
+                     descID="IEC61850_7_4.LNGroupC::CSYN.VNom.desc"
                      presCond="O"
                      dsPresCond="F"/>
             <DataObject name="MinVTmms"
@@ -11227,11 +11280,6 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
             <DataObject name="KckPls"
                      type="SPG"
                      descID="IEC61850_7_4.LNGroupC::CSYN.KckPls.desc"
-                     presCond="O"
-                     dsPresCond="F"/>
-            <DataObject name="DlSynTmms"
-                     type="ING"
-                     descID="IEC61850_7_4.LNGroupC::CSYN.DlSynTmms.desc"
                      presCond="O"
                      dsPresCond="F"/>
          </LNClass>
@@ -14771,12 +14819,28 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
             <DataObject name="FltZ"
                      type="CMV"
                      descID="IEC61850_7_4.LNGroupR::RFLO.FltZ.desc"
-                     presCond="O"
+                     presCond="MOcond"
+                     presCondArgs="2"
+                     presCondArgsID="IEC61850_7_4.LNGroupR::RFLO__(_MOcond(2)_=__((_FltZ,_FltX,_FltR_))__)_.cond.LNGroupR::RFLO.FltZ"
                      dsPresCond="O"/>
             <DataObject name="FltDiskm"
                      type="MV"
                      descID="IEC61850_7_4.LNGroupR::RFLO.FltDiskm.desc"
                      presCond="O"
+                     dsPresCond="O"/>
+            <DataObject name="FltR"
+                     type="MV"
+                     descID="IEC61850_7_4.LNGroupR::RFLO.FltR.desc"
+                     presCond="MOcond"
+                     presCondArgs="2"
+                     presCondArgsID="IEC61850_7_4.LNGroupR::RFLO__(_MOcond(2)_=__((_FltZ,_FltX,_FltR_))__)_.cond.LNGroupR::RFLO.FltR"
+                     dsPresCond="O"/>
+            <DataObject name="FltX"
+                     type="MV"
+                     descID="IEC61850_7_4.LNGroupR::RFLO.FltX.desc"
+                     presCond="MOcond"
+                     presCondArgs="2"
+                     presCondArgsID="IEC61850_7_4.LNGroupR::RFLO__(_MOcond(2)_=__((_FltZ,_FltX,_FltR_))__)_.cond.LNGroupR::RFLO.FltX"
                      dsPresCond="O"/>
             <DataObject name="OpCntRs"
                      type="INC"
@@ -14984,6 +15048,11 @@ export const nsd74 = `<?xml version="1.0" encoding="UTF-8"?>
          <LNClass name="RSYN"
                titleID="IEC61850_7_4.LNGroupR::RSYN.cl.title"
                base="SynchronisationLN">
+            <DataObject name="Rel"
+                     type="SPS"
+                     descID="IEC61850_7_4.LNGroupR::RSYN.Rel.desc"
+                     presCond="M"
+                     dsPresCond="F"/>
             <DataObject name="DifV"
                      type="ASG"
                      descID="IEC61850_7_4.LNGroupR::RSYN.DifV.desc"

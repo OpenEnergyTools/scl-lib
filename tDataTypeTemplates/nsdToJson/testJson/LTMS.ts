@@ -1451,18 +1451,17 @@ export const ltms = {
           InternalClock: {
             tagName: "Literal",
             name: "InternalClock",
-            literalVal: "1",
+            literalVal: "0",
           },
           LocalAreaClock: {
             tagName: "Literal",
             name: "LocalAreaClock",
-            literalVal: "2",
+            literalVal: "1",
           },
           GlobalAreaClock: {
             tagName: "Literal",
             name: "GlobalAreaClock",
-            literalVal: "3",
-            descID: "IEC61850_7_4.DOEnums::ClockSyncKind.GlobalAreaClock.desc",
+            literalVal: "2",
           },
         },
       },
@@ -1505,18 +1504,17 @@ export const ltms = {
           InternalClock: {
             tagName: "Literal",
             name: "InternalClock",
-            literalVal: "1",
+            literalVal: "0",
           },
           LocalAreaClock: {
             tagName: "Literal",
             name: "LocalAreaClock",
-            literalVal: "2",
+            literalVal: "1",
           },
           GlobalAreaClock: {
             tagName: "Literal",
             name: "GlobalAreaClock",
-            literalVal: "3",
-            descID: "IEC61850_7_4.DOEnums::ClockSyncKind.GlobalAreaClock.desc",
+            literalVal: "2",
           },
         },
       },
