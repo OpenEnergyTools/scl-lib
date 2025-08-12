@@ -170,7 +170,7 @@ function data(lnData: any, path: string[]): any {
 export function insertSelectedLNodeType(
   doc: XMLDocument,
   selection: TreeSelection,
-  logicalnode: { class: string, desc?: string, data?: LNodeDescription },
+  logicalnode: { class: string, desc?: string, id?: string, data?: LNodeDescription },
 ): Insert[] {
   const types = new Set<string>();
   const elements: Templates = {
@@ -193,9 +193,9 @@ export function insertSelectedLNodeType(
     return !alreadyCreate && !alreadyExist;
   }
 
-  function identify(element: Element, name: string): string {
+  function identify(element: Element, name: string, userId?: string): string {
     const hash = hashElement(element);
-    const id = `${name}$oscd$_${hash}`;
+    const id = userId ?? `${name}$oscd$_${hash}`;
 
     element.setAttribute("id", id);
     if (isUnknownId(id)) {
@@ -406,7 +406,8 @@ export function insertSelectedLNodeType(
     lnType.append(doElement);
   });
 
-  identify(lnType, lnClass);
+  // write LNodeType.id user defined id or content hash
+  identify(lnType, lnClass, logicalnode.id);
 
   const dataTypeTemplates: Element =
     (doc.querySelector(":root > DataTypeTemplates") as Element) ||
