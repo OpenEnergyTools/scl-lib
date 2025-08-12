@@ -533,3 +533,17 @@ export const lln0Selection = {
     "dataNs": {}
   },
 }
+
+export const ptrcSelection = {
+  "Beh": {
+    "q": {},
+    "stVal": {
+      "blocked": {},
+      "off": {},
+      "on": {},
+      "test": {},
+      "test/blocked": {}
+    },
+    "t": {}
+  },
+}

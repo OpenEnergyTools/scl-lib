@@ -9,7 +9,8 @@ import {
   mhaiSelection,
   mmxuSelection,
   ptocSelection,
-  lln0Selection
+  lln0Selection,
+  ptrcSelection
 } from "./insertSelectedLNodeType.testdata.js";
 
 import {
@@ -21,6 +22,31 @@ import {
 
 import { insertSelectedLNodeType } from "./insertSelectedLNodeType.js";
 import { CdcChildren, DaDescription, LNodeDescription, nsdToJson } from "./nsdToJson.js";
+
+
+function cyrb64(str: string): string {
+  /* eslint-disable no-bitwise */
+  let h1 = 0xdeadbeef;
+  let h2 = 0x41c6ce57;
+  /* eslint-disable-next-line no-plusplus */
+  for (let i = 0, ch; i < str.length; i++) {
+    ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 =
+    Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
+    Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 =
+    Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
+    Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (
+    (h2 >>> 0).toString(16).padStart(8, "0") +
+    (h1 >>> 0).toString(16).padStart(8, "0")
+  );
+  /* eslint-enable no-bitwise */
+}
+
 
 const incompleteMmxu = findElement(missingMmxuTypes) as XMLDocument;
 const imcompleteLtrk = findElement(incompleteLtrkTypes) as XMLDocument;
@@ -239,5 +265,15 @@ describe("insertLNodeTypeSelection", () => {
 
     expect(edits.length).to.equal(5);
     expect((edits[3].node as Element).querySelector('DA[name="dataNs"] > Val')?.textContent).to.equal("TestNameSpace-1-d-1234567890");
+  });
+
+  it('set user defined LNodeType.id', () => {
+    const id = cyrb64("TestFile");
+    const edits = insertSelectedLNodeType(missingDataTypes, ptrcSelection, { class: "PTRC", id });
+
+    expect(edits.length).to.equal(4);
+    expect((edits[1].node as Element).getAttribute("id")).to.equal("96ba6481aba181d8");
+    expect((edits[2].node as Element).getAttribute("id")).to.equal("Beh$oscd$_c6ed035c8137b35a");
+    expect((edits[3].node as Element).getAttribute("id")).to.equal("stVal$oscd$_48ba16345b8e7f5b");
   })
 });
