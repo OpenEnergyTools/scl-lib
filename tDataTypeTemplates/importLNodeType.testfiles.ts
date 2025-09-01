@@ -33,6 +33,9 @@ export const competeBayTemplate = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL"
     <DAType id="someAnalogueValueINT32">
         <BDA name="i" bType="INT32" />
     </DAType>
+    <DAType id="someAnalogueValueFLOAT32">
+        <BDA name="i" bType="INT32" />
+    </DAType>
     <EnumType id="BehaviourModeKind">
         <EnumVal ord="1">on</EnumVal>
         <EnumVal ord="2">blocked</EnumVal>
@@ -43,6 +46,45 @@ export const competeBayTemplate = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL"
 </DataTypeTemplates>
 </SCL>`;
 export const invalidBayTemplate = `<SomeInvalidSCL></SomeInvalidSCL>`;
+
+export const hardUpdate = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:esld="https://transpower.co.nz/SCL/SSD/SLD/v0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2007" revision="B" release="4">
+<Header id="BayTemplate"/>
+<Substation name="S1">
+  <VoltageLevel name="V1" desc="" nomFreq="50" numPhases="3">
+    <Voltage unit="V" multiplier="k">110</Voltage>
+    <Bay name="B1" desc=""/>
+  </VoltageLevel>
+</Substation>
+<DataTypeTemplates>
+    <LNodeType lnClass="TCTR" id="Dummy.TCTR" desc="Current Transformer">
+        <DO name="Beh" desc="ENS_Beh" type="OpenSCD_ENS_Beh"/>
+        <DO name="AmpSv" type="Dummy.SAV"/>
+        <DO name="MyBeh" type="OpenSCD_ENS_Beh" />
+    </LNodeType>
+    <DOType cdc="ENS" id="OpenSCD_ENS_Beh">
+        <DA name="stVal" bType="Enum" dchg="true" fc="ST" type="BehaviourModeKind"/>
+        <DA name="q" bType="Quality" qchg="true" fc="ST"/>
+        <DA name="t" bType="Timestamp" fc="ST"/>
+    </DOType>
+    <DOType cdc="SAV" id="Dummy.SAV" desc="Sampled value">
+        <DA fc="MX" name="instMag" bType="Struct" type="someAnalogueValueINT32"/>
+        <DA fc="MX" qchg="true" name="q" bType="Quality"/>
+    </DOType>
+    <DAType id="someAnalogueValueINT32">
+        <BDA name="i" bType="INT32" />
+    </DAType>
+    <DAType id="someAnalogueValueFLOAT32">
+        <BDA name="i" bType="INT32" />
+    </DAType>
+    <EnumType id="BehaviourModeKind">
+        <EnumVal ord="1">on</EnumVal>
+        <EnumVal ord="2">blocked</EnumVal>
+        <EnumVal ord="3">test</EnumVal>
+        <EnumVal ord="4">test/blocked</EnumVal>
+        <EnumVal ord="5">off</EnumVal>
+    </EnumType>
+</DataTypeTemplates>
+</SCL>`;
 
 export const baseDataTypes = `
 <SCL xmlns="http://www.iec.ch/61850/2003/SCL" version="2007" revision="B" release="4">
