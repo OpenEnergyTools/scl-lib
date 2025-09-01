@@ -1,6 +1,11 @@
-import { Insert, createElement } from "../foundation/utils.js";
+import { Edit, Insert, createElement } from "../foundation/utils.js";
 
 import { getReference } from "../tBaseElement/getReference.js";
+import { isEqualNode } from "./foundation.js";
+
+type ImportLNodeTypeOptions = {
+  overwrite?: boolean;
+}
 
 function removeDuplicates(inserts: Insert[]): Insert[] {
   const uniqueInserts: Insert[] = [];
@@ -25,7 +30,7 @@ function insertDataType(
   const existingDataType = targetDataTypeTemplate.querySelector(
     `${dataType.tagName}[id="${dataType.getAttribute("id")}"] `
   );
-  if (existingDataType && dataType.isEqualNode(existingDataType)) return;
+  if (existingDataType && isEqualNode(dataType, existingDataType)) return;
 
   const node = dataType.cloneNode(true);
   // const node = dataType;
@@ -112,8 +117,9 @@ function getDoTypes(parent: Element): Element[] {
  */
 export function importLNodeType(
   lNodeType: Element,
-  targetDoc: XMLDocument
-): Insert[] {
+  targetDoc: XMLDocument,
+  option: ImportLNodeTypeOptions = {}
+): Edit[] {
   const doc = lNodeType.ownerDocument;
   const targetScl = targetDoc.querySelector("SCL");
 
@@ -134,8 +140,16 @@ export function importLNodeType(
         .filter((enumType) => !!enumType) as Element[]
   );
 
-  return insertDataTypes(
+  const inserts = insertDataTypes(
     [lNodeType, ...doTypes, ...daTypes, ...enumTypes],
     targetScl
   );
+  if (option.overwrite === undefined || option.overwrite === false) return inserts;
+
+  const duplicatedLNodeType = targetScl.querySelector(
+    `:root > DataTypeTemplates > LNodeType[id="${lNodeType.getAttribute("id")}"]`
+  );
+  if (!duplicatedLNodeType) return inserts;
+
+  return [...inserts, { node: duplicatedLNodeType }]
 }

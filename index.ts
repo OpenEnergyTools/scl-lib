@@ -10,6 +10,7 @@ export { updateBay } from "./tBay/updateBay.js";
 export { updateVoltageLevel } from "./tVoltageLevel/updateVoltageLevel.js";
 export { updateSubstation } from "./tSubstation/updateSubstation.js";
 export { removeProcessElement } from "./tSubstation/removeProcessElement.js";
+export { updateLnType } from "./tSubstation/updateLnType.js";
 
 export { InsertIedOptions, insertIed } from "./tIED/insertIED.js";
 export { updateIED } from "./tIED/updateIED.js";
@@ -71,8 +72,7 @@ export {
 export { sourceControlBlock } from "./tExtRef/sourceControlBlock.js";
 export { isSubscribed } from "./tExtRef/isSubscribed.js";
 
-export { importLNodeType } from "./tDataTypeTemplates/importLNodeType.js";
-export { lNodeTypeToSelection } from "./tDataTypeTemplates/lNodeTypeToSelection.js";
+
 
 export {
   LNodeDescription,
@@ -82,7 +82,10 @@ export {
 
 export { insertSelectedLNodeType } from "./tDataTypeTemplates/insertSelectedLNodeType.js";
 
-export {removeDataType, RemoveDataTypeOptions} from "./tDataTypeTemplates/removeDataType.js"
+export { removeDataType, RemoveDataTypeOptions } from "./tDataTypeTemplates/removeDataType.js"
+export { importLNodeType } from "./tDataTypeTemplates/importLNodeType.js";
+export { updateLNodeType } from "./tDataTypeTemplates/updateLNodeType.js";
+export { lNodeTypeToSelection } from "./tDataTypeTemplates/lNodeTypeToSelection.js";
 
 export {
   Supervision,
